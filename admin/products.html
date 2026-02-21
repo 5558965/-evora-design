@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EVORA DESIGN - Administration Produits</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Protection Admin -->
+  <script src="admin-auth.js"></script>
+  
+  <!-- Font Awesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background-color: #f3f4f6;
+    }
+    
+    .sidebar {
+      background: linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%);
+    }
+    
+    .sidebar a.active {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-left: 4px solid #fbbf24;
+    }
+    
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+    }
+    
+    .btn-primary {
+      background-color: #1e3a8a;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary:hover {
+      background-color: #1e40af;
+      transform: scale(1.05);
+    }
+    
+    .btn-danger {
+      background-color: #dc2626;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+    }
+    
+    .btn-danger:hover {
+      background-color: #b91c1c;
+    }
+    
+    .modal {
+      transition: opacity 0.3s ease;
+    }
+    
+    .table-header {
+      background-color: #1e3a8a;
+      color: white;
+    }
+    
+    .table-row:hover {
+      background-color: #f9fafb;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+<!-- ========== CONTAINER PRINCIPAL ========== -->
+<div class="flex h-screen bg-gray-100">
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar w-64 text-white flex-shrink-0 hidden md:block overflow-y-auto">
+    <div class="p-6">
+      <div class="flex items-center space-x-3 mb-8">
+        <img src="../images/LOGO EVORA NOUVEAU.png" alt="Logo" class="h-10 w-10 object-contain">
+        <h2 class="text-xl font-bold">EVORA DESIGN</h2>
+      </div>
+      
+      <nav class="space-y-2">
+        <a href="dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-tachometer-alt w-5"></i>
+          <span>Tableau de bord</span>
+        </a>
+        <a href="products.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-white/20 border-l-4 border-yellow-400 active">
+          <i class="fas fa-box w-5"></i>
+          <span>Produits</span>
+        </a>
+        <a href="categories.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-tags w-5"></i>
+          <span>Catégories</span>
+        </a>
+        <a href="orders.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-shopping-cart w-5"></i>
+          <span>Commandes</span>
+        </a>
+        <a href="messages.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-envelope w-5"></i>
+          <span>Messages</span>
+        </a>
+        <a href="users.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-users w-5"></i>
+          <span>Utilisateurs</span>
+        </a>
+        <a href="settings.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-cog w-5"></i>
+          <span>Paramètres</span>
+        </a>
+        <hr class="border-white/20 my-4">
+        <a href="../index.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-home w-5"></i>
+          <span>Voir le site</span>
+        </a>
+        <a href="login.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-sign-out-alt w-5"></i>
+          <span>Déconnexion</span>
+        </a>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- ========== CONTENU PRINCIPAL ========== -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+
+    <!-- ========== HEADER ADMIN ========== -->
+    <header class="bg-white shadow-sm px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <button id="menuBtn" class="md:hidden text-gray-600 hover:text-[#1e3a8a]">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+        <h1 class="text-2xl font-semibold text-gray-800">Gestion des Produits</h1>
+      </div>
+      
+      <div class="flex items-center space-x-4">
+        <div class="relative">
+          <button class="text-gray-600 hover:text-[#1e3a8a]">
+            <i class="fas fa-bell text-xl"></i>
+            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">3</span>
+          </button>
+        </div>
+        
+        <div class="flex items-center space-x-3">
+          <img src="https://ui-avatars.com/api/?name=Admin+User&background=1e3a8a&color=fff" class="h-10 w-10 rounded-full">
+          <div class="hidden md:block">
+            <p class="text-sm font-semibold">Admin EVORA</p>
+            <p class="text-xs text-gray-500">admin@evoradesign.ci</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="flex-1 overflow-y-auto p-6 bg-gray-100">
+
+      <!-- Barre d'actions -->
+      <div class="mb-6 flex flex-wrap gap-4 items-center justify-between">
+        <div class="flex gap-2">
+          <button id="addProductBtn" class="btn-primary flex items-center gap-2">
+            <i class="fas fa-plus"></i>
+            Ajouter un produit
+          </button>
+          <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg transition flex items-center gap-2">
+            <i class="fas fa-download"></i>
+            Exporter
+          </button>
+        </div>
+        
+        <div class="flex gap-2">
+          <div class="relative">
+            <input type="text" id="searchInput" placeholder="Rechercher un produit..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] focus:border-transparent w-64">
+            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+          </div>
+          
+          <select id="categoryFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            <option value="">Toutes catégories</option>
+            <option value="cuisine">Cuisines</option>
+            <option value="dressing">Dressings</option>
+            <option value="placard">Placards</option>
+            <option value="canape">Canapés</option>
+            <option value="table">Tables</option>
+            <option value="lit">Lits</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Statistiques rapides -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">Total produits</p>
+              <p class="text-2xl font-bold text-[#1e3a8a]" id="totalProducts">0</p>
+            </div>
+            <div class="bg-blue-100 p-3 rounded-full">
+              <i class="fas fa-box text-[#1e3a8a] text-xl"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">En stock</p>
+              <p class="text-2xl font-bold text-green-600" id="inStock">0</p>
+            </div>
+            <div class="bg-green-100 p-3 rounded-full">
+              <i class="fas fa-check-circle text-green-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">En rupture</p>
+              <p class="text-2xl font-bold text-red-600" id="outOfStock">0</p>
+            </div>
+            <div class="bg-red-100 p-3 rounded-full">
+              <i class="fas fa-exclamation-circle text-red-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">Valeur totale</p>
+              <p class="text-2xl font-bold text-purple-600" id="totalValue">0 FCFA</p>
+            </div>
+            <div class="bg-purple-100 p-3 rounded-full">
+              <i class="fas fa-chart-line text-purple-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tableau des produits -->
+      <div class="bg-white rounded-lg shadow overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="table-header">
+              <tr>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Image</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Nom</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Catégorie</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Prix</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Stock</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Statut</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="productsTableBody" class="divide-y divide-gray-200">
+              <!-- Les produits seront chargés ici via JavaScript -->
+              <tr>
+                <td colspan="7" class="px-6 py-8 text-center text-gray-500">
+                  <i class="fas fa-spinner fa-spin text-3xl mb-2"></i>
+                  <p>Chargement des produits...</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="mt-4 flex items-center justify-between">
+        <p class="text-sm text-gray-600" id="showingInfo">Affichage de 1 à 10 produits</p>
+        <div class="flex gap-2">
+          <button class="px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 disabled:opacity-50" id="prevPage" disabled>
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <span class="px-3 py-1 bg-[#1e3a8a] text-white rounded" id="currentPage">1</span>
+          <button class="px-3 py-1 border border-gray-300 rounded hover:bg-gray-100" id="nextPage">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ========== MODAL AJOUT/MODIFICATION PRODUIT ========== -->
+<div id="productModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 modal">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+    <div class="p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold text-gray-800" id="modalTitle">Ajouter un produit</h2>
+        <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times text-2xl"></i>
+        </button>
+      </div>
+      
+      <form id="productForm" class="space-y-4">
+        <input type="hidden" id="productId">
+        
+        <div class="grid grid-cols-2 gap-4">
+          <div class="col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nom du produit *</label>
+            <input type="text" id="productName" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+          </div>
+          
+          <div class="col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+            <textarea id="productDescription" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]"></textarea>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Catégorie *</label>
+            <select id="productCategory" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+              <option value="">Sélectionner</option>
+              <option value="cuisine">Cuisine</option>
+              <option value="dressing">Dressing</option>
+              <option value="placard">Placard</option>
+              <option value="canape">Canapé</option>
+              <option value="table">Table</option>
+              <option value="lit">Lit</option>
+              <option value="commode">Commode</option>
+              <option value="meuble-tv">Meuble TV</option>
+              <option value="bureau">Bureau</option>
+              <option value="autre">Autre</option>
+            </select>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Prix (FCFA) *</label>
+            <input type="number" id="productPrice" required min="0" step="1000" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Stock *</label>
+            <input type="number" id="productStock" required min="0" value="1" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Statut</label>
+            <select id="productStatus" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+              <option value="actif">Actif</option>
+              <option value="inactif">Inactif</option>
+            </select>
+          </div>
+          
+          <div class="col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Image du produit</label>
+            <div class="flex items-center space-x-4">
+              <div class="flex-1">
+                <input type="file" id="productImage" accept="image/*" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+              </div>
+              <div id="imagePreview" class="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden hidden">
+                <img src="" alt="Aperçu" class="w-full h-full object-cover">
+              </div>
+            </div>
+            <p class="text-xs text-gray-500 mt-1">Formats acceptés: JPG, PNG, GIF. Taille max: 2Mo</p>
+          </div>
+        </div>
+        
+        <div class="flex justify-end space-x-3 pt-4">
+          <button type="button" id="cancelModal" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+            Annuler
+          </button>
+          <button type="submit" class="btn-primary px-6 py-2">
+            Enregistrer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MODAL SUPPRESSION ========== -->
+<div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 modal">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+    <div class="p-6">
+      <div class="text-center">
+        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+          <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+        </div>
+        <h3 class="text-lg font-bold text-gray-800 mb-2">Confirmer la suppression</h3>
+        <p class="text-gray-600 mb-6">Êtes-vous sûr de vouloir supprimer ce produit ? Cette action est irréversible.</p>
+        <input type="hidden" id="deleteProductId">
+        <div class="flex justify-center space-x-3">
+          <button id="cancelDelete" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+            Annuler
+          </button>
+          <button id="confirmDelete" class="btn-danger px-6 py-2">
+            Supprimer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SCRIPT JAVASCRIPT ========== -->
+<script>
+  // Clé de stockage
+  const PRODUCTS_STORAGE_KEY = 'evora_products';
+
+  // Charger les produits depuis localStorage ou utiliser les données par défaut
+  let products = loadProducts();
+
+  function loadProducts() {
+    try {
+      const stored = localStorage.getItem(PRODUCTS_STORAGE_KEY);
+      if (stored) {
+        return JSON.parse(stored);
+      }
+    } catch (error) {
+      console.error('Erreur chargement produits:', error);
+    }
+    
+    // Produits par défaut
+    return [
+      {
+        id: 1,
+        name: 'Canapé Bois Noble',
+        category: 'canape',
+        price: 450000,
+        stock: 3,
+        status: 'actif',
+        image: 'images/Canapé Bois Noble.jpg',
+        description: 'Canapé en bois noble avec finition premium'
+      },
+    {
+      id: 2,
+      name: 'Table Artisanale',
+      category: 'table',
+      price: 380000,
+      stock: 5,
+      status: 'actif',
+      image: 'images/Table Artisanale.jpg',
+      description: 'Table en bois massif artisanale'
+    },
+    {
+      id: 3,
+      name: 'Lit Moderne',
+      category: 'lit',
+      price: 520000,
+      stock: 2,
+      status: 'actif',
+      image: 'images/Lit Moderne.jpg',
+      description: 'Lit design moderne avec rangement intégré'
+    },
+    {
+      id: 4,
+      name: 'Cuisine équipée moderne',
+      category: 'cuisine',
+      price: 1250000,
+      stock: 1,
+      status: 'actif',
+      image: 'images/image22.jpg',
+      description: 'Cuisine complète sur mesure'
+    },
+    {
+      id: 5,
+      name: 'Dressing sur mesure',
+      category: 'dressing',
+      price: 890000,
+      stock: 0,
+      status: 'inactif',
+      image: 'images/DRESING SUR MESURES3.jpg',
+      description: 'Dressing avec rangements personnalisés'
+    },
+    {
+      id: 6,
+      name: 'Meuble TV contemporain',
+      category: 'meuble-tv',
+      price: 250000,
+      stock: 4,
+      status: 'actif',
+      image: 'images/Meubles TV.jpg',
+      description: 'Meuble TV design avec rangements'
+    },
+    {
+      id: 7,
+      name: 'Bureau professionnel',
+      category: 'bureau',
+      price: 320000,
+      stock: 2,
+      status: 'actif',
+      image: 'images/bureaux.jpg',
+      description: 'Bureau en bois avec tiroirs'
+    },
+    {
+      id: 8,
+      name: 'Commode élégante',
+      category: 'commode',
+      price: 180000,
+      stock: 6,
+      status: 'actif',
+      image: 'images/COMMODES.jpg',
+      description: 'Commode à 4 tiroirs'
+    },
+    {
+      id: 9,
+      name: 'Placard 3 portes',
+      category: 'placard',
+      price: 450000,
+      stock: 3,
+      status: 'actif',
+      image: 'images/Placards.png',
+      description: 'Placard avec étagères intégrées'
+    },
+    {
+      id: 10,
+      name: 'Kitchenette compacte',
+      category: 'cuisine',
+      price: 650000,
+      stock: 2,
+      status: 'actif',
+      image: 'images/Kichnettte 2.jpg',
+      description: 'Kitchenette idéale pour studio'
+    }
+    ];
+  }
+
+  // Sauvegarder les produits dans localStorage
+  function saveProducts() {
+    try {
+      localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(products));
+      console.log('Produits sauvegardés:', products.length);
+    } catch (error) {
+      console.error('Erreur sauvegarde produits:', error);
+    }
+  }
+
+  // Variables globales
+  let currentPage = 1;
+  const itemsPerPage = 8;
+  let filteredProducts = [...products];
+  let searchTerm = '';
+  let categoryFilter = '';
+
+  // Initialisation au chargement
+  document.addEventListener('DOMContentLoaded', function() {
+    updateStats();
+    renderProducts();
+    setupEventListeners();
+  });
+
+  // Configuration des écouteurs d'événements
+  function setupEventListeners() {
+    // Bouton d'ajout
+    document.getElementById('addProductBtn').addEventListener('click', openAddModal);
+    
+    // Fermeture des modals
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    document.getElementById('cancelModal').addEventListener('click', closeModal);
+    document.getElementById('cancelDelete').addEventListener('click', closeDeleteModal);
+    
+    // Recherche et filtres
+    document.getElementById('searchInput').addEventListener('input', handleSearch);
+    document.getElementById('categoryFilter').addEventListener('change', handleCategoryFilter);
+    
+    // Pagination
+    document.getElementById('prevPage').addEventListener('click', () => changePage(currentPage - 1));
+    document.getElementById('nextPage').addEventListener('click', () => changePage(currentPage + 1));
+    
+    // Formulaire produit
+    document.getElementById('productForm').addEventListener('submit', handleProductSubmit);
+    
+    // Modal suppression
+    document.getElementById('confirmDelete').addEventListener('click', handleDelete);
+    
+    // Aperçu image
+    document.getElementById('productImage').addEventListener('change', handleImagePreview);
+  }
+
+  // Mise à jour des statistiques
+  function updateStats() {
+    document.getElementById('totalProducts').textContent = products.length;
+    const inStock = products.filter(p => p.stock > 0).length;
+    const outOfStock = products.filter(p => p.stock === 0).length;
+    const totalValue = products.reduce((sum, p) => sum + (p.price * p.stock), 0);
+    
+    document.getElementById('inStock').textContent = inStock;
+    document.getElementById('outOfStock').textContent = outOfStock;
+    document.getElementById('totalValue').textContent = totalValue.toLocaleString() + ' FCFA';
+  }
+
+  // Gestion de la recherche
+  function handleSearch(e) {
+    searchTerm = e.target.value.toLowerCase();
+    filterProducts();
+  }
+
+  // Gestion du filtre catégorie
+  function handleCategoryFilter(e) {
+    categoryFilter = e.target.value;
+    filterProducts();
+  }
+
+  // Filtrage des produits
+  function filterProducts() {
+    filteredProducts = products.filter(product => {
+      const matchesSearch = product.name.toLowerCase().includes(searchTerm) ||
+                           product.description?.toLowerCase().includes(searchTerm) || '';
+      const matchesCategory = !categoryFilter || product.category === categoryFilter;
+      return matchesSearch && matchesCategory;
+    });
+    
+    currentPage = 1;
+    renderProducts();
+    updatePaginationInfo();
+  }
+
+  // Rendu des produits dans le tableau
+  function renderProducts() {
+    const tbody = document.getElementById('productsTableBody');
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const paginatedProducts = filteredProducts.slice(start, end);
+    
+    if (filteredProducts.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7" class="px-6 py-8 text-center text-gray-500">
+            <i class="fas fa-box-open text-4xl mb-2"></i>
+            <p>Aucun produit trouvé</p>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+    
+    tbody.innerHTML = paginatedProducts.map(product => {
+      // Corriger le chemin de l'image pour l'affichage dans le dashboard
+      let imagePath = product.image;
+      // Si c'est une image Base64, la garder telle quelle
+      if (!imagePath.startsWith('data:')) {
+        // Si ce n'est pas un chemin absolu, ajouter ../
+        if (!imagePath.startsWith('../') && !imagePath.startsWith('http')) {
+          imagePath = '../' + imagePath;
+        }
+      }
+      
+      return `
+      <tr class="table-row">
+        <td class="px-6 py-4">
+          <img src="${imagePath}" alt="${product.name}" class="w-12 h-12 object-cover rounded-lg" onerror="this.src='../images/placeholder.jpg'">
+        </td>
+        <td class="px-6 py-4">
+          <div class="font-medium text-gray-900">${product.name}</div>
+          <div class="text-xs text-gray-500">${product.description?.substring(0, 30)}${product.description?.length > 30 ? '...' : ''}</div>
+        </td>
+        <td class="px-6 py-4 capitalize">${product.category}</td>
+        <td class="px-6 py-4 font-medium">${product.price.toLocaleString()} FCFA</td>
+        <td class="px-6 py-4">
+          <span class="${product.stock > 0 ? 'text-green-600' : 'text-red-600'} font-medium">
+            ${product.stock}
+          </span>
+        </td>
+        <td class="px-6 py-4">
+          <span class="px-2 py-1 rounded-full text-xs ${product.status === 'actif' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">
+            ${product.status === 'actif' ? 'Actif' : 'Inactif'}
+          </span>
+        </td>
+        <td class="px-6 py-4">
+          <div class="flex space-x-2">
+            <button onclick="editProduct(${product.id})" class="text-blue-600 hover:text-blue-800">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button onclick="deleteProduct(${product.id})" class="text-red-600 hover:text-red-800">
+              <i class="fas fa-trash"></i>
+            </button>
+            <button onclick="viewProduct(${product.id})" class="text-gray-600 hover:text-gray-800">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      `;
+    }).join('');
+    
+    updatePaginationInfo();
+  }
+
+  // Mise à jour des informations de pagination
+  function updatePaginationInfo() {
+    const start = (currentPage - 1) * itemsPerPage + 1;
+    const end = Math.min(currentPage * itemsPerPage, filteredProducts.length);
+    document.getElementById('showingInfo').textContent = 
+      `Affichage de ${start} à ${end} sur ${filteredProducts.length} produits`;
+    
+    document.getElementById('prevPage').disabled = currentPage === 1;
+    document.getElementById('nextPage').disabled = currentPage * itemsPerPage >= filteredProducts.length;
+    document.getElementById('currentPage').textContent = currentPage;
+  }
+
+  // Changement de page
+  function changePage(page) {
+    if (page < 1 || page > Math.ceil(filteredProducts.length / itemsPerPage)) return;
+    currentPage = page;
+    renderProducts();
+  }
+
+  // Ouverture du modal d'ajout
+  function openAddModal() {
+    document.getElementById('modalTitle').textContent = 'Ajouter un produit';
+    document.getElementById('productForm').reset();
+    document.getElementById('productId').value = '';
+    document.getElementById('imagePreview').classList.add('hidden');
+    document.getElementById('productModal').classList.remove('hidden');
+    document.getElementById('productModal').classList.add('flex');
+  }
+
+  // Ouverture du modal d'édition
+  window.editProduct = function(id) {
+    const product = products.find(p => p.id === id);
+    if (!product) return;
+    
+    document.getElementById('modalTitle').textContent = 'Modifier le produit';
+    document.getElementById('productId').value = product.id;
+    document.getElementById('productName').value = product.name;
+    document.getElementById('productDescription').value = product.description || '';
+    document.getElementById('productCategory').value = product.category;
+    document.getElementById('productPrice').value = product.price;
+    document.getElementById('productStock').value = product.stock;
+    document.getElementById('productStatus').value = product.status;
+    
+    // Aperçu de l'image
+    const preview = document.getElementById('imagePreview');
+    const previewImg = preview.querySelector('img');
+    // Corriger le chemin de l'image pour l'aperçu
+    let imagePath = product.image;
+    if (!imagePath.startsWith('../') && !imagePath.startsWith('http') && !imagePath.startsWith('data:')) {
+      imagePath = '../' + imagePath;
+    }
+    previewImg.src = imagePath;
+    preview.classList.remove('hidden');
+    
+    document.getElementById('productModal').classList.remove('hidden');
+    document.getElementById('productModal').classList.add('flex');
+  };
+
+  // Vue détaillée du produit
+  window.viewProduct = function(id) {
+    const product = products.find(p => p.id === id);
+    if (!product) return;
+    
+    alert(`
+      Détails du produit :
+      Nom : ${product.name}
+      Catégorie : ${product.category}
+      Prix : ${product.price.toLocaleString()} FCFA
+      Stock : ${product.stock}
+      Description : ${product.description || 'Aucune description'}
+    `);
+  };
+
+  // Préparation de la suppression
+  window.deleteProduct = function(id) {
+    document.getElementById('deleteProductId').value = id;
+    document.getElementById('deleteModal').classList.remove('hidden');
+    document.getElementById('deleteModal').classList.add('flex');
+  };
+
+  // Fermeture du modal principal
+  function closeModal() {
+    document.getElementById('productModal').classList.add('hidden');
+    document.getElementById('productModal').classList.remove('flex');
+  }
+
+  // Fermeture du modal de suppression
+  function closeDeleteModal() {
+    document.getElementById('deleteModal').classList.add('hidden');
+    document.getElementById('deleteModal').classList.remove('flex');
+  }
+
+  // Gestion de la soumission du formulaire
+  function handleProductSubmit(e) {
+    e.preventDefault();
+    
+    const id = document.getElementById('productId').value;
+    
+    // Gérer l'image
+    let imagePath = 'images/placeholder.jpg';
+    const imagePreview = document.getElementById('imagePreview');
+    if (!imagePreview.classList.contains('hidden')) {
+      const previewImg = imagePreview.querySelector('img');
+      if (previewImg && previewImg.src) {
+        // Si c'est une image Base64 (uploadée), la garder telle quelle
+        if (previewImg.src.startsWith('data:')) {
+          imagePath = previewImg.src;
+        } 
+        // Si c'est une URL complète (http://), extraire juste le chemin
+        else if (previewImg.src.startsWith('http')) {
+          const parts = previewImg.src.split('/');
+          const filename = parts[parts.length - 1];
+          imagePath = 'images/' + filename;
+        }
+        // Sinon, c'est déjà un chemin relatif
+        else {
+          imagePath = previewImg.src;
+          // Extraire juste le nom du fichier et le dossier images/
+          if (!imagePath.startsWith('data:') && !imagePath.startsWith('images/')) {
+            const parts = imagePath.split('/');
+            const filename = parts[parts.length - 1];
+            imagePath = 'images/' + filename;
+          }
+        }
+      }
+    }
+    
+    const productData = {
+      name: document.getElementById('productName').value,
+      description: document.getElementById('productDescription').value,
+      category: document.getElementById('productCategory').value,
+      price: parseInt(document.getElementById('productPrice').value),
+      stock: parseInt(document.getElementById('productStock').value),
+      status: document.getElementById('productStatus').value,
+      image: imagePath
+    };
+    
+    if (id) {
+      // Modification
+      const index = products.findIndex(p => p.id === parseInt(id));
+      if (index !== -1) {
+        products[index] = { ...products[index], ...productData, id: parseInt(id) };
+        saveProducts(); // Sauvegarder dans localStorage
+        alert('Produit modifié avec succès !');
+      }
+    } else {
+      // Ajout
+      const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+      products.push({ id: newId, ...productData });
+      saveProducts(); // Sauvegarder dans localStorage
+      alert('Produit ajouté avec succès !');
+    }
+    
+    filterProducts();
+    updateStats();
+    closeModal();
+  }
+
+  // Gestion de la suppression
+  function handleDelete() {
+    const id = parseInt(document.getElementById('deleteProductId').value);
+    products = products.filter(p => p.id !== id);
+    saveProducts(); // Sauvegarder dans localStorage
+    filterProducts();
+    updateStats();
+    closeDeleteModal();
+    alert('Produit supprimé avec succès !');
+  }
+
+  // Aperçu de l'image
+  function handleImagePreview(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const preview = document.getElementById('imagePreview');
+        const previewImg = preview.querySelector('img');
+        previewImg.src = e.target.result;
+        preview.classList.remove('hidden');
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  // Menu mobile (à implémenter)
+  document.getElementById('menuBtn')?.addEventListener('click', function() {
+    alert('Menu mobile - Fonctionnalité à implémenter');
+  });
+</script>
+</body>
+</html>

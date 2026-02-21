@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EVORA DESIGN - Administration Messages</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background-color: #f3f4f6;
+    }
+    
+    .sidebar {
+      background: linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%);
+    }
+    
+    .sidebar a.active {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-left: 4px solid #fbbf24;
+    }
+    
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+    }
+    
+    .btn-primary {
+      background-color: #1e3a8a;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary:hover {
+      background-color: #1e40af;
+      transform: scale(1.05);
+    }
+    
+    .btn-success {
+      background-color: #059669;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+    }
+    
+    .btn-success:hover {
+      background-color: #047857;
+    }
+    
+    .message-unread {
+      background-color: #eff6ff;
+      border-left: 4px solid #1e3a8a;
+    }
+    
+    .message-read {
+      background-color: #ffffff;
+      border-left: 4px solid #d1d5db;
+    }
+    
+    .message-important {
+      border-left: 4px solid #dc2626;
+    }
+    
+    .badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
+    .badge-info {
+      background-color: #dbeafe;
+      color: #1e3a8a;
+    }
+    
+    .badge-success {
+      background-color: #d1fae5;
+      color: #065f46;
+    }
+    
+    .badge-warning {
+      background-color: #fef3c7;
+      color: #92400e;
+    }
+    
+    .badge-danger {
+      background-color: #fee2e2;
+      color: #991b1b;
+    }
+    
+    .modal {
+      transition: opacity 0.3s ease;
+    }
+    
+    .message-content {
+      white-space: pre-line;
+      line-height: 1.6;
+    }
+    
+    .table-header {
+      background-color: #1e3a8a;
+      color: white;
+    }
+    
+    .table-row:hover {
+      background-color: #f9fafb;
+    }
+    
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #1e3a8a;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+    
+    .type-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+<!-- ========== CONTAINER PRINCIPAL ========== -->
+<div class="flex h-screen bg-gray-100">
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar w-64 text-white flex-shrink-0 hidden md:block overflow-y-auto">
+    <div class="p-6">
+      <div class="flex items-center space-x-3 mb-8">
+        <img src="../images/LOGO EVORA NOUVEAU.png" alt="Logo" class="h-10 w-10 object-contain">
+        <h2 class="text-xl font-bold">EVORA DESIGN</h2>
+      </div>
+      
+      <nav class="space-y-2">
+        <a href="dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-tachometer-alt w-5"></i>
+          <span>Tableau de bord</span>
+        </a>
+        <a href="products.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-box w-5"></i>
+          <span>Produits</span>
+        </a>
+        <a href="categories.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-tags w-5"></i>
+          <span>Catégories</span>
+        </a>
+        <a href="orders.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-shopping-cart w-5"></i>
+          <span>Commandes</span>
+        </a>
+        <a href="messages.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-white/20 border-l-4 border-yellow-400 active">
+          <i class="fas fa-envelope w-5"></i>
+          <span>Messages</span>
+          <span class="ml-auto bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center" id="unreadBadge">12</span>
+        </a>
+        <a href="users.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-users w-5"></i>
+          <span>Utilisateurs</span>
+        </a>
+        <a href="settings.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-cog w-5"></i>
+          <span>Paramètres</span>
+        </a>
+        <hr class="border-white/20 my-4">
+        <a href="../index.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-home w-5"></i>
+          <span>Voir le site</span>
+        </a>
+        <a href="login.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-sign-out-alt w-5"></i>
+          <span>Déconnexion</span>
+        </a>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- ========== CONTENU PRINCIPAL ========== -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+
+    <!-- ========== HEADER ADMIN ========== -->
+    <header class="bg-white shadow-sm px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <button id="menuBtn" class="md:hidden text-gray-600 hover:text-[#1e3a8a]">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+        <h1 class="text-2xl font-semibold text-gray-800">Gestion des Messages</h1>
+      </div>
+      
+      <div class="flex items-center space-x-4">
+        <div class="relative">
+          <button class="text-gray-600 hover:text-[#1e3a8a] relative">
+            <i class="fas fa-bell text-xl"></i>
+            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">3</span>
+          </button>
+        </div>
+        
+        <div class="flex items-center space-x-3">
+          <img src="https://ui-avatars.com/api/?name=Admin+User&background=1e3a8a&color=fff" class="h-10 w-10 rounded-full">
+          <div class="hidden md:block">
+            <p class="text-sm font-semibold">Admin EVORA</p>
+            <p class="text-xs text-gray-500">admin@evoradesign.ci</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="flex-1 overflow-y-auto p-6 bg-gray-100">
+
+      <!-- Statistiques -->
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">Total messages</p>
+              <p class="text-2xl font-bold text-[#1e3a8a]" id="totalMessages">0</p>
+            </div>
+            <div class="bg-blue-100 p-3 rounded-full">
+              <i class="fas fa-envelope text-[#1e3a8a] text-xl"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">Non lus</p>
+              <p class="text-2xl font-bold text-yellow-600" id="unreadMessages">0</p>
+            </div>
+            <div class="bg-yellow-100 p-3 rounded-full">
+              <i class="fas fa-circle-exclamation text-yellow-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">Importants</p>
+              <p class="text-2xl font-bold text-red-600" id="importantMessages">0</p>
+            </div>
+            <div class="bg-red-100 p-3 rounded-full">
+              <i class="fas fa-star text-red-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">Devis demandés</p>
+              <p class="text-2xl font-bold text-purple-600" id="quotationRequests">0</p>
+            </div>
+            <div class="bg-purple-100 p-3 rounded-full">
+              <i class="fas fa-file-invoice text-purple-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">Taux de réponse</p>
+              <p class="text-2xl font-bold text-green-600" id="responseRate">0%</p>
+            </div>
+            <div class="bg-green-100 p-3 rounded-full">
+              <i class="fas fa-reply-all text-green-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtres et recherche -->
+      <div class="mb-6 flex flex-wrap gap-4 items-center justify-between">
+        <div class="flex gap-2">
+          <button class="filter-btn active px-4 py-2 rounded-lg bg-[#1e3a8a] text-white" data-filter="all">
+            Tous <span class="ml-1 text-xs bg-white/20 px-2 py-0.5 rounded-full" id="countAll">0</span>
+          </button>
+          <button class="filter-btn px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-gray-100" data-filter="unread">
+            Non lus <span class="ml-1 text-xs bg-gray-200 px-2 py-0.5 rounded-full" id="countUnread">0</span>
+          </button>
+          <button class="filter-btn px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-gray-100" data-filter="important">
+            Importants <span class="ml-1 text-xs bg-gray-200 px-2 py-0.5 rounded-full" id="countImportant">0</span>
+          </button>
+          <button class="filter-btn px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-gray-100" data-filter="quotation">
+            Devis <span class="ml-1 text-xs bg-gray-200 px-2 py-0.5 rounded-full" id="countQuotation">0</span>
+          </button>
+        </div>
+        
+        <div class="flex gap-2">
+          <div class="relative">
+            <input type="text" id="searchInput" placeholder="Rechercher un message..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] focus:border-transparent w-80">
+            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+          </div>
+          
+          <select id="dateFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            <option value="all">Toutes dates</option>
+            <option value="today">Aujourd'hui</option>
+            <option value="week">Cette semaine</option>
+            <option value="month">Ce mois</option>
+            <option value="year">Cette année</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Vue: Liste des messages -->
+      <div class="bg-white rounded-lg shadow overflow-hidden">
+        <div class="divide-y divide-gray-200" id="messagesList">
+          <!-- Les messages seront chargés ici -->
+          <div class="text-center py-8">
+            <i class="fas fa-spinner fa-spin text-3xl text-[#1e3a8a] mb-2"></i>
+            <p class="text-gray-500">Chargement des messages...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="mt-4 flex items-center justify-between">
+        <p class="text-sm text-gray-600" id="showingInfo">Affichage de 1 à 10 messages</p>
+        <div class="flex gap-2">
+          <button class="px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 disabled:opacity-50" id="prevPage" disabled>
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <span class="px-3 py-1 bg-[#1e3a8a] text-white rounded" id="currentPage">1</span>
+          <button class="px-3 py-1 border border-gray-300 rounded hover:bg-gray-100" id="nextPage">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ========== MODAL LECTURE MESSAGE ========== -->
+<div id="messageModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 modal">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+    <div class="p-6">
+      <!-- En-tête du modal -->
+      <div class="flex justify-between items-start mb-4">
+        <div class="flex items-center gap-3">
+          <div class="avatar" id="modalAvatar">JD</div>
+          <div>
+            <h2 class="text-xl font-bold text-gray-800" id="modalName">Jean Dupont</h2>
+            <p class="text-sm text-gray-500" id="modalEmail">jean.dupont@email.com</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="markImportant" class="text-gray-400 hover:text-yellow-500 transition" title="Marquer comme important">
+            <i class="far fa-star text-xl"></i>
+          </button>
+          <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+            <i class="fas fa-times text-2xl"></i>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Informations supplémentaires -->
+      <div class="flex flex-wrap gap-4 mb-4 text-sm">
+        <div class="bg-gray-100 px-3 py-1 rounded-full">
+          <i class="fas fa-phone mr-2 text-gray-600"></i>
+          <span id="modalPhone">+225 07 12 34 56</span>
+        </div>
+        <div class="bg-gray-100 px-3 py-1 rounded-full">
+          <i class="fas fa-calendar mr-2 text-gray-600"></i>
+          <span id="modalDate">15/02/2025 14:30</span>
+        </div>
+        <div class="bg-gray-100 px-3 py-1 rounded-full" id="modalType">
+          <i class="fas fa-question-circle mr-2 text-gray-600"></i>
+          <span>Demande d'information</span>
+        </div>
+      </div>
+      
+      <!-- Sujet -->
+      <div class="mb-4">
+        <h3 class="text-lg font-semibold text-gray-800" id="modalSubject">Sujet du message</h3>
+      </div>
+      
+      <!-- Corps du message -->
+      <div class="bg-gray-50 rounded-lg p-6 mb-6">
+        <div class="message-content text-gray-700" id="modalMessage">
+          Contenu du message...
+        </div>
+      </div>
+      
+      <!-- Actions -->
+      <div class="border-t pt-4">
+        <div class="flex justify-between items-center">
+          <div class="flex gap-2">
+            <button id="replyBtn" class="btn-primary flex items-center gap-2">
+              <i class="fas fa-reply"></i>
+              Répondre
+            </button>
+            <button id="archiveBtn" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg transition flex items-center gap-2">
+              <i class="fas fa-archive"></i>
+              Archiver
+            </button>
+            <button id="deleteMsgBtn" class="bg-red-100 hover:bg-red-200 text-red-600 px-4 py-2 rounded-lg transition flex items-center gap-2">
+              <i class="fas fa-trash"></i>
+              Supprimer
+            </button>
+          </div>
+          
+          <button id="markReadBtn" class="text-[#1e3a8a] hover:text-blue-700 text-sm font-semibold">
+            <i class="far fa-check-circle mr-1"></i>
+            Marquer comme non lu
+          </button>
+        </div>
+        
+        <!-- Zone de réponse (cachée par défaut) -->
+        <div id="replyArea" class="hidden mt-4">
+          <textarea id="replyMessage" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]" placeholder="Écrivez votre réponse..."></textarea>
+          <div class="flex justify-end gap-2 mt-2">
+            <button id="cancelReply" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+              Annuler
+            </button>
+            <button id="sendReply" class="btn-success flex items-center gap-2">
+              <i class="fas fa-paper-plane"></i>
+              Envoyer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MODAL SUPPRESSION ========== -->
+<div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 modal">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+    <div class="p-6">
+      <div class="text-center">
+        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+          <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+        </div>
+        <h3 class="text-lg font-bold text-gray-800 mb-2">Confirmer la suppression</h3>
+        <p class="text-gray-600 mb-4">Êtes-vous sûr de vouloir supprimer ce message ? Cette action est irréversible.</p>
+        <input type="hidden" id="deleteMessageId">
+        <div class="flex justify-center space-x-3">
+          <button id="cancelDelete" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+            Annuler
+          </button>
+          <button id="confirmDelete" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg transition">
+            Supprimer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MODAL RÉPONSE RAPIDE ========== -->
+<div id="quickReplyModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 modal">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-lg">
+    <div class="p-6">
+      <h3 class="text-xl font-bold mb-4">Réponse rapide</h3>
+      
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Modèle de réponse</label>
+          <select id="templateSelect" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+            <option value="">Sélectionner un modèle</option>
+            <option value="acknowledge">Accusé de réception</option>
+            <option value="quotation">Devis en cours</option>
+            <option value="info">Informations générales</option>
+            <option value="appointment">Prise de rendez-vous</option>
+          </select>
+        </div>
+        
+        <div>
+          <textarea id="quickReplyMessage" rows="6" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]" placeholder="Votre réponse..."></textarea>
+        </div>
+      </div>
+      
+      <div class="flex justify-end space-x-3 mt-6">
+        <button id="cancelQuickReply" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+          Annuler
+        </button>
+        <button id="sendQuickReply" class="btn-primary">
+          Envoyer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SCRIPT JAVASCRIPT ========== -->
+<script>
+  // Données simulées des messages
+  let messages = [
+    {
+      id: 1,
+      type: 'contact',
+      name: 'Jean Dupont',
+      email: 'jean.dupont@email.com',
+      phone: '+225 07 12 34 56',
+      subject: 'Demande d\'information sur cuisine équipée',
+      message: 'Bonjour, je souhaiterais obtenir plus d\'informations sur vos cuisines équipées. Quels sont les délais de fabrication et de livraison ? Avez-vous des modèles à me montrer ? Je suis particulièrement intéressé par un style moderne. Merci d\'avance pour votre retour.',
+      date: '2025-02-20T09:30:00',
+      read: false,
+      important: true,
+      archived: false,
+      tags: ['cuisine', 'devis']
+    },
+    {
+      id: 2,
+      type: 'quotation',
+      name: 'Marie Koné',
+      email: 'marie.kone@email.com',
+      phone: '+225 05 23 45 67',
+      subject: 'Demande de devis pour dressing',
+      message: 'Bonjour, je suis intéressée par la réalisation d\'un dressing sur mesure dans ma chambre. Dimensions : 3m de large x 2.5m de haut. Pourriez-vous me faire un devis approximatif et me dire quels sont vos délais ? Je souhaiterais un rendez-vous pour discuter des options possibles.',
+      date: '2025-02-19T14:45:00',
+      read: false,
+      important: false,
+      archived: false,
+      tags: ['dressing', 'devis']
+    },
+    {
+      id: 3,
+      type: 'contact',
+      name: 'Amadou Touré',
+      email: 'amadou.toure@email.com',
+      phone: '+225 07 34 56 78',
+      subject: 'Question sur le Canapé Bois Noble',
+      message: 'Bonjour, je souhaiterais avoir plus de détails sur le Canapé Bois Noble affiché à 450 000 FCFA. Quelles sont les dimensions exactes ? Est-il disponible en différentes couleurs ? Le bois utilisé est-il traité ? Merci de votre retour.',
+      date: '2025-02-19T11:20:00',
+      read: true,
+      important: false,
+      archived: false,
+      tags: ['canapé', 'salon']
+    },
+    {
+      id: 4,
+      type: 'quotation',
+      name: 'Fatoumata Diallo',
+      email: 'fatou.diallo@email.com',
+      phone: '+225 05 45 67 89',
+      subject: 'Devis pour cuisine complète',
+      message: 'Bonjour, je construis ma maison et j\'aurais besoin d\'une cuisine complète sur mesure. Dimensions approximatives : 4m x 3m. Je souhaiterais un style moderne avec îlot central. Pouvez-vous me contacter pour convenir d\'un rendez-vous pour discuter du projet et des matériaux ? Merci.',
+      date: '2025-02-18T16:30:00',
+      read: true,
+      important: true,
+      archived: false,
+      tags: ['cuisine', 'devis', 'urgence']
+    },
+    {
+      id: 5,
+      type: 'contact',
+      name: 'Koffi Bernard',
+      email: 'koffi.b@email.com',
+      phone: '+225 07 56 78 90',
+      subject: 'Information sur les portes',
+      message: 'Bonjour, je rénove ma maison et j\'aurais besoin de 5 portes intérieures. Pouvez-vous me donner une idée des prix pour des portes en bois moderne ? Avez-vous un catalogue ou des modèles à me montrer ? Je suis à Abidjan et peux passer à votre atelier.',
+      date: '2025-02-18T10:15:00',
+      read: true,
+      important: false,
+      archived: true,
+      tags: ['portes', 'rénovation']
+    },
+    {
+      id: 6,
+      type: 'contact',
+      name: 'Aminata Cissé',
+      email: 'aminata.c@email.com',
+      phone: '+225 05 67 89 01',
+      subject: 'Demande de catalogue',
+      message: 'Bonjour, pourriez-vous m\'envoyer votre catalogue de meubles par email ? Je suis particulièrement intéressée par les chambres à coucher et les commodes. Merci d\'avance.',
+      date: '2025-02-17T13:45:00',
+      read: true,
+      important: false,
+      archived: false,
+      tags: ['catalogue', 'chambre']
+    },
+    {
+      id: 7,
+      type: 'quotation',
+      name: 'Yao Philippe',
+      email: 'yao.philippe@email.com',
+      phone: '+225 07 78 90 12',
+      subject: 'Devis pour bureau professionnel',
+      message: 'Bonjour, je cherche à équiper mon cabinet avec 4 bureaux sur mesure. Dimensions souhaitées : 160x80cm. Bois massif de préférence. Pourriez-vous me faire un devis et me dire quels sont les délais de fabrication ? Merci.',
+      date: '2025-02-17T09:20:00',
+      read: false,
+      important: false,
+      archived: false,
+      tags: ['bureau', 'professionnel']
+    },
+    {
+      id: 8,
+      type: 'contact',
+      name: 'Nadia Kouadio',
+      email: 'nadia.k@email.com',
+      phone: '+225 05 89 01 23',
+      subject: 'Réparation meuble',
+      message: 'Bonjour, j\'ai une commande ancienne qui a besoin d\'être réparée. Proposez-vous des services de restauration de meubles ? Si oui, comment procéder ? Merci.',
+      date: '2025-02-16T15:50:00',
+      read: true,
+      important: false,
+      archived: false,
+      tags: ['réparation', 'restauration']
+    },
+    {
+      id: 9,
+      type: 'contact',
+      name: 'Soro Moussa',
+      email: 'soro.m@email.com',
+      phone: '+225 07 90 12 34',
+      subject: 'Question sur les matériaux',
+      message: 'Bonjour, quels types de bois utilisez-vous pour vos meubles ? Proposez-vous des finitions spéciales (vernis, peinture) ? Je souhaiterais un meuble TV avec un bois clair. Merci.',
+      date: '2025-02-16T11:10:00',
+      read: true,
+      important: false,
+      archived: false,
+      tags: ['matériaux', 'finition']
+    },
+    {
+      id: 10,
+      type: 'quotation',
+      name: 'Rachel N\'Guessan',
+      email: 'rachel.n@email.com',
+      phone: '+225 05 01 23 45',
+      subject: 'Devis pour kitchenette',
+      message: 'Bonjour, je suis intéressée par une kitchenette pour mon studio. Dimensions très petites (2m de long). Pouvez-vous me faire un devis pour une kitchenette compacte avec rangements ? Merci.',
+      date: '2025-02-15T09:45:00',
+      read: true,
+      important: false,
+      archived: false,
+      tags: ['kitchenette', 'petit espace']
+    }
+  ];
+
+  // Variables globales
+  let currentPage = 1;
+  const itemsPerPage = 8;
+  let filteredMessages = [...messages];
+  let currentFilter = 'all';
+  let searchTerm = '';
+  let dateFilter = 'all';
+  let currentMessageId = null;
+
+  // Initialisation
+  document.addEventListener('DOMContentLoaded', function() {
+    updateStats();
+    renderMessages();
+    setupEventListeners();
+  });
+
+  // Configuration des écouteurs
+  function setupEventListeners() {
+    // Filtres
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => {
+          b.classList.remove('active', 'bg-[#1e3a8a]', 'text-white');
+          b.classList.add('bg-white', 'text-gray-700');
+        });
+        this.classList.add('active', 'bg-[#1e3a8a]', 'text-white');
+        this.classList.remove('bg-white', 'text-gray-700');
+        
+        currentFilter = this.dataset.filter;
+        filterMessages();
+      });
+    });
+
+    document.getElementById('searchInput').addEventListener('input', handleSearch);
+    document.getElementById('dateFilter').addEventListener('change', handleDateFilter);
+    
+    document.getElementById('prevPage').addEventListener('click', () => changePage(currentPage - 1));
+    document.getElementById('nextPage').addEventListener('click', () => changePage(currentPage + 1));
+    
+    // Modals
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    document.getElementById('cancelDelete').addEventListener('click', closeDeleteModal);
+    document.getElementById('confirmDelete').addEventListener('click', handleDelete);
+    
+    // Actions dans le modal
+    document.getElementById('replyBtn').addEventListener('click', toggleReplyArea);
+    document.getElementById('cancelReply').addEventListener('click', toggleReplyArea);
+    document.getElementById('sendReply').addEventListener('click', sendReply);
+    document.getElementById('archiveBtn').addEventListener('click', archiveMessage);
+    document.getElementById('deleteMsgBtn').addEventListener('click', openDeleteModal);
+    document.getElementById('markReadBtn').addEventListener('click', toggleReadStatus);
+    document.getElementById('markImportant').addEventListener('click', toggleImportant);
+  }
+
+  // Mise à jour des statistiques
+  function updateStats() {
+    const total = messages.length;
+    const unread = messages.filter(m => !m.read && !m.archived).length;
+    const important = messages.filter(m => m.important && !m.archived).length;
+    const quotations = messages.filter(m => m.type === 'quotation' && !m.archived).length;
+    const responseRate = Math.round((messages.filter(m => m.read).length / total) * 100);
+
+    document.getElementById('totalMessages').textContent = total;
+    document.getElementById('unreadMessages').textContent = unread;
+    document.getElementById('importantMessages').textContent = important;
+    document.getElementById('quotationRequests').textContent = quotations;
+    document.getElementById('responseRate').textContent = responseRate + '%';
+    
+    // Mettre à jour les badges de filtre
+    document.getElementById('unreadBadge').textContent = unread;
+    document.getElementById('countAll').textContent = total;
+    document.getElementById('countUnread').textContent = unread;
+    document.getElementById('countImportant').textContent = important;
+    document.getElementById('countQuotation').textContent = quotations;
+  }
+
+  // Gestion de la recherche
+  function handleSearch(e) {
+    searchTerm = e.target.value.toLowerCase();
+    filterMessages();
+  }
+
+  // Gestion du filtre de date
+  function handleDateFilter(e) {
+    dateFilter = e.target.value;
+    filterMessages();
+  }
+
+  // Filtrage des messages
+  function filterMessages() {
+    filteredMessages = messages.filter(msg => {
+      if (msg.archived) return false;
+      
+      // Filtre par statut
+      if (currentFilter === 'unread' && msg.read) return false;
+      if (currentFilter === 'important' && !msg.important) return false;
+      if (currentFilter === 'quotation' && msg.type !== 'quotation') return false;
+      
+      // Filtre par recherche
+      if (searchTerm) {
+        const matches = msg.name.toLowerCase().includes(searchTerm) ||
+                       msg.email.toLowerCase().includes(searchTerm) ||
+                       msg.subject.toLowerCase().includes(searchTerm) ||
+                       msg.message.toLowerCase().includes(searchTerm);
+        if (!matches) return false;
+      }
+      
+      // Filtre par date
+      if (dateFilter !== 'all') {
+        const msgDate = new Date(msg.date);
+        const today = new Date();
+        const diffTime = today - msgDate;
+        const diffDays = diffTime / (1000 * 60 * 60 * 24);
+        
+        if (dateFilter === 'today' && diffDays >= 1) return false;
+        if (dateFilter === 'week' && diffDays >= 7) return false;
+        if (dateFilter === 'month' && diffDays >= 30) return false;
+        if (dateFilter === 'year' && diffDays >= 365) return false;
+      }
+      
+      return true;
+    });
+    
+    currentPage = 1;
+    renderMessages();
+  }
+
+  // Rendu des messages
+  function renderMessages() {
+    const list = document.getElementById('messagesList');
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const paginatedMessages = filteredMessages.slice(start, end);
+    
+    if (filteredMessages.length === 0) {
+      list.innerHTML = `
+        <div class="text-center py-12">
+          <i class="fas fa-inbox text-5xl text-gray-400 mb-3"></i>
+          <p class="text-gray-500 text-lg">Aucun message trouvé</p>
+        </div>
+      `;
+      updatePaginationInfo();
+      return;
+    }
+    
+    list.innerHTML = paginatedMessages.map(msg => `
+      <div class="p-4 ${msg.read ? 'message-read' : 'message-unread'} ${msg.important ? 'message-important' : ''} cursor-pointer hover:bg-gray-50 transition" onclick="viewMessage(${msg.id})">
+        <div class="flex items-start gap-4">
+          <!-- Avatar -->
+          <div class="avatar flex-shrink-0">
+            ${getInitials(msg.name)}
+          </div>
+          
+          <!-- Contenu -->
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between mb-1">
+              <div class="flex items-center gap-2">
+                <span class="font-semibold ${!msg.read ? 'text-[#1e3a8a]' : 'text-gray-700'}">${msg.name}</span>
+                ${msg.important ? '<i class="fas fa-star text-yellow-500 text-xs"></i>' : ''}
+                <span class="text-xs text-gray-500">${msg.email}</span>
+              </div>
+              <span class="text-xs text-gray-500">${formatDate(msg.date)}</span>
+            </div>
+            
+            <div class="mb-1">
+              <span class="font-medium text-gray-800">${msg.subject}</span>
+            </div>
+            
+            <div class="text-sm text-gray-600 mb-2">
+              ${truncateText(msg.message, 120)}
+            </div>
+            
+            <!-- Tags et type -->
+            <div class="flex items-center gap-2">
+              <span class="badge ${msg.type === 'quotation' ? 'badge-warning' : 'badge-info'}">
+                <i class="fas ${msg.type === 'quotation' ? 'fa-file-invoice' : 'fa-envelope'} mr-1"></i>
+                ${msg.type === 'quotation' ? 'Devis' : 'Contact'}
+              </span>
+              ${msg.tags.map(tag => `
+                <span class="badge bg-gray-100 text-gray-600">${tag}</span>
+              `).join('')}
+            </div>
+          </div>
+          
+          <!-- Indicateur non lu -->
+          ${!msg.read ? '<div class="w-2 h-2 bg-[#1e3a8a] rounded-full flex-shrink-0 mt-2"></div>' : ''}
+        </div>
+      </div>
+    `).join('');
+    
+    updatePaginationInfo();
+  }
+
+  // Obtenir les initiales
+  function getInitials(name) {
+    return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+  }
+
+  // Troncature du texte
+  function truncateText(text, maxLength) {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + '...';
+  }
+
+  // Formatage de la date
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffTime = now - date;
+    const diffDays = diffTime / (1000 * 60 * 60 * 24);
+    
+    if (diffDays < 1) {
+      const diffHours = diffTime / (1000 * 60 * 60);
+      if (diffHours < 1) {
+        const diffMinutes = Math.floor(diffTime / (1000 * 60));
+        return `Il y a ${diffMinutes} min`;
+      }
+      return `Il y a ${Math.floor(diffHours)} h`;
+    } else if (diffDays < 2) {
+      return 'Hier';
+    } else if (diffDays < 7) {
+      return `Il y a ${Math.floor(diffDays)} jours`;
+    }
+    
+    return date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  }
+
+  // Voir un message
+  window.viewMessage = function(id) {
+    const msg = messages.find(m => m.id === id);
+    if (!msg) return;
+    
+    currentMessageId = id;
+    
+    // Marquer comme lu
+    if (!msg.read) {
+      msg.read = true;
+      updateStats();
+      renderMessages();
+    }
+    
+    // Remplir le modal
+    document.getElementById('modalAvatar').textContent = getInitials(msg.name);
+    document.getElementById('modalName').textContent = msg.name;
+    document.getElementById('modalEmail').textContent = msg.email;
+    document.getElementById('modalPhone').textContent = msg.phone;
+    document.getElementById('modalDate').textContent = new Date(msg.date).toLocaleDateString('fr-FR', {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    });
+    document.getElementById('modalType').innerHTML = `
+      <i class="fas ${msg.type === 'quotation' ? 'fa-file-invoice' : 'fa-question-circle'} mr-2 text-gray-600"></i>
+      <span>${msg.type === 'quotation' ? 'Demande de devis' : 'Demande d\'information'}</span>
+    `;
+    document.getElementById('modalSubject').textContent = msg.subject;
+    document.getElementById('modalMessage').textContent = msg.message;
+    
+    // Mettre à jour le bouton d'importance
+    const importantBtn = document.getElementById('markImportant');
+    if (msg.important) {
+      importantBtn.innerHTML = '<i class="fas fa-star text-yellow-500 text-xl"></i>';
+    } else {
+      importantBtn.innerHTML = '<i class="far fa-star text-xl"></i>';
+    }
+    
+    // Mettre à jour le bouton de lecture
+    const readBtn = document.getElementById('markReadBtn');
+    readBtn.innerHTML = msg.read ? 
+      '<i class="far fa-check-circle mr-1"></i>Marquer comme non lu' :
+      '<i class="far fa-check-circle mr-1"></i>Marquer comme lu';
+    
+    document.getElementById('messageModal').classList.remove('hidden');
+    document.getElementById('messageModal').classList.add('flex');
+  };
+
+  // Basculer la zone de réponse
+  function toggleReplyArea() {
+    const replyArea = document.getElementById('replyArea');
+    replyArea.classList.toggle('hidden');
+    if (!replyArea.classList.contains('hidden')) {
+      document.getElementById('replyMessage').focus();
+    }
+  }
+
+  // Envoyer une réponse
+  function sendReply() {
+    const reply = document.getElementById('replyMessage').value;
+    if (!reply.trim()) {
+      alert('Veuillez écrire un message');
+      return;
+    }
+    
+    alert('Réponse envoyée avec succès !');
+    document.getElementById('replyMessage').value = '';
+    toggleReplyArea();
+  }
+
+  // Archiver un message
+  function archiveMessage() {
+    if (!currentMessageId) return;
+    
+    const msg = messages.find(m => m.id === currentMessageId);
+    if (msg) {
+      msg.archived = true;
+      updateStats();
+      filterMessages();
+      closeModal();
+      alert('Message archivé avec succès');
+    }
+  }
+
+  // Basculer le statut important
+  function toggleImportant() {
+    if (!currentMessageId) return;
+    
+    const msg = messages.find(m => m.id === currentMessageId);
+    if (msg) {
+      msg.important = !msg.important;
+      
+      const importantBtn = document.getElementById('markImportant');
+      if (msg.important) {
+        importantBtn.innerHTML = '<i class="fas fa-star text-yellow-500 text-xl"></i>';
+      } else {
+        importantBtn.innerHTML = '<i class="far fa-star text-xl"></i>';
+      }
+      
+      updateStats();
+      renderMessages();
+    }
+  }
+
+  // Basculer le statut de lecture
+  function toggleReadStatus() {
+    if (!currentMessageId) return;
+    
+    const msg = messages.find(m => m.id === currentMessageId);
+    if (msg) {
+      msg.read = !msg.read;
+      
+      const readBtn = document.getElementById('markReadBtn');
+      readBtn.innerHTML = msg.read ? 
+        '<i class="far fa-check-circle mr-1"></i>Marquer comme non lu' :
+        '<i class="far fa-check-circle mr-1"></i>Marquer comme lu';
+      
+      updateStats();
+      renderMessages();
+    }
+  }
+
+  // Ouvrir le modal de suppression
+  function openDeleteModal() {
+    if (!currentMessageId) return;
+    document.getElementById('deleteMessageId').value = currentMessageId;
+    document.getElementById('deleteModal').classList.remove('hidden');
+    document.getElementById('deleteModal').classList.add('flex');
+  }
+
+  // Supprimer un message
+  function handleDelete() {
+    const id = parseInt(document.getElementById('deleteMessageId').value);
+    messages = messages.filter(m => m.id !== id);
+    updateStats();
+    filterMessages();
+    closeDeleteModal();
+    closeModal();
+    alert('Message supprimé avec succès');
+  }
+
+  // Mise à jour de la pagination
+  function updatePaginationInfo() {
+    const start = (currentPage - 1) * itemsPerPage + 1;
+    const end = Math.min(currentPage * itemsPerPage, filteredMessages.length);
+    document.getElementById('showingInfo').textContent = 
+      `Affichage de ${start} à ${end} sur ${filteredMessages.length} messages`;
+    
+    document.getElementById('prevPage').disabled = currentPage === 1;
+    document.getElementById('nextPage').disabled = currentPage * itemsPerPage >= filteredMessages.length;
+    document.getElementById('currentPage').textContent = currentPage;
+  }
+
+  // Changement de page
+  function changePage(page) {
+    if (page < 1 || page > Math.ceil(filteredMessages.length / itemsPerPage)) return;
+    currentPage = page;
+    renderMessages();
+  }
+
+  // Fermeture des modals
+  function closeModal() {
+    document.getElementById('messageModal').classList.add('hidden');
+    document.getElementById('messageModal').classList.remove('flex');
+    document.getElementById('replyArea').classList.add('hidden');
+    document.getElementById('replyMessage').value = '';
+  }
+
+  function closeDeleteModal() {
+    document.getElementById('deleteModal').classList.add('hidden');
+    document.getElementById('deleteModal').classList.remove('flex');
+  }
+
+  // Menu mobile
+  document.getElementById('menuBtn')?.addEventListener('click', function() {
+    alert('Menu mobile - Fonctionnalité à implémenter');
+  });
+</script>
+</body>
+</html>

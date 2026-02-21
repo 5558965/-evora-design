@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EVORA DESIGN - Créateur de meubles sur mesure en Côte d'Ivoire. Cuisines équipées, dressings, placards et mobilier haut de gamme artisanal.">
+  <meta name="keywords" content="meubles sur mesure, ébéniste, Côte d'Ivoire, cuisine équipée, dressing, placard, mobilier artisanal">
+  <meta name="author" content="EVORA DESIGN">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="EVORA DESIGN · Meubles sur mesure">
+  <meta property="og:description" content="L'Art du Meuble sur Mesure - Des créations artisanales qui subliment votre intérieur">
+  <meta property="og:image" content="images/EVORA DESIGN .jpg">
+  
+  <title>EVORA DESIGN · Meubles sur mesure | Ébéniste Côte d'Ivoire</title>
+
+  <!-- Preconnect pour optimisation -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Fichier CSS externe -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#F5F1EB] text-gray-800">
+
+<!-- ========== HEADER ========== -->
+<header class="bg-white shadow-md fixed w-full z-50" role="banner">
+  <div class="container mx-auto flex justify-between items-center p-4">
+    <div class="flex items-center space-x-3">
+      <img src="images/LOGO EVORA NOUVEAU.png" alt="Logo EVORA DESIGN" class="h-10 w-10 object-contain" width="40" height="40">
+      <h1 class="text-2xl font-bold" style="color: #6b4f3a;">EVORA DESIGN</h1>
+    </div>
+
+    <nav class="hidden md:flex space-x-6 font-medium" role="navigation" aria-label="Navigation principale">
+      <a href="#" class="hover:text-[#6b4f3a] transition" aria-label="Accueil">Accueil</a>
+      <a href="#apropos" class="hover:text-[#6b4f3a] transition" aria-label="À propos de nous">À Propos</a>
+      <a href="#catalogue" class="hover:text-[#6b4f3a] transition" aria-label="Notre catalogue">Catalogue</a>
+      <a href="#boutique" class="hover:text-[#6b4f3a] transition" aria-label="Notre boutique">Boutique</a>
+      <a href="#blog" class="hover:text-[#6b4f3a] transition" aria-label="Nos articles">Articles</a>
+      <a href="#contact" class="hover:text-[#6b4f3a] transition" aria-label="Nous contacter">Contact</a>
+    </nav>
+
+    <!-- Bouton panier -->
+    <button id="cartBtn" class="btn-cart" aria-label="Voir le panier">
+      Panier (<span id="cartCount" aria-live="polite">0</span>)
+    </button>
+    
+    <!-- Mini aperçu du panier -->
+    <div id="cartPreview" class="cart-preview hidden">
+      <div class="cart-preview-header">
+        <h3>Votre panier</h3>
+      </div>
+      <div id="cartPreviewItems" class="cart-preview-items">
+        <!-- Articles du panier -->
+      </div>
+      <div class="cart-preview-footer">
+        <div class="cart-preview-total">
+          <span>Total:</span>
+          <span id="cartPreviewTotal">0 FCFA</span>
+        </div>
+        <button class="btn-primary w-full" onclick="window.location.href='panier.html'">
+          Voir le panier
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ========== HERO ========== -->
+<section class="h-screen bg-cover bg-center flex items-center justify-center text-white" style="background-image: url('https://images.unsplash.com/photo-1615874959474-d609969a20ed');">
+  <div class="text-center bg-black/50 p-10 rounded-xl backdrop-blur-sm">
+    <h2 class="text-5xl font-bold mb-4">L’Art du Meuble sur Mesure</h2>
+    <p class="mb-6 text-lg">Des créations artisanales qui subliment votre intérieur.</p>
+    <a href="#boutique" class="btn-primary inline-block">Découvrir la Boutique</a>
+  </div>
+</section>
+
+<!-- ========== À PROPOS ========== -->
+<section id="apropos" class="py-24 bg-white">
+  <div class="container mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <img src="images/EVORA DESIGN .jpg" class="rounded-xl shadow-lg" alt="Atelier Evora">
+    <div>
+      <h2 class="text-4xl mb-6" style="color: #6b4f3a;">Présentation Evora Design</h2>
+      <p class="mb-4 text-gray-600">Idée d’un groupe de jeunes ivoiriens Ébéniste, EVORA DESIGN est bien plus qu'un simple acteur dans le monde de l'ameublement et de la décoration intérieure. Nous sommes les visionnaires qui redéfinissent les espaces de vie, transformant chaque intérieur en un chef-d'œuvre d'esthétique et de fonctionnalité. Notre passion pour l'élégance contemporaine et le design innovant nous a permis de forger une réputation d'excellence.</p>
+      <p class="mb-6 text-gray-600">Chaque meuble, chaque élément de décoration que nous proposons, est le fruit d'une quête incessante de perfection, combinant matériaux de haute qualité, savoir-faire exceptionnel et designs avant-gardistes. Du salon à la chambre, en passant par les espaces de travail, nous créons des environnements qui évoquent émotion, confort et luxe.</p>
+      <a href="#contact" class="btn-primary inline-block" aria-label="Nous contacter pour plus d'informations">Nous Contacter</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CATALOGUE ========== -->
+<section id="catalogue" class="py-24">
+  <div class="container mx-auto">
+
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-bold" style="color: #6b4f3a;">Catalogue</h2>
+      
+      <!-- Image d�corative -->
+     
+      <p class="mt-2 text-lg text-gray-700">Notre métier, c’est construire vos rêves</p>
+    </div>
+
+    <!-- PRODUITS VEDETTES -->
+    <div class="mb-24">
+      <h3 class="text-3xl font-bold mb-12 text-center" style="color: #4a3a2c;">Nos Produits Vedettes</h3>
+
+      <div class="grid md:grid-cols-3 sm:grid-cols-2 gap-10">
+
+        <!-- PORTES -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <img src="images/Portes sur mesure.jpg" class="w-full h-64 object-cover" alt="Portes">
+          <div class="p-6">
+            <h4 class="text-xl font-semibold mb-2">Portes sur mesure</h4>
+            <p class="text-gray-600 mb-4">Portes modernes et classiques adaptées à tous les espaces.</p>
+        <a href="devis.html" target="_blank" class="btn-primary w-full text-center inline-block">Demander un devis</a>
+
+          </div>
+        </div>
+
+        <!-- PLACARDS -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <img src="images/Placards.png" class="w-full h-64 object-cover" alt="Placards">
+          <div class="p-6">
+            <h4 class="text-xl font-semibold mb-2">Placards</h4>
+            <p class="text-gray-600 mb-4">Optimisation intelligente de votre espace intérieur.</p>            
+<a href="devis.html" target="_blank" class="btn-primary w-full text-center inline-block">Demander un devis</a>
+
+            
+          </div>
+        </div>
+
+        <!-- DRESSING -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <img src="images/DRESING SUR MESURES3.jpg" class="w-full h-64 object-cover" alt="Dressing">
+          <div class="p-6">
+            <h4 class="text-xl font-semibold mb-2">Dressing sur mesure</h4>
+            <p class="text-gray-600 mb-4">Design élégant et organisation personnalisée.</p>
+           
+         <a href="devis.html" target="_blank" class="btn-primary w-full text-center inline-block">Demander un devis</a>
+          </div>
+        </div>
+
+        <!-- CUISINES -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <img src="images/image22.jpg" class="w-full h-64 object-cover" alt="Cuisine">
+          <div class="p-6">
+            <h4 class="text-xl font-semibold mb-2">Cuisines équipées modernes</h4>
+            <p class="text-gray-600 mb-4">Fonctionnalité et esthétisme haut de gamme.</p>
+     <a href="devis.html" target="_blank" class="btn-primary w-full text-center inline-block">Demander un devis</a>
+
+          </div>
+        </div>
+
+        <!-- COMMODES -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <img src="images/COMMODES.jpg" class="w-full h-64 object-cover" alt="Commodes">
+          <div class="p-6">
+            <h4 class="text-xl font-semibold mb-2">Commodes</h4>
+            <p class="text-gray-600 mb-4">Rangements élégants et robustes.</p>
+            <a href="devis.html" target="_blank" class="btn-primary w-full text-center inline-block">Demander un devis</a>
+
+          </div>
+        </div>
+
+        <!-- LITS -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <img src="images/lits.jpg" class="w-full h-64 object-cover" alt="Lits">
+          <div class="p-6">
+            <h4 class="text-xl font-semibold mb-2">Lits de tout genre</h4>
+            <p class="text-gray-600 mb-4">Confort et solidité pour un sommeil parfait.</p>
+            <a href="devis.html" target="_blank" class="btn-primary w-full text-center inline-block">Demander un devis</a>
+
+          </div>
+        </div>
+
+        <!-- MEUBLE RANGEMENT -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <img src="images/MEUBLE DE RANGEMENT 1.jpg" class="w-full h-64 object-cover" alt="Rangement">
+          <div class="p-6">
+            <h4 class="text-xl font-semibold mb-2">Meubles de rangement</h4>
+            <p class="text-gray-600 mb-4">Solutions pratiques et modernes.</p>
+            <a href="devis.html" target="_blank" class="btn-primary w-full text-center inline-block">Demander un devis</a>
+
+          </div>
+        </div>
+
+        <!-- MEUBLE TV -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <img src="images/Meubles TV.jpg" class="w-full h-64 object-cover" alt="Meuble TV">
+          <div class="p-6">
+            <h4 class="text-xl font-semibold mb-2">Meubles TV</h4>
+            <p class="text-gray-600 mb-4">Design contemporain et finition premium.</p>
+            <a href="devis.html" target="_blank" class="btn-primary w-full text-center inline-block">Demander un devis</a>
+
+          </div>
+        </div>
+
+        <!-- REVETEMENT MURAL -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <img src="images/Revêtements muraux.jpg" class="w-full h-64 object-cover" alt="Revêtements">
+          <div class="p-6">
+            <h4 class="text-xl font-semibold mb-2">Revêtements muraux</h4>
+            <p class="text-gray-600 mb-4">Habillez vos murs avec élégance.</p>
+            <a href="devis.html" target="_blank" class="btn-primary w-full text-center inline-block">Demander un devis</a>
+
+          </div>
+        </div>
+
+        <!-- COMPTOIR -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <img src="images/Comptoirs d'accueil 2.jpg" class="w-full h-64 object-cover" alt="Comptoir">
+          <div class="p-6">
+            <h4 class="text-xl font-semibold mb-2">Comptoirs d'accueil</h4>
+            <p class="text-gray-600 mb-4">Image professionnelle et design moderne.</p>
+            <a href="devis.html" target="_blank" class="btn-primary w-full text-center inline-block">Demander un devis</a>
+
+          </div>
+        </div>
+
+        <!-- BUREAUX -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <img src="images/bureaux.jpg" class="w-full h-64 object-cover" alt="Bureaux">
+          <div class="p-6">
+            <h4 class="text-xl font-semibold mb-2">Bureaux</h4>
+            <p class="text-gray-600 mb-4">Espaces de travail élégants et fonctionnels.</p>
+            <a href="devis.html" target="_blank" class="btn-primary w-full text-center inline-block">Demander un devis</a>
+
+          </div>
+        </div>
+
+        <!-- TABLE BASSE -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <img src="images/images 10.jpeg" class="w-full h-64 object-cover" alt="Table basse">
+          <div class="p-6">
+            <h4 class="text-xl font-semibold mb-2">Table basse centrale</h4>
+            <p class="text-gray-600 mb-4">Pièce centrale élégante pour votre salon.</p>
+            <a href="devis.html" target="_blank" class="btn-primary w-full text-center inline-block">Demander un devis</a>
+
+          </div>
+        </div>
+
+        <!-- MEUBLE SOUS LAVABO -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <img src="images/Meuble sous lavabo.jpg" class="w-full h-64 object-cover" alt="Salle de bain">
+          <div class="p-6">
+            <h4 class="text-xl font-semibold mb-2">Meuble sous lavabo</h4>
+            <p class="text-gray-600 mb-4">Optimisation parfaite pour salle de bain.</p>
+            <a href="devis.html" target="_blank" class="btn-primary w-full text-center inline-block">Demander un devis</a>
+
+          </div>
+        </div>
+
+        <!-- Kitchenette -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <img src="images/Kichnettte 2.jpg" class="w-full h-64 object-cover" alt="Kitchenette">
+          <div class="p-6">
+            <h4 class="text-xl font-semibold mb-2">Kitchenette</h4>
+            <p class="text-gray-600 mb-4">Optimisation parfaite pour kitchenette.</p>
+            <a href="devis.html" target="_blank" class="btn-primary w-full text-center inline-block">Demander un devis</a>
+
+          </div>
+        </div>
+
+        <!-- Canapé Bois Noble -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <img src="images/Canapé Bois Noble 2.jpg" class="w-full h-64 object-cover" alt="Canapé bois">
+          <div class="p-6">
+            <h4 class="text-xl font-semibold mb-2">Canapé Bois Noble</h4>
+            <p class="text-gray-600 mb-4">Confort raffiné en bois noble.</p>
+            <a href="devis.html" target="_blank" class="btn-primary w-full text-center inline-block">Demander un devis</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- NOS VALEURS -->
+    <div id="valeurs" class="mb-16">
+      <h3 class="text-3xl font-bold mb-8 text-center" style="color: #4a3a2c;">Nos Valeurs</h3>
+      <div class="grid md:grid-cols-3 gap-10">
+        <div class="bg-white rounded-xl shadow-lg p-8 text-center card-hover">
+          <img src="https://img.icons8.com/ios-filled/100/6b4f3a/quality.png" class="mx-auto mb-4 w-16 h-16">
+          <h4 class="text-xl font-semibold mb-2">Qualité & Excellence</h4>
+          <p class="text-gray-700">Produits et services haut de gamme pour une satisfaction totale.</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-lg p-8 text-center card-hover">
+          <img src="https://img.icons8.com/ios-filled/100/6b4f3a/idea.png" class="mx-auto mb-4 w-16 h-16">
+          <h4 class="text-xl font-semibold mb-2">Créativité & Innovation</h4>
+          <p class="text-gray-700">Solutions de design novatrices et fonctionnelles.</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-lg p-8 text-center card-hover">
+          <img src="https://img.icons8.com/ios-filled/100/6b4f3a/handshake.png" class="mx-auto mb-4 w-16 h-16">
+          <h4 class="text-xl font-semibold mb-2">Personnalisation</h4>
+          <p class="text-gray-700">Chaque projet est adapté aux besoins spécifiques du client.</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-lg p-8 text-center card-hover">
+          <img src="https://img.icons8.com/ios-filled/100/6b4f3a/earth-planet.png" class="mx-auto mb-4 w-16 h-16">
+          <h4 class="text-xl font-semibold mb-2">Durabilité & Responsabilité</h4>
+          <p class="text-gray-700">Matériaux durables et pratiques respectueuses de l'environnement.</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-lg p-8 text-center card-hover">
+          <img src="https://img.icons8.com/ios-filled/100/6b4f3a/customer-support.png" class="mx-auto mb-4 w-16 h-16">
+          <h4 class="text-xl font-semibold mb-2">Service Client</h4>
+          <p class="text-gray-700">Assistance attentive et personnalisée à chaque étape du projet.</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-lg p-8 text-center card-hover">
+          <img src="https://img.icons8.com/ios-filled/100/6b4f3a/teamwork.png" class="mx-auto mb-4 w-16 h-16">
+          <h4 class="text-xl font-semibold mb-2">Collaboration & Esprit d’équipe</h4>
+          <p class="text-gray-700">Travaillons main dans la main avec nos clients et partenaires pour un résultat exceptionnel.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOS INSPIRATIONS -->
+    <section id="inspirations" class="py-16 bg-white rounded-3xl">
+      <div class="container mx-auto">
+        <h3 class="text-3xl font-bold mb-12 text-center" style="color: #4a3a2c;">Nos Inspirations</h3>
+        <div class="grid md:grid-cols-4 sm:grid-cols-2 gap-6">
+          <div class="rounded-lg overflow-hidden shadow-lg hover:scale-105 transition transform"><img src="images/Coiffeuse.jpg" class="w-full h-48 object-cover"><p class="text-center mt-2 text-gray-700 font-medium">Coiffeuse</p></div>
+          <div class="rounded-lg overflow-hidden shadow-lg hover:scale-105 transition transform"><img src="images/Commode 2.jpg" class="w-full h-48 object-cover"><p class="text-center mt-2 text-gray-700 font-medium">Commode</p></div>
+          <div class="rounded-lg overflow-hidden shadow-lg hover:scale-105 transition transform"><img src="images/Comptoir Accueil.jpg" class="w-full h-48 object-cover"><p class="text-center mt-2 text-gray-700 font-medium">Comptoir Accueil</p></div>
+          <div class="rounded-lg overflow-hidden shadow-lg hover:scale-105 transition transform"><img src="images/Cuisine.jpg" class="w-full h-48 object-cover"><p class="text-center mt-2 text-gray-700 font-medium">Cuisine</p></div>
+          <div class="rounded-lg overflow-hidden shadow-lg hover:scale-105 transition transform"><img src="images/Dressing & Placard.jpg" class="w-full h-48 object-cover"><p class="text-center mt-2 text-gray-700 font-medium">Dressing & Placard</p></div>
+          <div class="rounded-lg overflow-hidden shadow-lg hover:scale-105 transition transform"><img src="images/Lit.jpg" class="w-full h-48 object-cover"><p class="text-center mt-2 text-gray-700 font-medium">Lit</p></div>
+          <div class="rounded-lg overflow-hidden shadow-lg hover:scale-105 transition transform"><img src="images/Meuble TV 2.jpg" class="w-full h-48 object-cover"><p class="text-center mt-2 text-gray-700 font-medium">Meuble TV</p></div>
+          <div class="rounded-lg overflow-hidden shadow-lg hover:scale-105 transition transform"><img src="images/Revêtements Muraux 1.jpg" class="w-full h-48 object-cover"><p class="text-center mt-2 text-gray-700 font-medium">Revêtements Muraux</p></div>
+          <div class="rounded-lg overflow-hidden shadow-lg hover:scale-105 transition transform"><img src="images/Kichnettte.png" class="w-full h-48 object-cover"><p class="text-center mt-2 text-gray-700 font-medium">Kichnettte</p></div>
+          <div class="rounded-lg overflow-hidden shadow-lg hover:scale-105 transition transform"><img src="images/Portes.jpg" class="w-full h-48 object-cover"><p class="text-center mt-2 text-gray-700 font-medium">Portes</p></div>
+          <div class="rounded-lg overflow-hidden shadow-lg hover:scale-105 transition transform"><img src="images/salle de bain.jpg" class="w-full h-48 object-cover"><p class="text-center mt-2 text-gray-700 font-medium">salle de bain</p></div>
+          <div class="rounded-lg overflow-hidden shadow-lg hover:scale-105 transition transform"><img src="images/CUISINES ÉQUIPÉES MODERNES .jpg" class="w-full h-48 object-cover"><p class="text-center mt-2 text-gray-700 font-medium">CUISINES ÉQUIPÉES</p></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+<!-- ========== BOUTIQUE ========== -->
+<section id="boutique" class="py-20 bg-white">
+  <div class="container mx-auto">
+    <h2 class="text-4xl text-center mb-12" style="color: #6b4f3a;">Catégories</h2>
+    <div class="grid md:grid-cols-3 gap-10">
+      <div class="bg-[#F5F1EB] rounded-xl shadow-lg overflow-hidden card-hover">
+        <img src="images/Canapé Bois Noble.jpg" class="w-full h-64 object-cover" alt="Canapé Bois Noble" loading="lazy">
+        <div class="p-6">
+          <h3 class="text-xl mb-2">Canapé Bois Noble</h3>
+          <p class="text-[#6b4f3a] font-bold mb-4">450 000 FCFA</p>
+          <button class="btn-primary w-full text-center add-to-cart" data-name="Canapé Bois Noble" data-price="450000" aria-label="Ajouter Canapé Bois Noble au panier">
+            Ajouter au panier
+          </button>
+        </div>
+      </div>
+      <div class="bg-[#F5F1EB] rounded-xl shadow-lg overflow-hidden card-hover">
+        <img src="images/Table Artisanale.jpg" class="w-full h-64 object-cover" alt="Table Artisanale" loading="lazy">
+        <div class="p-6">
+          <h3 class="text-xl mb-2">Table Artisanale</h3>
+          <p class="text-[#6b4f3a] font-bold mb-4">380 000 FCFA</p>
+          <button class="btn-primary w-full text-center add-to-cart" data-name="Table Artisanale" data-price="380000" aria-label="Ajouter Table Artisanale au panier">
+            Ajouter au panier
+          </button>
+        </div>
+      </div>
+      <div class="bg-[#F5F1EB] rounded-xl shadow-lg overflow-hidden card-hover">
+        <img src="images/Lit Moderne.jpg" class="w-full h-64 object-cover" alt="Lit Moderne" loading="lazy">
+        <div class="p-6">
+          <h3 class="text-xl mb-2">Lit Moderne</h3>
+          <p class="text-[#6b4f3a] font-bold mb-4">520 000 FCFA</p>
+          <button class="btn-primary w-full text-center add-to-cart" data-name="Lit Moderne" data-price="520000" aria-label="Ajouter Lit Moderne au panier">
+            Ajouter au panier
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== BLOG ========== -->
+<section id="blog" class="py-20 container mx-auto">
+  <h2 class="text-4xl text-center mb-12" style="color: #6b4f3a;">Nos Articles & Conseils</h2>
+  <div class="grid md:grid-cols-3 gap-10">
+    <div class="bg-white rounded-xl shadow overflow-hidden card-hover">
+      <img src="images/meuble de rangement.png" class="w-full h-52 object-cover">
+      <div class="p-6">
+        <h3 class="text-xl mb-3">Comment choisir un meuble durable ?</h3>
+        <p class="text-gray-600 mb-4">Découvrez les critères essentiels pour investir dans un meuble de qualité.</p>
+        <a href="#" class="font-semibold" style="color: #6b4f3a;">Lire plus →</a>
+      </div>
+    </div>
+    <div class="bg-white rounded-xl shadow overflow-hidden card-hover">
+      <img src="images/Tendances déco 2026.jpg" class="w-full h-52 object-cover">
+      <div class="p-6">
+        <h3 class="text-xl mb-3">Tendances déco 2026</h3>
+        <p class="text-gray-600 mb-4">Les styles et matières qui feront sensation cette année.</p>
+        <a href="#" class="font-semibold" style="color: #6b4f3a;">Lire plus →</a>
+      </div>
+    </div>
+    <div class="bg-white rounded-xl shadow overflow-hidden card-hover">
+      <img src="images/images 15.jpeg" class="w-full h-52 object-cover">
+      <div class="p-6">
+        <h3 class="text-xl mb-3">Pourquoi choisir le sur mesure ?</h3>
+        <p class="text-gray-600 mb-4">Le mobilier personnalisé pour un intérieur unique.</p>
+        <a href="#" class="font-semibold" style="color: #6b4f3a;">Lire plus →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CONTACT ========== -->
+<section class="py-24" style="background-color: #1e3a8a;">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">Contactez-nous</h2>
+      <p class="text-lg text-gray-200 max-w-2xl mx-auto">Une question, une demande de devis ou besoin d’un conseil déco ? Notre équipe vous répond rapidement.</p>
+    </div>
+
+    <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-2xl p-8 md:p-12 text-gray-800">
+      <form class="space-y-6">
+        <div>
+          <label class="block mb-2 font-semibold">Nom complet</label>
+          <div class="relative">
+            <input type="text" placeholder="Votre nom" class="w-full p-4 pl-12 rounded-xl border border-gray-300 outline-none transition" required>
+            <span class="absolute left-4 top-4 text-gray-400">👤</span>
+          </div>
+        </div>
+        <div>
+          <label class="block mb-2 font-semibold">Adresse email</label>
+          <div class="relative">
+            <input type="email" placeholder="exemple@email.com" class="w-full p-4 pl-12 rounded-xl border border-gray-300 outline-none transition" required>
+            <span class="absolute left-4 top-4 text-gray-400">✉️</span>
+          </div>
+        </div>
+        <div>
+          <label class="block mb-2 font-semibold">Téléphone</label>
+          <div class="relative">
+            <input type="tel" placeholder="+225 07 00 00 00 00" class="w-full p-4 pl-12 rounded-xl border border-gray-300 outline-none transition">
+            <span class="absolute left-4 top-4 text-gray-400">📞</span>
+          </div>
+        </div>
+        <div>
+          <label class="block mb-2 font-semibold">Votre message</label>
+          <textarea rows="5" placeholder="Écrivez votre message ici..." class="w-full p-4 rounded-xl border border-gray-300 outline-none transition resize-none" required></textarea>
+        </div>
+        <div class="text-center pt-4">
+          <button type="submit" class="btn-primary px-10 py-4 text-lg shadow-lg hover:shadow-xl">Envoyer le message</button>
+        </div>
+      </form>
+    </div>
+    <p class="text-center mt-8 text-sm text-gray-200">Vos informations restent confidentielles et ne seront jamais partagées.</p>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer id="contact" class="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-300">
+  
+  <!-- Section principale -->
+  <div class="container mx-auto px-4 py-16">
+    <div class="grid md:grid-cols-4 gap-12">
+      
+      <!-- À propos -->
+      <div class="md:col-span-1">
+        <div class="flex items-center gap-3 mb-6">
+          <img src="images/LOGO EVORA NOUVEAU.png" alt="Logo EVORA DESIGN" class="h-12 w-12 object-contain" width="48" height="48">
+          <h3 class="text-white text-2xl font-bold">EVORA DESIGN</h3>
+        </div>
+        <p class="text-gray-400 mb-4 leading-relaxed">Confection artisanale de meubles haut de gamme sur mesure.</p>
+        <p class="text-[#6b4f3a] font-semibold italic">Notre métier : construire vos rêves</p>
+      </div>
+
+      <!-- Liens rapides -->
+      <div>
+        <h4 class="text-white text-lg font-semibold mb-6 relative inline-block">
+          Liens rapides
+          <span class="absolute bottom-0 left-0 w-12 h-0.5 bg-[#1e3a8a]"></span>
+        </h4>
+        <ul class="space-y-3">
+          <li><a href="#" class="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            Accueil
+          </a></li>
+          <li><a href="#apropos" class="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            À Propos
+          </a></li>
+          <li><a href="#catalogue" class="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            Catalogue
+          </a></li>
+          <li><a href="#boutique" class="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            Boutique
+          </a></li>
+          <li><a href="devis.html" class="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            Demander un devis
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h4 class="text-white text-lg font-semibold mb-6 relative inline-block">
+          Contact
+          <span class="absolute bottom-0 left-0 w-12 h-0.5 bg-[#1e3a8a]"></span>
+        </h4>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3 group">
+            <svg class="w-5 h-5 text-[#1e3a8a] flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            <span class="text-sm leading-relaxed">KOUMASSI, ZOE BRUNO,<br>RUE SORO SORI 127</span>
+          </li>
+          <li class="flex items-center gap-3 group">
+            <svg class="w-5 h-5 text-[#1e3a8a] flex-shrink-0 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+            </svg>
+            <a href="tel:+2250748655120" class="text-sm hover:text-white transition">+225 07 48 65 51 20</a>
+          </li>
+          <li class="flex items-center gap-3 group">
+            <svg class="w-5 h-5 text-[#1e3a8a] flex-shrink-0 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+            </svg>
+            <a href="tel:+2250554175794" class="text-sm hover:text-white transition">+225 05 54 17 57 94</a>
+          </li>
+          <li class="flex items-center gap-3 group">
+            <svg class="w-5 h-5 text-[#1e3a8a] flex-shrink-0 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+            <a href="mailto:contact@evoradesign.ci" class="text-sm hover:text-white transition">contact@evoradesign.ci</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Réseaux sociaux & Newsletter -->
+      <div>
+        <h4 class="text-white text-lg font-semibold mb-6 relative inline-block">
+          Suivez-nous
+          <span class="absolute bottom-0 left-0 w-12 h-0.5 bg-[#1e3a8a]"></span>
+        </h4>
+        
+        <!-- Réseaux sociaux -->
+        <div class="flex gap-3 mb-6">
+          <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-[#1e3a8a] rounded-lg flex items-center justify-center transition-all hover:scale-110" aria-label="Facebook">
+            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </a>
+          <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-500 rounded-lg flex items-center justify-center transition-all hover:scale-110" aria-label="Instagram">
+            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </a>
+          <a href="https://wa.me/2250748655120" target="_blank" class="w-10 h-10 bg-gray-700 hover:bg-green-600 rounded-lg flex items-center justify-center transition-all hover:scale-110" aria-label="WhatsApp">
+            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+          </a>
+        </div>
+
+        <p class="text-sm text-gray-400 mb-4">Restez informé de nos nouveautés</p>
+        
+        <!-- Newsletter -->
+        <form class="flex gap-2">
+          <input type="email" placeholder="Votre email" class="flex-1 px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] transition">
+          <button type="submit" class="px-4 py-2 bg-[#1e3a8a] hover:bg-[#1e40af] text-white rounded-lg transition flex items-center justify-center" aria-label="S'inscrire à la newsletter">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Barre de séparation -->
+  <div class="border-t border-gray-700"></div>
+
+  <!-- Copyright & Mentions légales -->
+  <div class="container mx-auto px-4 py-6">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-sm text-gray-500">© 2026 EVORA DESIGN - Tous droits réservés</p>
+      <div class="flex gap-6 text-sm">
+        <a href="#" class="text-gray-500 hover:text-white transition">Mentions légales</a>
+        <a href="#" class="text-gray-500 hover:text-white transition">Politique de confidentialité</a>
+        <a href="#" class="text-gray-500 hover:text-white transition">CGV</a>
+        <!-- Admin link removed -->
+      </div>
+    </div>
+  </div>
+
+</footer>
+
+
+<!-- Fichier JavaScript externe -->
+<script src="script.js"></script>
+<script src="js/api-client.js"></script>
+
+</body>
+</html>

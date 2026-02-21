@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostic Produits</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .box {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 { color: #1e3a8a; }
+        h2 { color: #1e40af; border-bottom: 2px solid #1e40af; padding-bottom: 10px; }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+        .warning { color: orange; font-weight: bold; }
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            max-height: 400px;
+        }
+        button {
+            background: #1e3a8a;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #1e40af; }
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .test-pass { background: #d4edda; border: 1px solid #c3e6cb; }
+        .test-fail { background: #f8d7da; border: 1px solid #f5c6cb; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Diagnostic Complet - Système de Produits</h1>
+
+    <div class="box">
+        <h2>1. Vérification localStorage</h2>
+        <button onclick="runDiagnostic()">🔄 Lancer le Diagnostic</button>
+        <button onclick="clearAndReload()">🗑️ Vider et Recharger</button>
+        <div id="diagnostic-result"></div>
+    </div>
+
+    <div class="box">
+        <h2>2. Contenu localStorage</h2>
+        <div id="storage-content"></div>
+    </div>
+
+    <div class="box">
+        <h2>3. Tests de Filtrage</h2>
+        <div id="filter-tests"></div>
+    </div>
+
+    <div class="box">
+        <h2>4. Simulation Affichage Site</h2>
+        <div id="site-simulation"></div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'evora_products';
+
+        function runDiagnostic() {
+            const result = document.getElementById('diagnostic-result');
+            const storageContent = document.getElementById('storage-content');
+            const filterTests = document.getElementById('filter-tests');
+            const siteSimulation = document.getElementById('site-simulation');
+
+            let html = '<h3>Résultats du Diagnostic</h3>';
+            let tests = [];
+
+            // Test 1: localStorage existe
+            try {
+                const data = localStorage.getItem(STORAGE_KEY);
+                if (data) {
+                    tests.push({ name: 'localStorage existe', pass: true, details: 'Données trouvées' });
+                    
+                    // Test 2: Parsing JSON
+                    try {
+                        const products = JSON.parse(data);
+                        tests.push({ name: 'Parsing JSON', pass: true, details: `${products.length} produits trouvés` });
+
+                        // Afficher le contenu
+                        storageContent.innerHTML = `
+                            <p class="success">✅ ${products.length} produit(s) dans localStorage</p>
+                            <pre>${JSON.stringify(products, null, 2)}</pre>
+                        `;
+
+                        // Test 3: Vérifier les propriétés requises
+                        let validProducts = 0;
+                        let invalidProducts = [];
+                        
+                        products.forEach((p, index) => {
+                            const hasRequired = p.name && p.price && p.status && typeof p.stock === 'number';
+                            if (hasRequired) {
+                                validProducts++;
+                            } else {
+                                invalidProducts.push({ index, product: p, missing: [] });
+                                if (!p.name) invalidProducts[invalidProducts.length-1].missing.push('name');
+                                if (!p.price) invalidProducts[invalidProducts.length-1].missing.push('price');
+                                if (!p.status) invalidProducts[invalidProducts.length-1].missing.push('status');
+                                if (typeof p.stock !== 'number') invalidProducts[invalidProducts.length-1].missing.push('stock');
+                            }
+                        });
+
+                        tests.push({ 
+                            name: 'Validation des produits', 
+                            pass: invalidProducts.length === 0, 
+                            details: `${validProducts} valides, ${invalidProducts.length} invalides` 
+                        });
+
+                        // Test 4: Filtrage (actif + stock > 0)
+                        const activeProducts = products.filter(p => p.status === 'actif' && p.stock > 0);
+                        tests.push({ 
+                            name: 'Produits actifs avec stock', 
+                            pass: activeProducts.length > 0, 
+                            details: `${activeProducts.length} produit(s) affichable(s)` 
+                        });
+
+                        // Afficher les tests de filtrage
+                        let filterHtml = '<h3>Détails du Filtrage</h3>';
+                        filterHtml += `<p><strong>Total produits:</strong> ${products.length}</p>`;
+                        
+                        products.forEach((p, i) => {
+                            const isActive = p.status === 'actif';
+                            const hasStock = p.stock > 0;
+                            const willDisplay = isActive && hasStock;
+                            
+                            filterHtml += `
+                                <div class="product-card" style="border-left: 4px solid ${willDisplay ? 'green' : 'red'}">
+                                    <strong>${i + 1}. ${p.name}</strong><br>
+                                    Statut: <span style="color: ${isActive ? 'green' : 'red'}">${p.status}</span> 
+                                    ${isActive ? '✅' : '❌'}<br>
+                                    Stock: <span style="color: ${hasStock ? 'green' : 'red'}">${p.stock}</span> 
+                                    ${hasStock ? '✅' : '❌'}<br>
+                                    <strong>Affichage: ${willDisplay ? '✅ OUI' : '❌ NON'}</strong>
+                                </div>
+                            `;
+                        });
+
+                        filterTests.innerHTML = filterHtml;
+
+                        // Simulation affichage site
+                        if (activeProducts.length > 0) {
+                            const displayProducts = activeProducts.slice(0, 6);
+                            let simHtml = `<p class="success">✅ ${displayProducts.length} produit(s) seront affichés sur le site</p>`;
+                            
+                            displayProducts.forEach(p => {
+                                simHtml += `
+                                    <div class="product-card">
+                                        <strong>${p.name}</strong><br>
+                                        Prix: ${p.price.toLocaleString()} FCFA<br>
+                                        Catégorie: ${p.category}<br>
+                                        Image: ${p.image}<br>
+                                        Description: ${p.description || 'Aucune'}
+                                    </div>
+                                `;
+                            });
+                            
+                            siteSimulation.innerHTML = simHtml;
+                        } else {
+                            siteSimulation.innerHTML = '<p class="error">❌ Aucun produit ne sera affiché (tous inactifs ou sans stock)</p>';
+                        }
+
+                    } catch (parseError) {
+                        tests.push({ name: 'Parsing JSON', pass: false, details: parseError.message });
+                        storageContent.innerHTML = `<p class="error">❌ Erreur de parsing: ${parseError.message}</p>`;
+                    }
+
+                } else {
+                    tests.push({ name: 'localStorage existe', pass: false, details: 'Aucune donnée trouvée' });
+                    storageContent.innerHTML = '<p class="error">❌ localStorage vide</p>';
+                }
+
+            } catch (error) {
+                tests.push({ name: 'Accès localStorage', pass: false, details: error.message });
+            }
+
+            // Afficher les résultats des tests
+            tests.forEach(test => {
+                html += `
+                    <div class="test-result ${test.pass ? 'test-pass' : 'test-fail'}">
+                        ${test.pass ? '✅' : '❌'} <strong>${test.name}</strong>: ${test.details}
+                    </div>
+                `;
+            });
+
+            result.innerHTML = html;
+        }
+
+        function clearAndReload() {
+            if (confirm('Voulez-vous vraiment vider le localStorage et recharger?')) {
+                localStorage.removeItem(STORAGE_KEY);
+                location.reload();
+            }
+        }
+
+        // Lancer automatiquement au chargement
+        window.addEventListener('load', runDiagnostic);
+    </script>
+</body>
+</html>

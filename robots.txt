@@ -1,0 +1,14 @@
+# Robots.txt pour EVORA DESIGN
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /test-*.html
+Disallow: /diagnostic.html
+
+# Sitemap
+Sitemap: https://www.evoradesign.ci/sitemap.xml
+
+# Crawl-delay (optionnel)
+Crawl-delay: 10

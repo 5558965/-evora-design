@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Simple - Affichage Produits</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { padding: 20px; background: #f5f5f5; }
+        .debug { background: #fff3cd; padding: 15px; margin: 10px 0; border-radius: 5px; border: 1px solid #ffc107; }
+    </style>
+</head>
+<body>
+    <h1 class="text-3xl font-bold mb-4">Test Simple - Affichage Produits</h1>
+
+    <div class="debug">
+        <h2 class="font-bold">Debug Info:</h2>
+        <div id="debug-info"></div>
+    </div>
+
+    <!-- Section Boutique (copie de index.html) -->
+    <section id="boutique" class="py-20 bg-white">
+        <div class="container mx-auto">
+            <h2 class="text-4xl text-center mb-12" style="color: #6b4f3a;">Catégories</h2>
+            <div class="grid md:grid-cols-3 gap-10" id="products-container">
+                <!-- Les produits seront chargés ici -->
+                <div class="text-center text-gray-500 col-span-3">
+                    Chargement des produits...
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const STORAGE_KEY = 'evora_products';
+        const debugInfo = document.getElementById('debug-info');
+        
+        function log(message) {
+            console.log(message);
+            debugInfo.innerHTML += `<p>${message}</p>`;
+        }
+
+        function loadAndDisplayProducts() {
+            log('🔍 Début du chargement...');
+
+            // 1. Charger depuis localStorage
+            const stored = localStorage.getItem(STORAGE_KEY);
+            log(`📦 localStorage: ${stored ? 'Trouvé' : 'Vide'}`);
+
+            if (!stored) {
+                log('❌ Aucune donnée dans localStorage');
+                return;
+            }
+
+            // 2. Parser les données
+            let products;
+            try {
+                products = JSON.parse(stored);
+                log(`✅ ${products.length} produits parsés`);
+            } catch (error) {
+                log(`❌ Erreur parsing: ${error.message}`);
+                return;
+            }
+
+            // 3. Filtrer les produits actifs
+            const activeProducts = products.filter(p => {
+                const isActive = p.status === 'actif';
+                const hasStock = p.stock > 0;
+                log(`  - ${p.name}: status=${p.status} (${isActive?'✅':'❌'}), stock=${p.stock} (${hasStock?'✅':'❌'})`);
+                return isActive && hasStock;
+            });
+
+            log(`🎯 ${activeProducts.length} produits actifs avec stock`);
+
+            if (activeProducts.length === 0) {
+                log('⚠️ Aucun produit à afficher');
+                return;
+            }
+
+            // 4. Trouver le conteneur
+            const container = document.getElementById('products-container');
+            if (!container) {
+                log('❌ Conteneur non trouvé!');
+                return;
+            }
+            log('✅ Conteneur trouvé');
+
+            // 5. Afficher les produits
+            const displayProducts = activeProducts.slice(0, 6);
+            log(`📺 Affichage de ${displayProducts.length} produits`);
+
+            container.innerHTML = displayProducts.map(product => {
+                // Corriger le chemin de l'image
+                let imagePath = product.image;
+                if (imagePath.startsWith('../')) {
+                    imagePath = imagePath.substring(3);
+                }
+                log(`  - Image: ${product.image} → ${imagePath}`);
+
+                return `
+                    <div class="bg-[#F5F1EB] rounded-xl shadow-lg overflow-hidden">
+                        <img src="${imagePath}" 
+                             class="w-full h-64 object-cover" 
+                             alt="${product.name}" 
+                             onerror="this.src='images/placeholder.jpg'; console.error('Image non trouvée: ${imagePath}')">
+                        <div class="p-6">
+                            <h3 class="text-xl mb-2">${product.name}</h3>
+                            ${product.description ? `<p class="text-gray-600 text-sm mb-2">${product.description}</p>` : ''}
+                            <p class="text-[#6b4f3a] font-bold mb-4">${product.price.toLocaleString('fr-FR')} FCFA</p>
+                            <button class="bg-blue-600 text-white w-full py-2 rounded-lg">
+                                Ajouter au panier
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            log('✅ Produits affichés avec succès!');
+        }
+
+        // Lancer au chargement de la page
+        window.addEventListener('DOMContentLoaded', loadAndDisplayProducts);
+    </script>
+</body>
+</html>

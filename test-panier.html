@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Panier</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8">Test du Système de Panier</h1>
+
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4">Panier Actuel</h2>
+            <div class="mb-4">
+                <span class="text-lg">Articles: <span id="cart-count" class="font-bold">0</span></span>
+            </div>
+            <div id="cart-items" class="space-y-2"></div>
+            <button onclick="clearCart()" class="mt-4 bg-red-500 text-white px-4 py-2 rounded">
+                Vider le panier
+            </button>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-bold mb-4">Produits de Test</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="border rounded p-4">
+                    <h3 class="font-bold">Canapé Test</h3>
+                    <p class="text-gray-600">450 000 FCFA</p>
+                    <button onclick="addToCart('Canapé Test', 450000)" 
+                            class="mt-2 bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700">
+                        Ajouter au panier
+                    </button>
+                </div>
+                <div class="border rounded p-4">
+                    <h3 class="font-bold">Table Test</h3>
+                    <p class="text-gray-600">380 000 FCFA</p>
+                    <button onclick="addToCart('Table Test', 380000)" 
+                            class="mt-2 bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700">
+                        Ajouter au panier
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-yellow-100 border-l-4 border-yellow-500 p-4 mt-6">
+            <h3 class="font-bold mb-2">Console de Debug</h3>
+            <div id="debug" class="text-sm font-mono"></div>
+        </div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'evoradesign_cart';
+        const debugDiv = document.getElementById('debug');
+
+        function log(msg) {
+            console.log(msg);
+            debugDiv.innerHTML += `<div>${msg}</div>`;
+        }
+
+        function addToCart(name, price) {
+            log(`➕ Ajout: ${name} - ${price} FCFA`);
+            
+            try {
+                // Charger le panier
+                let cart = [];
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored) {
+                    cart = JSON.parse(stored);
+                    log(`📦 Panier existant: ${cart.length} articles`);
+                }
+
+                // Ajouter le produit
+                cart.push({
+                    name: name,
+                    price: price,
+                    id: Date.now()
+                });
+
+                // Sauvegarder
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+                log(`✅ Sauvegardé! Total: ${cart.length} articles`);
+
+                // Afficher notification
+                showNotification(`${name} ajouté au panier!`);
+
+                // Mettre à jour l'affichage
+                updateCartDisplay();
+
+            } catch (error) {
+                log(`❌ Erreur: ${error.message}`);
+            }
+        }
+
+        function updateCartDisplay() {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (!stored) {
+                    document.getElementById('cart-count').textContent = '0';
+                    document.getElementById('cart-items').innerHTML = '<p class="text-gray-500">Panier vide</p>';
+                    return;
+                }
+
+                const cart = JSON.parse(stored);
+                document.getElementById('cart-count').textContent = cart.length;
+
+                const itemsHtml = cart.map((item, index) => `
+                    <div class="flex justify-between items-center border-b pb-2">
+                        <span>${index + 1}. ${item.name}</span>
+                        <span class="font-bold">${item.price.toLocaleString()} FCFA</span>
+                    </div>
+                `).join('');
+
+                document.getElementById('cart-items').innerHTML = itemsHtml;
+
+                const total = cart.reduce((sum, item) => sum + item.price, 0);
+                document.getElementById('cart-items').innerHTML += `
+                    <div class="mt-4 pt-4 border-t">
+                        <div class="flex justify-between font-bold text-lg">
+                            <span>Total:</span>
+                            <span>${total.toLocaleString()} FCFA</span>
+                        </div>
+                    </div>
+                `;
+
+            } catch (error) {
+                log(`❌ Erreur affichage: ${error.message}`);
+            }
+        }
+
+        function clearCart() {
+            if (confirm('Vider le panier?')) {
+                localStorage.removeItem(STORAGE_KEY);
+                log('🗑️ Panier vidé');
+                updateCartDisplay();
+            }
+        }
+
+        function showNotification(message) {
+            const notif = document.createElement('div');
+            notif.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            notif.textContent = message;
+            document.body.appendChild(notif);
+
+            setTimeout(() => {
+                notif.style.opacity = '0';
+                notif.style.transition = 'opacity 0.3s';
+                setTimeout(() => notif.remove(), 300);
+            }, 2000);
+        }
+
+        // Initialisation
+        log('🚀 Page chargée');
+        updateCartDisplay();
+    </script>
+</body>
+</html>

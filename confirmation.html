@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Confirmation de commande EVORA DESIGN">
+  <meta name="robots" content="noindex, follow">
+  <title>Commande confirmée - EVORA DESIGN</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    @keyframes checkmark {
+      0% { stroke-dashoffset: 100; }
+      100% { stroke-dashoffset: 0; }
+    }
+    @keyframes circle {
+      0% { stroke-dashoffset: 240; }
+      100% { stroke-dashoffset: 480; }
+    }
+    .checkmark-circle {
+      stroke-dasharray: 240;
+      stroke-dashoffset: 480;
+      animation: circle 0.6s ease-in-out;
+      animation-fill-mode: forwards;
+    }
+    .checkmark-check {
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: checkmark 0.4s 0.6s ease-in-out;
+      animation-fill-mode: forwards;
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 via-blue-100 to-indigo-100 min-h-screen">
+
+<!-- HEADER -->
+<header class="bg-white shadow-md" role="banner">
+  <div class="container mx-auto flex justify-between items-center p-4">
+    <div class="flex items-center space-x-3">
+      <img src="images/LOGO EVORA NOUVEAU.png" alt="Logo EVORA DESIGN" class="h-10 w-10 object-contain" width="40" height="40">
+      <h1 class="text-2xl font-bold text-[#1e3a8a]">EVORA DESIGN</h1>
+    </div>
+  </div>
+</header>
+
+<!-- CONTENU -->
+<main class="py-12">
+  <div class="container mx-auto px-4">
+    <div class="max-w-2xl mx-auto">
+      
+      <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 text-center">
+        
+        <!-- Icône de succès -->
+        <div class="mb-8">
+          <svg class="w-32 h-32 mx-auto" viewBox="0 0 100 100">
+            <circle class="checkmark-circle" cx="50" cy="50" r="45" fill="none" stroke="#10b981" stroke-width="4"/>
+            <path class="checkmark-check" fill="none" stroke="#10b981" stroke-width="4" stroke-linecap="round" d="M30 50 L45 65 L70 35"/>
+          </svg>
+        </div>
+
+        <h2 class="text-4xl font-bold text-gray-800 mb-4">Commande confirmée !</h2>
+        <p class="text-xl text-gray-600 mb-8">Merci pour votre confiance</p>
+
+        <div class="bg-green-50 border-2 border-green-200 rounded-2xl p-6 mb-8">
+          <div class="flex items-start gap-4">
+            <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <div class="text-left">
+              <h3 class="font-bold text-gray-800 mb-2">Prochaines étapes</h3>
+              <ul class="text-sm text-gray-700 space-y-2">
+                <li>✓ Votre commande a été enregistrée</li>
+                <li>✓ Un message WhatsApp a été envoyé à notre équipe</li>
+                <li>✓ Nous vous contacterons sous 2 heures pour confirmer</li>
+                <li>✓ Livraison estimée : 3-7 jours ouvrés</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Détails de la commande -->
+        <div class="bg-gray-50 rounded-2xl p-6 mb-8 text-left">
+          <h3 class="font-bold text-gray-800 mb-4 text-center">Récapitulatif</h3>
+          <div class="space-y-3">
+            <div class="flex justify-between text-gray-700">
+              <span>Montant total :</span>
+              <span id="orderTotal" class="font-bold text-[#6b4f3a]">0 FCFA</span>
+            </div>
+            <div class="flex justify-between text-gray-700">
+              <span>Mode de paiement :</span>
+              <span id="paymentMethod" class="font-medium">-</span>
+            </div>
+            <div class="flex justify-between text-gray-700">
+              <span>Numéro de commande :</span>
+              <span id="orderNumber" class="font-mono font-medium">-</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="space-y-4">
+          <a href="index.html" class="btn-primary w-full inline-block py-4 text-lg">
+            Retour à l'accueil
+          </a>
+          <a href="tel:+2250748655120" class="block text-[#1e3a8a] hover:underline font-medium">
+            Besoin d'aide ? Appelez-nous : +225 07 48 65 51 20
+          </a>
+        </div>
+
+        <!-- Informations supplémentaires -->
+        <div class="mt-12 pt-8 border-t">
+          <h4 class="font-bold text-gray-800 mb-4">Pourquoi choisir EVORA DESIGN ?</h4>
+          <div class="grid md:grid-cols-3 gap-6 text-sm">
+            <div>
+              <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                </svg>
+              </div>
+              <p class="font-medium text-gray-800">Qualité garantie</p>
+              <p class="text-gray-600">Matériaux premium</p>
+            </div>
+            <div>
+              <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              <p class="font-medium text-gray-800">Livraison rapide</p>
+              <p class="text-gray-600">3-7 jours ouvrés</p>
+            </div>
+            <div>
+              <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              <p class="font-medium text-gray-800">Service client</p>
+              <p class="text-gray-600">Toujours à l'écoute</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<script>
+(function() {
+  'use strict';
+
+  // Récupérer les informations de commande
+  const orderConfirmed = sessionStorage.getItem('orderConfirmed');
+  const orderTotal = sessionStorage.getItem('orderTotal');
+  const orderPayment = sessionStorage.getItem('orderPayment');
+
+  if (!orderConfirmed) {
+    window.location.href = 'index.html';
+    return;
+  }
+
+  // Générer un numéro de commande
+  const orderNumber = 'EVD' + Date.now().toString().slice(-8);
+
+  // Afficher les informations
+  document.getElementById('orderTotal').textContent = parseInt(orderTotal).toLocaleString('fr-FR') + ' FCFA';
+  document.getElementById('orderNumber').textContent = orderNumber;
+
+  const paymentNames = {
+    'mobile-money': 'Mobile Money',
+    'wave': 'Wave',
+    'virement': 'Virement bancaire',
+    'livraison': 'Paiement à la livraison'
+  };
+  document.getElementById('paymentMethod').textContent = paymentNames[orderPayment] || orderPayment;
+
+  // Nettoyer le sessionStorage
+  sessionStorage.removeItem('orderConfirmed');
+  sessionStorage.removeItem('orderTotal');
+  sessionStorage.removeItem('orderPayment');
+
+})();
+</script>
+
+<script src="js/api-client.js"></script>
+
+</body>
+</html>

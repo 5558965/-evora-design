@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EVORA DESIGN - Administration Paramètres</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background-color: #f3f4f6;
+    }
+    
+    .sidebar {
+      background: linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%);
+    }
+    
+    .sidebar a.active {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-left: 4px solid #fbbf24;
+    }
+    
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+    }
+    
+    .btn-primary {
+      background-color: #1e3a8a;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary:hover {
+      background-color: #1e40af;
+      transform: scale(1.05);
+    }
+    
+    .btn-success {
+      background-color: #059669;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+    }
+    
+    .btn-success:hover {
+      background-color: #047857;
+    }
+    
+    .btn-danger {
+      background-color: #dc2626;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+    }
+    
+    .btn-danger:hover {
+      background-color: #b91c1c;
+    }
+    
+    .settings-tab {
+      padding: 0.75rem 1.5rem;
+      font-weight: 500;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
+    }
+    
+    .settings-tab.active {
+      color: #1e3a8a;
+      border-bottom-color: #1e3a8a;
+    }
+    
+    .settings-tab:hover:not(.active) {
+      color: #1e40af;
+      border-bottom-color: #9ca3af;
+    }
+    
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+    
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+    
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    
+    input:checked + .toggle-slider {
+      background-color: #1e3a8a;
+    }
+    
+    input:checked + .toggle-slider:before {
+      transform: translateX(26px);
+    }
+    
+    .modal {
+      transition: opacity 0.3s ease;
+    }
+    
+    .color-preview {
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      border: 2px solid #e5e7eb;
+    }
+    
+    .backup-item {
+      background-color: #f9fafb;
+      border-left: 4px solid #1e3a8a;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+<!-- ========== CONTAINER PRINCIPAL ========== -->
+<div class="flex h-screen bg-gray-100">
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar w-64 text-white flex-shrink-0 hidden md:block overflow-y-auto">
+    <div class="p-6">
+      <div class="flex items-center space-x-3 mb-8">
+        <img src="../images/LOGO EVORA NOUVEAU.png" alt="Logo" class="h-10 w-10 object-contain">
+        <h2 class="text-xl font-bold">EVORA DESIGN</h2>
+      </div>
+      
+      <nav class="space-y-2">
+        <a href="dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-tachometer-alt w-5"></i>
+          <span>Tableau de bord</span>
+        </a>
+        <a href="products.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-box w-5"></i>
+          <span>Produits</span>
+        </a>
+        <a href="categories.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-tags w-5"></i>
+          <span>Catégories</span>
+        </a>
+        <a href="orders.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-shopping-cart w-5"></i>
+          <span>Commandes</span>
+        </a>
+        <a href="messages.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-envelope w-5"></i>
+          <span>Messages</span>
+        </a>
+        <a href="users.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-users w-5"></i>
+          <span>Utilisateurs</span>
+        </a>
+        <a href="settings.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-white/20 border-l-4 border-yellow-400 active">
+          <i class="fas fa-cog w-5"></i>
+          <span>Paramètres</span>
+        </a>
+        <hr class="border-white/20 my-4">
+        <a href="../index.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-home w-5"></i>
+          <span>Voir le site</span>
+        </a>
+        <a href="login.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-sign-out-alt w-5"></i>
+          <span>Déconnexion</span>
+        </a>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- ========== CONTENU PRINCIPAL ========== -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+
+    <!-- ========== HEADER ADMIN ========== -->
+    <header class="bg-white shadow-sm px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <button id="menuBtn" class="md:hidden text-gray-600 hover:text-[#1e3a8a]">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+        <h1 class="text-2xl font-semibold text-gray-800">Paramètres</h1>
+      </div>
+      
+      <div class="flex items-center space-x-4">
+        <div class="relative">
+          <button class="text-gray-600 hover:text-[#1e3a8a] relative">
+            <i class="fas fa-bell text-xl"></i>
+            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">3</span>
+          </button>
+        </div>
+        
+        <div class="flex items-center space-x-3">
+          <img src="https://ui-avatars.com/api/?name=Admin+User&background=1e3a8a&color=fff" class="h-10 w-10 rounded-full">
+          <div class="hidden md:block">
+            <p class="text-sm font-semibold">Admin EVORA</p>
+            <p class="text-xs text-gray-500">admin@evoradesign.ci</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="flex-1 overflow-y-auto p-6 bg-gray-100">
+
+      <!-- En-tête avec actions -->
+      <div class="mb-6 flex items-center justify-between">
+        <div>
+          <p class="text-gray-600">Gérez la configuration générale de votre site</p>
+        </div>
+        <div class="flex gap-2">
+          <button id="saveAllSettings" class="btn-primary flex items-center gap-2">
+            <i class="fas fa-save"></i>
+            Enregistrer tout
+          </button>
+        </div>
+      </div>
+
+      <!-- Navigation des onglets -->
+      <div class="bg-white rounded-t-lg shadow px-6">
+        <div class="flex overflow-x-auto">
+          <button class="settings-tab active" data-tab="general">
+            <i class="fas fa-sliders-h mr-2"></i>Général
+          </button>
+          <button class="settings-tab" data-tab="site">
+            <i class="fas fa-globe mr-2"></i>Site web
+          </button>
+          <button class="settings-tab" data-tab="email">
+            <i class="fas fa-envelope mr-2"></i>Email
+          </button>
+          <button class="settings-tab" data-tab="payment">
+            <i class="fas fa-credit-card mr-2"></i>Paiement
+          </button>
+          <button class="settings-tab" data-tab="shipping">
+            <i class="fas fa-truck mr-2"></i>Livraison
+          </button>
+          <button class="settings-tab" data-tab="seo">
+            <i class="fas fa-search mr-2"></i>SEO
+          </button>
+          <button class="settings-tab" data-tab="backup">
+            <i class="fas fa-database mr-2"></i>Sauvegarde
+          </button>
+          <button class="settings-tab" data-tab="security">
+            <i class="fas fa-shield-alt mr-2"></i>Sécurité
+          </button>
+        </div>
+      </div>
+
+      <!-- Contenu des onglets -->
+      <div class="bg-white rounded-b-lg shadow p-6">
+
+        <!-- Onglet Général -->
+        <div id="tab-general" class="tab-content">
+          <h2 class="text-xl font-bold mb-6">Paramètres généraux</h2>
+          
+          <div class="grid grid-cols-2 gap-6">
+            <div class="col-span-2">
+              <h3 class="text-lg font-semibold mb-4">Informations de l'entreprise</h3>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Nom de l'entreprise</label>
+              <input type="text" id="companyName" value="EVORA DESIGN" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Slogan</label>
+              <input type="text" id="companySlogan" value="L'Art du Meuble sur Mesure" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            </div>
+            
+            <div class="col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-1">Description courte</label>
+              <textarea id="companyDescription" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">Confection artisanale de meubles haut de gamme sur mesure en Côte d'Ivoire.</textarea>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Email de contact</label>
+              <input type="email" id="contactEmail" value="contact@evoradesign.ci" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
+              <input type="tel" id="contactPhone" value="+225 07 48 65 51 20" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            </div>
+            
+            <div class="col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-1">Adresse</label>
+              <input type="text" id="companyAddress" value="KOUMASSI, ZOE BRUNO, RUE SORO SORI 127" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            </div>
+            
+            <div class="col-span-2">
+              <h3 class="text-lg font-semibold mb-4 mt-4">Réseaux sociaux</h3>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">
+                <i class="fab fa-facebook text-blue-600 mr-1"></i>Facebook
+              </label>
+              <input type="url" id="socialFacebook" value="https://facebook.com/evoradesign" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">
+                <i class="fab fa-instagram text-pink-600 mr-1"></i>Instagram
+              </label>
+              <input type="url" id="socialInstagram" value="https://instagram.com/evoradesign" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">
+                <i class="fab fa-whatsapp text-green-600 mr-1"></i>WhatsApp
+              </label>
+              <input type="url" id="socialWhatsapp" value="https://wa.me/2250748655120" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">
+                <i class="fab fa-linkedin text-blue-800 mr-1"></i>LinkedIn
+              </label>
+              <input type="url" id="socialLinkedin" value="" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            </div>
+          </div>
+        </div>
+
+        <!-- Onglet Site web -->
+        <div id="tab-site" class="tab-content hidden">
+          <h2 class="text-xl font-bold mb-6">Configuration du site</h2>
+          
+          <div class="grid grid-cols-2 gap-6">
+            <div class="col-span-2">
+              <h3 class="text-lg font-semibold mb-4">Apparence</h3>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Couleur principale</label>
+              <div class="flex items-center gap-3">
+                <input type="color" id="primaryColor" value="#1e3a8a" class="h-10 w-20 rounded border border-gray-300">
+                <input type="text" id="primaryColorHex" value="#1e3a8a" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+              </div>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Couleur secondaire</label>
+              <div class="flex items-center gap-3">
+                <input type="color" id="secondaryColor" value="#6b4f3a" class="h-10 w-20 rounded border border-gray-300">
+                <input type="text" id="secondaryColorHex" value="#6b4f3a" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+              </div>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Police principale</label>
+              <select id="primaryFont" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+                <option value="poppins" selected>Poppins</option>
+                <option value="montserrat">Montserrat</option>
+                <option value="opensans">Open Sans</option>
+                <option value="roboto">Roboto</option>
+                <option value="lato">Lato</option>
+              </select>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Police secondaire</label>
+              <select id="secondaryFont" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+                <option value="montserrat" selected>Montserrat</option>
+                <option value="poppins">Poppins</option>
+                <option value="opensans">Open Sans</option>
+                <option value="roboto">Roboto</option>
+                <option value="lato">Lato</option>
+              </select>
+            </div>
+            
+            <div class="col-span-2">
+              <h3 class="text-lg font-semibold mb-4 mt-4">Configuration générale</h3>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Langue par défaut</label>
+              <select id="defaultLanguage" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+                <option value="fr" selected>Français</option>
+                <option value="en">Anglais</option>
+              </select>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Fuseau horaire</label>
+              <select id="timezone" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+                <option value="africa/abidjan" selected>Afrique/Abidjan (GMT+0)</option>
+                <option value="europe/paris">Europe/Paris (GMT+1)</option>
+              </select>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Devise</label>
+              <select id="currency" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+                <option value="fcfa" selected>FCFA</option>
+                <option value="eur">Euro (€)</option>
+                <option value="usd">Dollar ($)</option>
+              </select>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Format de date</label>
+              <select id="dateFormat" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+                <option value="d/m/Y" selected>31/12/2025</option>
+                <option value="Y-m-d">2025-12-31</option>
+                <option value="m/d/Y">12/31/2025</option>
+              </select>
+            </div>
+            
+            <div class="col-span-2">
+              <h3 class="text-lg font-semibold mb-4 mt-4">Fonctionnalités</h3>
+            </div>
+            
+            <div>
+              <label class="flex items-center justify-between p-3 border rounded-lg">
+                <span class="font-medium">Mode maintenance</span>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="maintenanceMode">
+                  <span class="toggle-slider"></span>
+                </label>
+              </label>
+            </div>
+            
+            <div>
+              <label class="flex items-center justify-between p-3 border rounded-lg">
+                <span class="font-medium">Inscriptions ouvertes</span>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="registrationsOpen" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </label>
+            </div>
+            
+            <div>
+              <label class="flex items-center justify-between p-3 border rounded-lg">
+                <span class="font-medium">Avis clients</span>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="reviewsEnabled" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </label>
+            </div>
+            
+            <div>
+              <label class="flex items-center justify-between p-3 border rounded-lg">
+                <span class="font-medium">Blog actif</span>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="blogEnabled" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Onglet Email -->
+        <div id="tab-email" class="tab-content hidden">
+          <h2 class="text-xl font-bold mb-6">Configuration email</h2>
+          
+          <div class="grid grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Serveur SMTP</label>
+              <input type="text" id="smtpHost" value="smtp.gmail.com" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Port</label>
+              <input type="number" id="smtpPort" value="587" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Utilisateur</label>
+              <input type="text" id="smtpUser" value="noreply@evoradesign.ci" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
+              <input type="password" id="smtpPassword" value="********" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Email expéditeur</label>
+              <input type="email" id="senderEmail" value="contact@evoradesign.ci" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Nom expéditeur</label>
+              <input type="text" id="senderName" value="EVORA DESIGN" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            </div>
+            
+            <div class="col-span-2">
+              <h3 class="text-lg font-semibold mb-4 mt-4">Templates d'emails</h3>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Confirmation de commande</label>
+              <select id="emailOrderConfirmation" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                <option value="template1" selected>Template par défaut</option>
+                <option value="template2">Template moderne</option>
+                <option value="template3">Template simple</option>
+              </select>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Confirmation d'inscription</label>
+              <select id="emailRegistration" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                <option value="template1" selected>Template par défaut</option>
+                <option value="template2">Template moderne</option>
+                <option value="template3">Template simple</option>
+              </select>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Réinitialisation mot de passe</label>
+              <select id="emailResetPassword" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                <option value="template1" selected>Template par défaut</option>
+                <option value="template2">Template moderne</option>
+                <option value="template3">Template simple</option>
+              </select>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Newsletter</label>
+              <select id="emailNewsletter" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                <option value="template1" selected>Template par défaut</option>
+                <option value="template2">Template moderne</option>
+                <option value="template3">Template simple</option>
+              </select>
+            </div>
+            
+            <div class="col-span-2 mt-4">
+              <button class="btn-primary">Tester la configuration email</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Onglet Paiement -->
+        <div id="tab-payment" class="tab-content hidden">
+          <h2 class="text-xl font-bold mb-6">Moyens de paiement</h2>
+          
+          <div class="space-y-4">
+            <div class="border rounded-lg p-4">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <img src="https://img.icons8.com/color/48/000000/orange-money.png" class="w-10 h-10">
+                  <div>
+                    <h3 class="font-semibold">Orange Money</h3>
+                    <p class="text-sm text-gray-500">Paiement mobile Orange</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="paymentOrange" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
+                  <button class="text-[#1e3a8a] hover:text-blue-700">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="border rounded-lg p-4">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <img src="https://img.icons8.com/color/48/000000/mtn-group.png" class="w-10 h-10">
+                  <div>
+                    <h3 class="font-semibold">MTN Money</h3>
+                    <p class="text-sm text-gray-500">Paiement mobile MTN</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="paymentMtn" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
+                  <button class="text-[#1e3a8a] hover:text-blue-700">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="border rounded-lg p-4">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <img src="https://img.icons8.com/color/48/000000/wave-money.png" class="w-10 h-10">
+                  <div>
+                    <h3 class="font-semibold">Wave</h3>
+                    <p class="text-sm text-gray-500">Application Wave</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="paymentWave" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
+                  <button class="text-[#1e3a8a] hover:text-blue-700">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="border rounded-lg p-4">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <img src="https://img.icons8.com/color/48/000000/visa.png" class="w-10 h-10">
+                  <div>
+                    <h3 class="font-semibold">Carte bancaire</h3>
+                    <p class="text-sm text-gray-500">Visa, Mastercard</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="paymentCard" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
+                  <button class="text-[#1e3a8a] hover:text-blue-700">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="border rounded-lg p-4">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <i class="fas fa-money-bill-wave text-3xl text-green-600"></i>
+                  <div>
+                    <h3 class="font-semibold">Paiement à la livraison</h3>
+                    <p class="text-sm text-gray-500">Espèces à la réception</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="paymentCod" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Onglet Livraison -->
+        <div id="tab-shipping" class="tab-content hidden">
+          <h2 class="text-xl font-bold mb-6">Configuration livraison</h2>
+          
+          <div class="grid grid-cols-2 gap-6">
+            <div class="col-span-2">
+              <h3 class="text-lg font-semibold mb-4">Zones de livraison</h3>
+            </div>
+            
+            <div>
+              <label class="flex items-center p-3 border rounded-lg">
+                <input type="checkbox" class="mr-3" checked>
+                <span>Abidjan et environs</span>
+              </label>
+            </div>
+            
+            <div>
+              <label class="flex items-center p-3 border rounded-lg">
+                <input type="checkbox" class="mr-3" checked>
+                <span>Autres villes de Côte d'Ivoire</span>
+              </label>
+            </div>
+            
+            <div>
+              <label class="flex items-center p-3 border rounded-lg">
+                <input type="checkbox" class="mr-3">
+                <span>International</span>
+              </label>
+            </div>
+            
+            <div class="col-span-2">
+              <h3 class="text-lg font-semibold mb-4 mt-4">Frais de livraison</h3>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Abidjan (frais fixes)</label>
+              <div class="flex items-center">
+                <input type="number" id="shippingAbidjan" value="1500" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+                <span class="ml-2 text-gray-600">FCFA</span>
+              </div>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Intérieur pays (frais fixes)</label>
+              <div class="flex items-center">
+                <input type="number" id="shippingInterior" value="2500" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+                <span class="ml-2 text-gray-600">FCFA</span>
+              </div>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Livraison gratuite à partir de</label>
+              <div class="flex items-center">
+                <input type="number" id="freeShipping" value="100000" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+                <span class="ml-2 text-gray-600">FCFA</span>
+              </div>
+            </div>
+            
+            <div>
+              <label class="flex items-center p-3 border rounded-lg">
+                <input type="checkbox" id="enableFreeShipping" class="mr-3" checked>
+                <span>Activer la livraison gratuite</span>
+              </label>
+            </div>
+            
+            <div class="col-span-2">
+              <h3 class="text-lg font-semibold mb-4 mt-4">Transporteurs</h3>
+            </div>
+            
+            <div class="border rounded-lg p-4 col-span-2">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h4 class="font-semibold">DHL</h4>
+                  <p class="text-sm text-gray-500">Livraison express</p>
+                </div>
+                <div class="flex items-center gap-4">
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="carrierDhl">
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="border rounded-lg p-4 col-span-2">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h4 class="font-semibold">Chronopost</h4>
+                  <p class="text-sm text-gray-500">Livraison standard</p>
+                </div>
+                <div class="flex items-center gap-4">
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="carrierChronopost" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="border rounded-lg p-4 col-span-2">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h4 class="font-semibold">La Poste CI</h4>
+                  <p class="text-sm text-gray-500">Service postal national</p>
+                </div>
+                <div class="flex items-center gap-4">
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="carrierPoste" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Onglet SEO -->
+        <div id="tab-seo" class="tab-content hidden">
+          <h2 class="text-xl font-bold mb-6">Optimisation SEO</h2>
+          
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Titre du site (meta title)</label>
+              <input type="text" id="metaTitle" value="EVORA DESIGN · Meubles sur mesure | Ébéniste Côte d'Ivoire" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+              <p class="text-xs text-gray-500 mt-1">60-70 caractères recommandés</p>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Meta description</label>
+              <textarea id="metaDescription" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">EVORA DESIGN - Créateur de meubles sur mesure en Côte d'Ivoire. Cuisines équipées, dressings, placards et mobilier haut de gamme artisanal.</textarea>
+              <p class="text-xs text-gray-500 mt-1">150-160 caractères recommandés</p>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Mots-clés (séparés par des virgules)</label>
+              <input type="text" id="metaKeywords" value="meubles sur mesure, ébéniste, Côte d'Ivoire, cuisine équipée, dressing, placard, mobilier artisanal" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">URL canonique</label>
+              <input type="url" id="canonicalUrl" value="https://www.evoradesign.ci" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            </div>
+            
+            <div>
+              <h3 class="text-lg font-semibold mb-4 mt-4">Robots.txt</h3>
+              <textarea id="robotsTxt" rows="5" class="w-full px-3 py-2 border border-gray-300 rounded-lg font-mono text-sm">User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /cart/
+Sitemap: https://www.evoradesign.ci/sitemap.xml</textarea>
+            </div>
+            
+            <div>
+              <h3 class="text-lg font-semibold mb-4 mt-4">Sitemap</h3>
+              <div class="flex items-center gap-3">
+                <input type="text" value="https://www.evoradesign.ci/sitemap.xml" readonly class="flex-1 px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg">
+                <button class="btn-primary">Générer</button>
+              </div>
+            </div>
+            
+            <div class="mt-4">
+              <label class="flex items-center gap-3 p-3 border rounded-lg">
+                <input type="checkbox" id="seoAnalytics" checked>
+                <span>Activer le suivi Google Analytics</span>
+              </label>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">ID Google Analytics</label>
+              <input type="text" id="gaId" value="UA-XXXXXXXXX-X" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+            </div>
+          </div>
+        </div>
+
+        <!-- Onglet Sauvegarde -->
+        <div id="tab-backup" class="tab-content hidden">
+          <h2 class="text-xl font-bold mb-6">Sauvegardes</h2>
+          
+          <div class="grid grid-cols-2 gap-6">
+            <div class="col-span-2">
+              <div class="bg-blue-50 border-l-4 border-[#1e3a8a] p-4 mb-6">
+                <div class="flex items-center">
+                  <i class="fas fa-info-circle text-[#1e3a8a] text-xl mr-3"></i>
+                  <div>
+                    <p class="font-medium">Dernière sauvegarde : 20/02/2025 à 03:00</p>
+                    <p class="text-sm text-gray-600">Taille : 156 MB</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h3 class="text-lg font-semibold mb-4">Sauvegarde automatique</h3>
+              <div class="space-y-3">
+                <label class="flex items-center justify-between p-3 border rounded-lg">
+                  <span>Activer les sauvegardes automatiques</span>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="autoBackup" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
+                </label>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Fréquence</label>
+                  <select id="backupFrequency" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                    <option value="daily">Quotidienne</option>
+                    <option value="weekly" selected>Hebdomadaire</option>
+                    <option value="monthly">Mensuelle</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Heure</label>
+                  <input type="time" id="backupTime" value="03:00" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Conserver les sauvegardes (en jours)</label>
+                  <input type="number" id="backupRetention" value="30" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h3 class="text-lg font-semibold mb-4">Actions</h3>
+              <div class="space-y-3">
+                <button class="w-full btn-primary flex items-center justify-center gap-2">
+                  <i class="fas fa-database"></i>
+                  Sauvegarder maintenant
+                </button>
+                <button class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition flex items-center justify-center gap-2">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  Sauvegarder sur Cloud
+                </button>
+                <button class="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg transition flex items-center justify-center gap-2">
+                  <i class="fas fa-history"></i>
+                  Restaurer
+                </button>
+              </div>
+            </div>
+            
+            <div class="col-span-2">
+              <h3 class="text-lg font-semibold mb-4 mt-4">Sauvegardes disponibles</h3>
+              
+              <div class="space-y-2">
+                <div class="backup-item p-4 rounded flex items-center justify-between">
+                  <div class="flex items-center gap-4">
+                    <i class="fas fa-database text-[#1e3a8a] text-xl"></i>
+                    <div>
+                      <p class="font-medium">Sauvegarde complète - 20/02/2025 03:00</p>
+                      <p class="text-sm text-gray-500">156 MB - Base de données + Fichiers</p>
+                    </div>
+                  </div>
+                  <div class="flex gap-2">
+                    <button class="text-blue-600 hover:text-blue-800">
+                      <i class="fas fa-download"></i>
+                    </button>
+                    <button class="text-green-600 hover:text-green-800">
+                      <i class="fas fa-history"></i>
+                    </button>
+                    <button class="text-red-600 hover:text-red-800">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="backup-item p-4 rounded flex items-center justify-between">
+                  <div class="flex items-center gap-4">
+                    <i class="fas fa-database text-[#1e3a8a] text-xl"></i>
+                    <div>
+                      <p class="font-medium">Sauvegarde complète - 13/02/2025 03:00</p>
+                      <p class="text-sm text-gray-500">152 MB - Base de données + Fichiers</p>
+                    </div>
+                  </div>
+                  <div class="flex gap-2">
+                    <button class="text-blue-600 hover:text-blue-800">
+                      <i class="fas fa-download"></i>
+                    </button>
+                    <button class="text-green-600 hover:text-green-800">
+                      <i class="fas fa-history"></i>
+                    </button>
+                    <button class="text-red-600 hover:text-red-800">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="backup-item p-4 rounded flex items-center justify-between">
+                  <div class="flex items-center gap-4">
+                    <i class="fas fa-database text-[#1e3a8a] text-xl"></i>
+                    <div>
+                      <p class="font-medium">Sauvegarde complète - 06/02/2025 03:00</p>
+                      <p class="text-sm text-gray-500">148 MB - Base de données + Fichiers</p>
+                    </div>
+                  </div>
+                  <div class="flex gap-2">
+                    <button class="text-blue-600 hover:text-blue-800">
+                      <i class="fas fa-download"></i>
+                    </button>
+                    <button class="text-green-600 hover:text-green-800">
+                      <i class="fas fa-history"></i>
+                    </button>
+                    <button class="text-red-600 hover:text-red-800">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Onglet Sécurité -->
+        <div id="tab-security" class="tab-content hidden">
+          <h2 class="text-xl font-bold mb-6">Sécurité</h2>
+          
+          <div class="grid grid-cols-2 gap-6">
+            <div class="col-span-2">
+              <h3 class="text-lg font-semibold mb-4">Authentification</h3>
+            </div>
+            
+            <div>
+              <label class="flex items-center justify-between p-3 border rounded-lg">
+                <span>Authentification à deux facteurs</span>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="twoFactorAuth" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </label>
+            </div>
+            
+            <div>
+              <label class="flex items-center justify-between p-3 border rounded-lg">
+                <span>Captcha sur les formulaires</span>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="enableCaptcha" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </label>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Tentatives de connexion max</label>
+              <input type="number" id="maxLoginAttempts" value="5" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Durée de session (minutes)</label>
+              <input type="number" id="sessionDuration" value="120" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+            </div>
+            
+            <div class="col-span-2">
+              <h3 class="text-lg font-semibold mb-4 mt-4">Certificat SSL</h3>
+            </div>
+            
+            <div class="col-span-2">
+              <div class="bg-green-50 border-l-4 border-green-600 p-4">
+                <div class="flex items-center">
+                  <i class="fas fa-check-circle text-green-600 text-xl mr-3"></i>
+                  <div>
+                    <p class="font-medium">Certificat SSL actif</p>
+                    <p class="text-sm text-gray-600">Valide jusqu'au 20/02/2026</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-span-2">
+              <h3 class="text-lg font-semibold mb-4 mt-4">Journal de sécurité</h3>
+              
+              <div class="bg-gray-50 p-4 rounded-lg font-mono text-sm">
+                <p>[2025-02-20 08:15:23] Connexion réussie - Admin (IP: 192.168.1.100)</p>
+                <p>[2025-02-20 07:30:45] Tentative de connexion échouée - IP: 10.0.0.50</p>
+                <p>[2025-02-19 23:15:12] Modification produit #123 - Admin</p>
+                <p>[2025-02-19 18:22:34] Déconnexion - Manager (IP: 192.168.1.105)</p>
+                <p>[2025-02-19 14:08:51] Nouvel utilisateur créé - user@email.com</p>
+              </div>
+            </div>
+            
+            <div class="col-span-2 mt-4">
+              <button class="btn-danger flex items-center gap-2">
+                <i class="fas fa-shield-alt"></i>
+                Lancer un scan de sécurité
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bouton d'enregistrement en bas -->
+        <div class="mt-8 pt-6 border-t flex justify-end">
+          <button class="btn-primary px-8 py-3 text-lg">
+            <i class="fas fa-save mr-2"></i>
+            Enregistrer les modifications
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ========== MODAL CONFIRMATION ========== -->
+<div id="confirmModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 modal">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+    <div class="p-6">
+      <div class="text-center">
+        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+          <i class="fas fa-check text-green-600 text-xl"></i>
+        </div>
+        <h3 class="text-lg font-bold text-gray-800 mb-2">Paramètres enregistrés</h3>
+        <p class="text-gray-600 mb-4">Toutes les modifications ont été appliquées avec succès.</p>
+        <button id="closeConfirmModal" class="btn-primary px-6 py-2">
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SCRIPT JAVASCRIPT ========== -->
+<script>
+  // Initialisation
+  document.addEventListener('DOMContentLoaded', function() {
+    setupTabs();
+    setupEventListeners();
+    loadSettings();
+  });
+
+  // Configuration des onglets
+  function setupTabs() {
+    const tabs = document.querySelectorAll('.settings-tab');
+    const contents = document.querySelectorAll('.tab-content');
+    
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        // Désactiver tous les onglets
+        tabs.forEach(t => {
+          t.classList.remove('active');
+        });
+        
+        // Activer l'onglet cliqué
+        this.classList.add('active');
+        
+        // Cacher tous les contenus
+        contents.forEach(content => {
+          content.classList.add('hidden');
+        });
+        
+        // Afficher le contenu correspondant
+        const tabId = this.dataset.tab;
+        document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+      });
+    });
+  }
+
+  // Configuration des écouteurs
+  function setupEventListeners() {
+    // Couleurs
+    document.getElementById('primaryColor').addEventListener('input', function(e) {
+      document.getElementById('primaryColorHex').value = e.target.value;
+    });
+    
+    document.getElementById('primaryColorHex').addEventListener('input', function(e) {
+      document.getElementById('primaryColor').value = e.target.value;
+    });
+    
+    document.getElementById('secondaryColor').addEventListener('input', function(e) {
+      document.getElementById('secondaryColorHex').value = e.target.value;
+    });
+    
+    document.getElementById('secondaryColorHex').addEventListener('input', function(e) {
+      document.getElementById('secondaryColor').value = e.target.value;
+    });
+    
+    // Boutons d'enregistrement
+    document.getElementById('saveAllSettings').addEventListener('click', saveAllSettings);
+    document.querySelector('.btn-primary:last-child').addEventListener('click', saveAllSettings);
+    
+    // Fermeture du modal
+    document.getElementById('closeConfirmModal').addEventListener('click', function() {
+      document.getElementById('confirmModal').classList.add('hidden');
+      document.getElementById('confirmModal').classList.remove('flex');
+    });
+  }
+
+  // Chargement des paramètres (simulé)
+  function loadSettings() {
+    console.log('Chargement des paramètres...');
+    // Ici vous chargeriez les paramètres depuis l'API
+  }
+
+  // Sauvegarde de tous les paramètres
+  function saveAllSettings() {
+    // Récupérer tous les paramètres
+    const settings = {
+      general: {
+        companyName: document.getElementById('companyName').value,
+        companySlogan: document.getElementById('companySlogan').value,
+        companyDescription: document.getElementById('companyDescription').value,
+        contactEmail: document.getElementById('contactEmail').value,
+        contactPhone: document.getElementById('contactPhone').value,
+        companyAddress: document.getElementById('companyAddress').value,
+        social: {
+          facebook: document.getElementById('socialFacebook').value,
+          instagram: document.getElementById('socialInstagram').value,
+          whatsapp: document.getElementById('socialWhatsapp').value,
+          linkedin: document.getElementById('socialLinkedin').value
+        }
+      },
+      site: {
+        primaryColor: document.getElementById('primaryColor').value,
+        secondaryColor: document.getElementById('secondaryColor').value,
+        primaryFont: document.getElementById('primaryFont').value,
+        secondaryFont: document.getElementById('secondaryFont').value,
+        defaultLanguage: document.getElementById('defaultLanguage').value,
+        timezone: document.getElementById('timezone').value,
+        currency: document.getElementById('currency').value,
+        dateFormat: document.getElementById('dateFormat').value,
+        maintenanceMode: document.getElementById('maintenanceMode').checked,
+        registrationsOpen: document.getElementById('registrationsOpen').checked,
+        reviewsEnabled: document.getElementById('reviewsEnabled').checked,
+        blogEnabled: document.getElementById('blogEnabled').checked
+      },
+      email: {
+        smtpHost: document.getElementById('smtpHost').value,
+        smtpPort: document.getElementById('smtpPort').value,
+        smtpUser: document.getElementById('smtpUser').value,
+        smtpPassword: document.getElementById('smtpPassword').value,
+        senderEmail: document.getElementById('senderEmail').value,
+        senderName: document.getElementById('senderName').value
+      },
+      payment: {
+        orange: document.getElementById('paymentOrange').checked,
+        mtn: document.getElementById('paymentMtn').checked,
+        wave: document.getElementById('paymentWave').checked,
+        card: document.getElementById('paymentCard').checked,
+        cod: document.getElementById('paymentCod').checked
+      },
+      shipping: {
+        abidjan: document.getElementById('shippingAbidjan').value,
+        interior: document.getElementById('shippingInterior').value,
+        freeShipping: document.getElementById('freeShipping').value,
+        enableFreeShipping: document.getElementById('enableFreeShipping').checked,
+        carriers: {
+          dhl: document.getElementById('carrierDhl').checked,
+          chronopost: document.getElementById('carrierChronopost').checked,
+          poste: document.getElementById('carrierPoste').checked
+        }
+      },
+      seo: {
+        metaTitle: document.getElementById('metaTitle').value,
+        metaDescription: document.getElementById('metaDescription').value,
+        metaKeywords: document.getElementById('metaKeywords').value,
+        canonicalUrl: document.getElementById('canonicalUrl').value,
+        robotsTxt: document.getElementById('robotsTxt').value,
+        seoAnalytics: document.getElementById('seoAnalytics').checked,
+        gaId: document.getElementById('gaId').value
+      },
+      backup: {
+        autoBackup: document.getElementById('autoBackup').checked,
+        backupFrequency: document.getElementById('backupFrequency').value,
+        backupTime: document.getElementById('backupTime').value,
+        backupRetention: document.getElementById('backupRetention').value
+      },
+      security: {
+        twoFactorAuth: document.getElementById('twoFactorAuth').checked,
+        enableCaptcha: document.getElementById('enableCaptcha').checked,
+        maxLoginAttempts: document.getElementById('maxLoginAttempts').value,
+        sessionDuration: document.getElementById('sessionDuration').value
+      }
+    };
+    
+    console.log('Paramètres sauvegardés:', settings);
+    
+    // Afficher le modal de confirmation
+    document.getElementById('confirmModal').classList.remove('hidden');
+    document.getElementById('confirmModal').classList.add('flex');
+  }
+
+  // Menu mobile
+  document.getElementById('menuBtn')?.addEventListener('click', function() {
+    alert('Menu mobile - Fonctionnalité à implémenter');
+  });
+</script>
+</body>
+</html>

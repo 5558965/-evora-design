@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Connexion Admin - EVORA DESIGN</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    body { font-family: 'Montserrat', sans-serif; }
+    .login-container {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      min-height: 100vh;
+    }
+  </style>
+</head>
+
+<body class="login-container flex items-center justify-center p-4">
+
+  <div class="bg-white rounded-2xl shadow-2xl p-8 md:p-12 w-full max-w-md">
+    
+    <!-- Logo et titre -->
+    <div class="text-center mb-8">
+      <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+        </svg>
+      </div>
+      <h1 class="text-3xl font-bold text-gray-800 mb-2">Administration</h1>
+      <p class="text-gray-600">EVORA DESIGN</p>
+    </div>
+
+    <!-- Formulaire de connexion -->
+    <form id="loginForm" class="space-y-6">
+      
+      <div>
+        <label for="username" class="block text-sm font-semibold text-gray-700 mb-2">
+          Nom d'utilisateur
+        </label>
+        <div class="relative">
+          <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+          </svg>
+          <input type="text" id="username" name="username" required 
+            class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+            placeholder="admin">
+        </div>
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">
+          Mot de passe
+        </label>
+        <div class="relative">
+          <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+          </svg>
+          <input type="password" id="password" name="password" required 
+            class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+            placeholder="••••••••">
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <label class="flex items-center">
+          <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+          <span class="ml-2 text-sm text-gray-600">Se souvenir de moi</span>
+        </label>
+        <a href="#" class="text-sm text-blue-600 hover:text-blue-700">Mot de passe oublié ?</a>
+      </div>
+
+      <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg hover:shadow-xl">
+        Se connecter
+      </button>
+
+    </form>
+
+    <!-- Message d'erreur -->
+    <div id="errorMessage" class="hidden mt-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
+      Identifiants incorrects
+    </div>
+
+    <!-- Info -->
+    <div class="mt-6 text-center text-xs text-gray-500">
+      <p>Accès réservé aux administrateurs</p>
+      <p class="mt-1">© 2026 EVORA DESIGN</p>
+    </div>
+
+  </div>
+
+<script>
+(function() {
+  'use strict';
+
+  const loginForm = document.getElementById('loginForm');
+  const errorMessage = document.getElementById('errorMessage');
+
+  // Identifiants par défaut (À CHANGER EN PRODUCTION)
+  const ADMIN_CREDENTIALS = {
+    username: 'admin',
+    password: 'evora2030'
+  };
+
+  loginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    // Vérification des identifiants
+    if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+      // Créer une session
+      sessionStorage.setItem('adminLoggedIn', 'true');
+      sessionStorage.setItem('adminUsername', username);
+      sessionStorage.setItem('loginTime', Date.now());
+      
+      // Redirection vers le dashboard
+      window.location.href = 'dashboard.html';
+    } else {
+      // Afficher l'erreur
+      errorMessage.classList.remove('hidden');
+      
+      // Masquer après 3 secondes
+      setTimeout(() => {
+        errorMessage.classList.add('hidden');
+      }, 3000);
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>

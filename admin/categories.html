@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EVORA DESIGN - Administration Catégories</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background-color: #f3f4f6;
+    }
+    
+    .sidebar {
+      background: linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%);
+    }
+    
+    .sidebar a.active {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-left: 4px solid #fbbf24;
+    }
+    
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+    }
+    
+    .btn-primary {
+      background-color: #1e3a8a;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary:hover {
+      background-color: #1e40af;
+      transform: scale(1.05);
+    }
+    
+    .btn-danger {
+      background-color: #dc2626;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+    }
+    
+    .btn-danger:hover {
+      background-color: #b91c1c;
+    }
+    
+    .modal {
+      transition: opacity 0.3s ease;
+    }
+    
+    .table-header {
+      background-color: #1e3a8a;
+      color: white;
+    }
+    
+    .table-row:hover {
+      background-color: #f9fafb;
+    }
+    
+    .category-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
+    .sort-asc::after {
+      content: " ↑";
+    }
+    
+    .sort-desc::after {
+      content: " ↓";
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+<!-- ========== CONTAINER PRINCIPAL ========== -->
+<div class="flex h-screen bg-gray-100">
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar w-64 text-white flex-shrink-0 hidden md:block overflow-y-auto">
+    <div class="p-6">
+      <div class="flex items-center space-x-3 mb-8">
+        <img src="../images/LOGO EVORA NOUVEAU.png" alt="Logo" class="h-10 w-10 object-contain">
+        <h2 class="text-xl font-bold">EVORA DESIGN</h2>
+      </div>
+      
+      <nav class="space-y-2">
+        <a href="dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-tachometer-alt w-5"></i>
+          <span>Tableau de bord</span>
+        </a>
+        <a href="products.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-box w-5"></i>
+          <span>Produits</span>
+        </a>
+        <a href="categories.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-white/20 border-l-4 border-yellow-400 active">
+          <i class="fas fa-tags w-5"></i>
+          <span>Catégories</span>
+        </a>
+        <a href="orders.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-shopping-cart w-5"></i>
+          <span>Commandes</span>
+        </a>
+        <a href="messages.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-envelope w-5"></i>
+          <span>Messages</span>
+        </a>
+        <a href="users.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-users w-5"></i>
+          <span>Utilisateurs</span>
+        </a>
+        <a href="settings.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-cog w-5"></i>
+          <span>Paramètres</span>
+        </a>
+        <hr class="border-white/20 my-4">
+        <a href="../index.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-home w-5"></i>
+          <span>Voir le site</span>
+        </a>
+        <a href="login.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-sign-out-alt w-5"></i>
+          <span>Déconnexion</span>
+        </a>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- ========== CONTENU PRINCIPAL ========== -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+
+    <!-- ========== HEADER ADMIN ========== -->
+    <header class="bg-white shadow-sm px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <button id="menuBtn" class="md:hidden text-gray-600 hover:text-[#1e3a8a]">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+        <h1 class="text-2xl font-semibold text-gray-800">Gestion des Catégories</h1>
+      </div>
+      
+      <div class="flex items-center space-x-4">
+        <div class="relative">
+          <button class="text-gray-600 hover:text-[#1e3a8a]">
+            <i class="fas fa-bell text-xl"></i>
+            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">3</span>
+          </button>
+        </div>
+        
+        <div class="flex items-center space-x-3">
+          <img src="https://ui-avatars.com/api/?name=Admin+User&background=1e3a8a&color=fff" class="h-10 w-10 rounded-full">
+          <div class="hidden md:block">
+            <p class="text-sm font-semibold">Admin EVORA</p>
+            <p class="text-xs text-gray-500">admin@evoradesign.ci</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="flex-1 overflow-y-auto p-6 bg-gray-100">
+
+      <!-- Barre d'actions -->
+      <div class="mb-6 flex flex-wrap gap-4 items-center justify-between">
+        <div class="flex gap-2">
+          <button id="addCategoryBtn" class="btn-primary flex items-center gap-2">
+            <i class="fas fa-plus"></i>
+            Nouvelle catégorie
+          </button>
+          <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg transition flex items-center gap-2">
+            <i class="fas fa-download"></i>
+            Exporter
+          </button>
+        </div>
+        
+        <div class="flex gap-2">
+          <div class="relative">
+            <input type="text" id="searchInput" placeholder="Rechercher une catégorie..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] focus:border-transparent w-64">
+            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+          </div>
+          
+          <select id="statusFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            <option value="">Tous les statuts</option>
+            <option value="actif">Actif</option>
+            <option value="inactif">Inactif</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Statistiques rapides -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">Total catégories</p>
+              <p class="text-2xl font-bold text-[#1e3a8a]" id="totalCategories">0</p>
+            </div>
+            <div class="bg-blue-100 p-3 rounded-full">
+              <i class="fas fa-tags text-[#1e3a8a] text-xl"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">Catégories actives</p>
+              <p class="text-2xl font-bold text-green-600" id="activeCategories">0</p>
+            </div>
+            <div class="bg-green-100 p-3 rounded-full">
+              <i class="fas fa-check-circle text-green-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">Produits total</p>
+              <p class="text-2xl font-bold text-purple-600" id="totalProducts">0</p>
+            </div>
+            <div class="bg-purple-100 p-3 rounded-full">
+              <i class="fas fa-box text-purple-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">Catégories vides</p>
+              <p class="text-2xl font-bold text-orange-600" id="emptyCategories">0</p>
+            </div>
+            <div class="bg-orange-100 p-3 rounded-full">
+              <i class="fas fa-exclamation-triangle text-orange-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vue en grille des catégories -->
+      <div class="mb-6 flex justify-end">
+        <div class="bg-white rounded-lg shadow flex">
+          <button id="gridViewBtn" class="px-4 py-2 bg-[#1e3a8a] text-white rounded-l-lg">
+            <i class="fas fa-th-large"></i>
+          </button>
+          <button id="listViewBtn" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-r-lg hover:bg-gray-300">
+            <i class="fas fa-list"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Vue en grille (par défaut) -->
+      <div id="gridView" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Les catégories seront chargées ici -->
+        <div class="col-span-full text-center py-8">
+          <i class="fas fa-spinner fa-spin text-3xl text-[#1e3a8a] mb-2"></i>
+          <p class="text-gray-500">Chargement des catégories...</p>
+        </div>
+      </div>
+
+      <!-- Vue en liste (cachée par défaut) -->
+      <div id="listView" class="hidden">
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+          <table class="w-full">
+            <thead class="table-header">
+              <tr>
+                <th class="px-6 py-3 text-left text-sm font-semibold cursor-pointer hover:bg-blue-800" onclick="sortTable('name')">
+                  <span id="sortName">Nom <i class="fas fa-sort ml-1"></i></span>
+                </th>
+                <th class="px-6 py-3 text-left text-sm font-semibold cursor-pointer hover:bg-blue-800" onclick="sortTable('slug')">
+                  <span id="sortSlug">Slug <i class="fas fa-sort ml-1"></i></span>
+                </th>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Description</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold cursor-pointer hover:bg-blue-800" onclick="sortTable('products')">
+                  <span id="sortProducts">Produits <i class="fas fa-sort ml-1"></i></span>
+                </th>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Statut</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="categoriesTableBody" class="divide-y divide-gray-200">
+              <!-- Les catégories en liste seront chargées ici -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="mt-4 flex items-center justify-between">
+        <p class="text-sm text-gray-600" id="showingInfo">Affichage de 1 à 8 catégories</p>
+        <div class="flex gap-2">
+          <button class="px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 disabled:opacity-50" id="prevPage" disabled>
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <span class="px-3 py-1 bg-[#1e3a8a] text-white rounded" id="currentPage">1</span>
+          <button class="px-3 py-1 border border-gray-300 rounded hover:bg-gray-100" id="nextPage">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ========== MODAL AJOUT/MODIFICATION CATÉGORIE ========== -->
+<div id="categoryModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 modal">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+    <div class="p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold text-gray-800" id="modalTitle">Ajouter une catégorie</h2>
+        <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times text-2xl"></i>
+        </button>
+      </div>
+      
+      <form id="categoryForm" class="space-y-4">
+        <input type="hidden" id="categoryId">
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Nom de la catégorie *</label>
+          <input type="text" id="categoryName" required maxlength="50" 
+                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]"
+                 onkeyup="generateSlug()">
+          <p class="text-xs text-gray-500 mt-1">Maximum 50 caractères</p>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Slug (URL) *</label>
+          <input type="text" id="categorySlug" required readonly
+                 class="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-gray-600">
+          <p class="text-xs text-gray-500 mt-1">Identifiant unique pour l'URL (généré automatiquement)</p>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+          <textarea id="categoryDescription" rows="3" maxlength="200"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]"></textarea>
+          <p class="text-xs text-gray-500 mt-1">Maximum 200 caractères</p>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Image de la catégorie</label>
+          <div class="flex items-center space-x-4">
+            <div class="flex-1">
+              <input type="file" id="categoryImage" accept="image/*" 
+                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            </div>
+            <div id="imagePreview" class="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden hidden">
+              <img src="" alt="Aperçu" class="w-full h-full object-cover">
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Statut</label>
+            <label class="inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="categoryStatus" class="sr-only peer" checked>
+              <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#1e3a8a]"></div>
+              <span class="ms-3 text-sm font-medium text-gray-700" id="statusLabel">Actif</span>
+            </label>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Afficher dans le menu</label>
+            <label class="inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="categoryShowInMenu" class="sr-only peer" checked>
+              <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#1e3a8a]"></div>
+            </label>
+          </div>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Ordre d'affichage</label>
+          <input type="number" id="categoryOrder" min="0" value="0"
+                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+        </div>
+        
+        <div class="flex justify-end space-x-3 pt-4">
+          <button type="button" id="cancelModal" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+            Annuler
+          </button>
+          <button type="submit" class="btn-primary px-6 py-2">
+            Enregistrer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MODAL SUPPRESSION ========== -->
+<div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 modal">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+    <div class="p-6">
+      <div class="text-center">
+        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+          <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+        </div>
+        <h3 class="text-lg font-bold text-gray-800 mb-2">Confirmer la suppression</h3>
+        <p class="text-gray-600 mb-2" id="deleteWarning">Êtes-vous sûr de vouloir supprimer cette catégorie ?</p>
+        <p class="text-sm text-red-600 mb-4" id="productsWarning"></p>
+        <input type="hidden" id="deleteCategoryId">
+        <div class="flex justify-center space-x-3">
+          <button id="cancelDelete" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+            Annuler
+          </button>
+          <button id="confirmDelete" class="btn-danger px-6 py-2">
+            Supprimer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SCRIPT JAVASCRIPT ========== -->
+<script>
+  // Données simulées des catégories
+  let categories = [
+    {
+      id: 1,
+      name: 'Cuisines',
+      slug: 'cuisines',
+      description: 'Cuisines équipées modernes et sur mesure',
+      image: '../images/image22.jpg',
+      status: 'actif',
+      showInMenu: true,
+      order: 1,
+      productCount: 8
+    },
+    {
+      id: 2,
+      name: 'Dressings',
+      slug: 'dressings',
+      description: 'Dressings sur mesure avec rangements personnalisés',
+      image: '../images/DRESING SUR MESURES3.jpg',
+      status: 'actif',
+      showInMenu: true,
+      order: 2,
+      productCount: 5
+    },
+    {
+      id: 3,
+      name: 'Placards',
+      slug: 'placards',
+      description: 'Placards et rangements intelligents',
+      image: '../images/Placards.png',
+      status: 'actif',
+      showInMenu: true,
+      order: 3,
+      productCount: 6
+    },
+    {
+      id: 4,
+      name: 'Canapés',
+      slug: 'canapes',
+      description: 'Canapés en bois noble et tissus premium',
+      image: '../images/Canapé Bois Noble.jpg',
+      status: 'actif',
+      showInMenu: true,
+      order: 4,
+      productCount: 4
+    },
+    {
+      id: 5,
+      name: 'Tables',
+      slug: 'tables',
+      description: 'Tables artisanales et modernes',
+      image: '../images/Table Artisanale.jpg',
+      status: 'actif',
+      showInMenu: true,
+      order: 5,
+      productCount: 7
+    },
+    {
+      id: 6,
+      name: 'Lits',
+      slug: 'lits',
+      description: 'Lits de tout genre avec rangements',
+      image: '../images/lits.jpg',
+      status: 'actif',
+      showInMenu: true,
+      order: 6,
+      productCount: 5
+    },
+    {
+      id: 7,
+      name: 'Commodes',
+      slug: 'commodes',
+      description: 'Commodes élégantes et robustes',
+      image: '../images/COMMODES.jpg',
+      status: 'actif',
+      showInMenu: false,
+      order: 7,
+      productCount: 3
+    },
+    {
+      id: 8,
+      name: 'Meubles TV',
+      slug: 'meubles-tv',
+      description: 'Meubles TV design contemporain',
+      image: '../images/Meubles TV.jpg',
+      status: 'actif',
+      showInMenu: true,
+      order: 8,
+      productCount: 4
+    },
+    {
+      id: 9,
+      name: 'Bureaux',
+      slug: 'bureaux',
+      description: 'Bureaux professionnels et élégants',
+      image: '../images/bureaux.jpg',
+      status: 'inactif',
+      showInMenu: false,
+      order: 9,
+      productCount: 2
+    },
+    {
+      id: 10,
+      name: 'Portes',
+      slug: 'portes',
+      description: 'Portes sur mesure modernes et classiques',
+      image: '../images/Portes sur mesure.jpg',
+      status: 'actif',
+      showInMenu: true,
+      order: 10,
+      productCount: 5
+    },
+    {
+      id: 11,
+      name: 'Revêtements muraux',
+      slug: 'revetements-muraux',
+      description: 'Revêtements muraux élégants',
+      image: '../images/Revêtements muraux.jpg',
+      status: 'actif',
+      showInMenu: true,
+      order: 11,
+      productCount: 3
+    },
+    {
+      id: 12,
+      name: 'Kitchenettes',
+      slug: 'kitchenettes',
+      description: 'Kitchenettes compactes et fonctionnelles',
+      image: '../images/Kichnettte 2.jpg',
+      status: 'actif',
+      showInMenu: false,
+      order: 12,
+      productCount: 2
+    }
+  ];
+
+  // Variables globales
+  let currentPage = 1;
+  const itemsPerPage = 8;
+  let filteredCategories = [...categories];
+  let searchTerm = '';
+  let statusFilter = '';
+  let currentView = 'grid'; // 'grid' ou 'list'
+  let sortColumn = 'name';
+  let sortDirection = 'asc';
+
+  // Initialisation
+  document.addEventListener('DOMContentLoaded', function() {
+    updateStats();
+    renderCategories();
+    setupEventListeners();
+  });
+
+  // Configuration des écouteurs
+  function setupEventListeners() {
+    document.getElementById('addCategoryBtn').addEventListener('click', openAddModal);
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    document.getElementById('cancelModal').addEventListener('click', closeModal);
+    document.getElementById('cancelDelete').addEventListener('click', closeDeleteModal);
+    
+    document.getElementById('searchInput').addEventListener('input', handleSearch);
+    document.getElementById('statusFilter').addEventListener('change', handleStatusFilter);
+    
+    document.getElementById('gridViewBtn').addEventListener('click', () => switchView('grid'));
+    document.getElementById('listViewBtn').addEventListener('click', () => switchView('list'));
+    
+    document.getElementById('prevPage').addEventListener('click', () => changePage(currentPage - 1));
+    document.getElementById('nextPage').addEventListener('click', () => changePage(currentPage + 1));
+    
+    document.getElementById('categoryForm').addEventListener('submit', handleCategorySubmit);
+    document.getElementById('confirmDelete').addEventListener('click', handleDelete);
+    
+    document.getElementById('categoryImage').addEventListener('change', handleImagePreview);
+    document.getElementById('categoryStatus').addEventListener('change', updateStatusLabel);
+  }
+
+  // Mise à jour des statistiques
+  function updateStats() {
+    document.getElementById('totalCategories').textContent = categories.length;
+    const active = categories.filter(c => c.status === 'actif').length;
+    document.getElementById('activeCategories').textContent = active;
+    
+    const totalProducts = categories.reduce((sum, c) => sum + (c.productCount || 0), 0);
+    document.getElementById('totalProducts').textContent = totalProducts;
+    
+    const empty = categories.filter(c => !c.productCount || c.productCount === 0).length;
+    document.getElementById('emptyCategories').textContent = empty;
+  }
+
+  // Génération du slug
+  window.generateSlug = function() {
+    const name = document.getElementById('categoryName').value;
+    const slug = name.toLowerCase()
+                     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                     .replace(/[^a-z0-9]+/g, '-')
+                     .replace(/^-|-$/g, '');
+    document.getElementById('categorySlug').value = slug;
+  };
+
+  // Mise à jour du label de statut
+  function updateStatusLabel() {
+    const status = document.getElementById('categoryStatus').checked;
+    document.getElementById('statusLabel').textContent = status ? 'Actif' : 'Inactif';
+  }
+
+  // Gestion de la recherche
+  function handleSearch(e) {
+    searchTerm = e.target.value.toLowerCase();
+    filterCategories();
+  }
+
+  // Gestion du filtre de statut
+  function handleStatusFilter(e) {
+    statusFilter = e.target.value;
+    filterCategories();
+  }
+
+  // Filtrage des catégories
+  function filterCategories() {
+    filteredCategories = categories.filter(cat => {
+      const matchesSearch = cat.name.toLowerCase().includes(searchTerm) ||
+                           cat.description?.toLowerCase().includes(searchTerm) || '';
+      const matchesStatus = !statusFilter || cat.status === statusFilter;
+      return matchesSearch && matchesStatus;
+    });
+    
+    if (sortColumn) {
+      filteredCategories.sort((a, b) => {
+        let valA = a[sortColumn];
+        let valB = b[sortColumn];
+        if (sortColumn === 'products') {
+          valA = a.productCount || 0;
+          valB = b.productCount || 0;
+        }
+        if (typeof valA === 'string') valA = valA.toLowerCase();
+        if (typeof valB === 'string') valB = valB.toLowerCase();
+        
+        if (valA < valB) return sortDirection === 'asc' ? -1 : 1;
+        if (valA > valB) return sortDirection === 'asc' ? 1 : -1;
+        return 0;
+      });
+    }
+    
+    currentPage = 1;
+    renderCategories();
+  }
+
+  // Tri du tableau
+  window.sortTable = function(column) {
+    if (sortColumn === column) {
+      sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      sortColumn = column;
+      sortDirection = 'asc';
+    }
+    
+    // Mise à jour des indicateurs de tri
+    ['name', 'slug', 'products'].forEach(col => {
+      const element = document.getElementById(`sort${col.charAt(0).toUpperCase() + col.slice(1)}`);
+      if (element) {
+        element.innerHTML = `${col === 'name' ? 'Nom' : col === 'slug' ? 'Slug' : 'Produits'} <i class="fas fa-sort ml-1"></i>`;
+      }
+    });
+    
+    const currentElement = document.getElementById(`sort${column.charAt(0).toUpperCase() + column.slice(1)}`);
+    if (currentElement) {
+      currentElement.innerHTML = `${column === 'name' ? 'Nom' : column === 'slug' ? 'Slug' : 'Produits'} <i class="fas fa-sort-${sortDirection === 'asc' ? 'up' : 'down'} ml-1"></i>`;
+    }
+    
+    filterCategories();
+  };
+
+  // Changement de vue
+  function switchView(view) {
+    currentView = view;
+    if (view === 'grid') {
+      document.getElementById('gridView').classList.remove('hidden');
+      document.getElementById('listView').classList.add('hidden');
+      document.getElementById('gridViewBtn').classList.add('bg-[#1e3a8a]', 'text-white');
+      document.getElementById('gridViewBtn').classList.remove('bg-gray-200', 'text-gray-600');
+      document.getElementById('listViewBtn').classList.remove('bg-[#1e3a8a]', 'text-white');
+      document.getElementById('listViewBtn').classList.add('bg-gray-200', 'text-gray-600');
+    } else {
+      document.getElementById('gridView').classList.add('hidden');
+      document.getElementById('listView').classList.remove('hidden');
+      document.getElementById('listViewBtn').classList.add('bg-[#1e3a8a]', 'text-white');
+      document.getElementById('listViewBtn').classList.remove('bg-gray-200', 'text-gray-600');
+      document.getElementById('gridViewBtn').classList.remove('bg-[#1e3a8a]', 'text-white');
+      document.getElementById('gridViewBtn').classList.add('bg-gray-200', 'text-gray-600');
+    }
+    renderCategories();
+  }
+
+  // Rendu des catégories
+  function renderCategories() {
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const paginatedCategories = filteredCategories.slice(start, end);
+    
+    if (currentView === 'grid') {
+      renderGridView(paginatedCategories);
+    } else {
+      renderListView(paginatedCategories);
+    }
+    
+    updatePaginationInfo();
+  }
+
+  // Rendu en grille
+  function renderGridView(categories) {
+    const gridView = document.getElementById('gridView');
+    
+    if (categories.length === 0) {
+      gridView.innerHTML = `
+        <div class="col-span-full text-center py-12">
+          <i class="fas fa-folder-open text-5xl text-gray-400 mb-3"></i>
+          <p class="text-gray-500 text-lg">Aucune catégorie trouvée</p>
+        </div>
+      `;
+      return;
+    }
+    
+    gridView.innerHTML = categories.map(cat => `
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+        <div class="relative h-40 bg-gray-200">
+          <img src="${cat.image || 'https://via.placeholder.com/300x200?text=Catégorie'}" 
+               alt="${cat.name}" 
+               class="w-full h-full object-cover"
+               onerror="this.src='https://via.placeholder.com/300x200?text=Image+non+disponible'">
+          <div class="absolute top-2 right-2">
+            <span class="category-badge ${cat.status === 'actif' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">
+              ${cat.status === 'actif' ? 'Actif' : 'Inactif'}
+            </span>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="text-lg font-semibold text-gray-800">${cat.name}</h3>
+            <span class="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+              ${cat.productCount || 0} produits
+            </span>
+          </div>
+          <p class="text-sm text-gray-600 mb-3">${cat.description || 'Aucune description'}</p>
+          <div class="flex items-center justify-between text-sm">
+            <span class="text-gray-500">Slug: ${cat.slug}</span>
+            <div class="flex space-x-2">
+              <button onclick="editCategory(${cat.id})" class="text-blue-600 hover:text-blue-800">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button onclick="deleteCategory(${cat.id})" class="text-red-600 hover:text-red-800">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+          <div class="mt-2 flex items-center gap-2 text-xs text-gray-500">
+            ${cat.showInMenu ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded">Menu</span>' : ''}
+            <span>Ordre: ${cat.order}</span>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Rendu en liste
+  function renderListView(categories) {
+    const tbody = document.getElementById('categoriesTableBody');
+    
+    if (categories.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6" class="px-6 py-8 text-center text-gray-500">
+            <i class="fas fa-folder-open text-4xl mb-2"></i>
+            <p>Aucune catégorie trouvée</p>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+    
+    tbody.innerHTML = categories.map(cat => `
+      <tr class="table-row">
+        <td class="px-6 py-4">
+          <div class="flex items-center">
+            <img src="${cat.image || 'https://via.placeholder.com/40'}" 
+                 alt="${cat.name}" 
+                 class="w-10 h-10 object-cover rounded-lg mr-3"
+                 onerror="this.src='https://via.placeholder.com/40'">
+            <span class="font-medium text-gray-900">${cat.name}</span>
+          </div>
+        </td>
+        <td class="px-6 py-4 text-sm text-gray-600">${cat.slug}</td>
+        <td class="px-6 py-4 text-sm text-gray-600">${cat.description?.substring(0, 30)}${cat.description?.length > 30 ? '...' : ''}</td>
+        <td class="px-6 py-4">
+          <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
+            ${cat.productCount || 0}
+          </span>
+        </td>
+        <td class="px-6 py-4">
+          <span class="px-2 py-1 rounded-full text-xs ${cat.status === 'actif' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">
+            ${cat.status === 'actif' ? 'Actif' : 'Inactif'}
+          </span>
+        </td>
+        <td class="px-6 py-4">
+          <div class="flex space-x-2">
+            <button onclick="editCategory(${cat.id})" class="text-blue-600 hover:text-blue-800">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button onclick="deleteCategory(${cat.id})" class="text-red-600 hover:text-red-800">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // Mise à jour de la pagination
+  function updatePaginationInfo() {
+    const start = (currentPage - 1) * itemsPerPage + 1;
+    const end = Math.min(currentPage * itemsPerPage, filteredCategories.length);
+    document.getElementById('showingInfo').textContent = 
+      `Affichage de ${start} à ${end} sur ${filteredCategories.length} catégories`;
+    
+    document.getElementById('prevPage').disabled = currentPage === 1;
+    document.getElementById('nextPage').disabled = currentPage * itemsPerPage >= filteredCategories.length;
+    document.getElementById('currentPage').textContent = currentPage;
+  }
+
+  // Changement de page
+  function changePage(page) {
+    if (page < 1 || page > Math.ceil(filteredCategories.length / itemsPerPage)) return;
+    currentPage = page;
+    renderCategories();
+  }
+
+  // Ouverture du modal d'ajout
+  function openAddModal() {
+    document.getElementById('modalTitle').textContent = 'Ajouter une catégorie';
+    document.getElementById('categoryForm').reset();
+    document.getElementById('categoryId').value = '';
+    document.getElementById('categoryStatus').checked = true;
+    document.getElementById('categoryShowInMenu').checked = true;
+    document.getElementById('categoryOrder').value = categories.length + 1;
+    document.getElementById('imagePreview').classList.add('hidden');
+    updateStatusLabel();
+    document.getElementById('categoryModal').classList.remove('hidden');
+    document.getElementById('categoryModal').classList.add('flex');
+  }
+
+  // Édition d'une catégorie
+  window.editCategory = function(id) {
+    const cat = categories.find(c => c.id === id);
+    if (!cat) return;
+    
+    document.getElementById('modalTitle').textContent = 'Modifier la catégorie';
+    document.getElementById('categoryId').value = cat.id;
+    document.getElementById('categoryName').value = cat.name;
+    document.getElementById('categorySlug').value = cat.slug;
+    document.getElementById('categoryDescription').value = cat.description || '';
+    document.getElementById('categoryStatus').checked = cat.status === 'actif';
+    document.getElementById('categoryShowInMenu').checked = cat.showInMenu;
+    document.getElementById('categoryOrder').value = cat.order || 0;
+    
+    if (cat.image) {
+      const preview = document.getElementById('imagePreview');
+      const previewImg = preview.querySelector('img');
+      previewImg.src = cat.image;
+      preview.classList.remove('hidden');
+    }
+    
+    updateStatusLabel();
+    document.getElementById('categoryModal').classList.remove('hidden');
+    document.getElementById('categoryModal').classList.add('flex');
+  };
+
+  // Préparation de la suppression
+  window.deleteCategory = function(id) {
+    const cat = categories.find(c => c.id === id);
+    if (!cat) return;
+    
+    document.getElementById('deleteCategoryId').value = id;
+    
+    if (cat.productCount && cat.productCount > 0) {
+      document.getElementById('productsWarning').innerHTML = 
+        `<i class="fas fa-exclamation-circle"></i> Cette catégorie contient ${cat.productCount} produit(s). La suppression affectera ces produits.`;
+    } else {
+      document.getElementById('productsWarning').innerHTML = '';
+    }
+    
+    document.getElementById('deleteModal').classList.remove('hidden');
+    document.getElementById('deleteModal').classList.add('flex');
+  };
+
+  // Fermeture des modals
+  function closeModal() {
+    document.getElementById('categoryModal').classList.add('hidden');
+    document.getElementById('categoryModal').classList.remove('flex');
+  }
+
+  function closeDeleteModal() {
+    document.getElementById('deleteModal').classList.add('hidden');
+    document.getElementById('deleteModal').classList.remove('flex');
+  }
+
+  // Soumission du formulaire
+  function handleCategorySubmit(e) {
+    e.preventDefault();
+    
+    const id = document.getElementById('categoryId').value;
+    const categoryData = {
+      name: document.getElementById('categoryName').value,
+      slug: document.getElementById('categorySlug').value,
+      description: document.getElementById('categoryDescription').value,
+      status: document.getElementById('categoryStatus').checked ? 'actif' : 'inactif',
+      showInMenu: document.getElementById('categoryShowInMenu').checked,
+      order: parseInt(document.getElementById('categoryOrder').value) || 0,
+      image: '../images/placeholder-category.jpg', // À remplacer par l'image uploadée
+      productCount: 0
+    };
+    
+    if (id) {
+      // Modification
+      const index = categories.findIndex(c => c.id === parseInt(id));
+      if (index !== -1) {
+        categoryData.productCount = categories[index].productCount; // Conserver le compte de produits
+        categories[index] = { ...categories[index], ...categoryData, id: parseInt(id) };
+        alert('Catégorie modifiée avec succès !');
+      }
+    } else {
+      // Ajout
+      const newId = Math.max(...categories.map(c => c.id)) + 1;
+      categories.push({ id: newId, ...categoryData });
+      alert('Catégorie ajoutée avec succès !');
+    }
+    
+    filterCategories();
+    updateStats();
+    closeModal();
+  }
+
+  // Suppression
+  function handleDelete() {
+    const id = parseInt(document.getElementById('deleteCategoryId').value);
+    const cat = categories.find(c => c.id === id);
+    
+    if (cat.productCount && cat.productCount > 0) {
+      if (!confirm('Cette catégorie contient des produits. Voulez-vous vraiment la supprimer ?')) {
+        return;
+      }
+    }
+    
+    categories = categories.filter(c => c.id !== id);
+    filterCategories();
+    updateStats();
+    closeDeleteModal();
+    alert('Catégorie supprimée avec succès !');
+  }
+
+  // Aperçu de l'image
+  function handleImagePreview(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const preview = document.getElementById('imagePreview');
+        const previewImg = preview.querySelector('img');
+        previewImg.src = e.target.result;
+        preview.classList.remove('hidden');
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  // Menu mobile
+  document.getElementById('menuBtn')?.addEventListener('click', function() {
+    alert('Menu mobile - Fonctionnalité à implémenter');
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Finalisez votre commande EVORA DESIGN - Paiement sécurisé">
+  <meta name="robots" content="noindex, follow">
+  <title>Finaliser la commande - EVORA DESIGN</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    .payment-method {
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 2px solid #e5e7eb;
+    }
+    .payment-method:hover {
+      border-color: #1e3a8a;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15);
+    }
+    .payment-method.selected {
+      border-color: #1e3a8a;
+      background-color: #eff6ff;
+    }
+    .payment-method.selected::after {
+      content: '✓';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 24px;
+      height: 24px;
+      background: #1e3a8a;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    .step-indicator {
+      position: relative;
+    }
+    .step-indicator::after {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      width: 100%;
+      height: 2px;
+      background: #e5e7eb;
+      z-index: -1;
+    }
+    .step-indicator.active .step-number {
+      background: #1e3a8a;
+      color: white;
+    }
+    .step-indicator.completed .step-number {
+      background: #10b981;
+      color: white;
+    }
+    .step-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 via-blue-100 to-indigo-100 min-h-screen">
+
+<!-- HEADER -->
+<header class="bg-white shadow-md sticky top-0 z-50" role="banner">
+  <div class="container mx-auto flex justify-between items-center p-4">
+    <div class="flex items-center space-x-3">
+      <img src="images/LOGO EVORA NOUVEAU.png" alt="Logo EVORA DESIGN" class="h-10 w-10 object-contain" width="40" height="40">
+      <h1 class="text-2xl font-bold text-[#1e3a8a]">EVORA DESIGN</h1>
+    </div>
+    <div class="flex items-center gap-2 text-sm text-gray-600">
+      <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+      </svg>
+      Paiement sécurisé
+    </div>
+  </div>
+</header>
+
+<!-- INDICATEUR D'ÉTAPES -->
+<div class="bg-white border-b py-6">
+  <div class="container mx-auto px-4">
+    <div class="flex justify-between max-w-3xl mx-auto">
+      <div class="step-indicator completed text-center flex-1">
+        <div class="step-number">1</div>
+        <p class="text-xs mt-2 font-medium text-gray-600">Panier</p>
+      </div>
+      <div class="step-indicator active text-center flex-1">
+        <div class="step-number">2</div>
+        <p class="text-xs mt-2 font-medium text-gray-800">Informations</p>
+      </div>
+      <div class="step-indicator text-center flex-1">
+        <div class="step-number">3</div>
+        <p class="text-xs mt-2 font-medium text-gray-600">Paiement</p>
+      </div>
+      <div class="step-indicator text-center flex-1">
+        <div class="step-number">4</div>
+        <p class="text-xs mt-2 font-medium text-gray-600">Confirmation</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENU PRINCIPAL -->
+<main class="py-12">
+  <div class="container mx-auto px-4">
+    <div class="max-w-6xl mx-auto">
+      
+      <div class="grid lg:grid-cols-3 gap-8">
+        
+        <!-- FORMULAIRE -->
+        <div class="lg:col-span-2 space-y-6">
+          
+          <!-- Informations de livraison -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+              <svg class="w-6 h-6 text-[#1e3a8a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              Informations de livraison
+            </h2>
+            
+            <form id="orderForm" class="space-y-4">
+              <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label for="nom" class="block text-sm font-semibold text-gray-700 mb-2">
+                    Nom complet <span class="text-red-500">*</span>
+                  </label>
+                  <input type="text" id="nom" name="nom" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e3a8a] focus:border-transparent outline-none transition">
+                </div>
+                <div>
+                  <label for="telephone" class="block text-sm font-semibold text-gray-700 mb-2">
+                    Téléphone <span class="text-red-500">*</span>
+                  </label>
+                  <input type="tel" id="telephone" name="telephone" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e3a8a] focus:border-transparent outline-none transition" placeholder="+225 07 00 00 00 00">
+                </div>
+              </div>
+              
+              <div>
+                <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">
+                  Email <span class="text-red-500">*</span>
+                </label>
+                <input type="email" id="email" name="email" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e3a8a] focus:border-transparent outline-none transition">
+              </div>
+              
+              <div>
+                <label for="adresse" class="block text-sm font-semibold text-gray-700 mb-2">
+                  Adresse de livraison <span class="text-red-500">*</span>
+                </label>
+                <input type="text" id="adresse" name="adresse" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e3a8a] focus:border-transparent outline-none transition" placeholder="Rue, quartier">
+              </div>
+              
+              <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label for="ville" class="block text-sm font-semibold text-gray-700 mb-2">
+                    Ville <span class="text-red-500">*</span>
+                  </label>
+                  <select id="ville" name="ville" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e3a8a] focus:border-transparent outline-none transition">
+                    <option value="">Sélectionnez</option>
+                    <option value="Abidjan">Abidjan</option>
+                    <option value="Bouaké">Bouaké</option>
+                    <option value="Daloa">Daloa</option>
+                    <option value="Yamoussoukro">Yamoussoukro</option>
+                    <option value="San-Pédro">San-Pédro</option>
+                    <option value="Korhogo">Korhogo</option>
+                    <option value="Autre">Autre</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="commune" class="block text-sm font-semibold text-gray-700 mb-2">
+                    Commune / Quartier
+                  </label>
+                  <input type="text" id="commune" name="commune" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e3a8a] focus:border-transparent outline-none transition">
+                </div>
+              </div>
+              
+              <div>
+                <label for="notes" class="block text-sm font-semibold text-gray-700 mb-2">
+                  Instructions de livraison (optionnel)
+                </label>
+                <textarea id="notes" name="notes" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e3a8a] focus:border-transparent outline-none resize-none transition" placeholder="Précisions pour faciliter la livraison..."></textarea>
+              </div>
+            </form>
+          </div>
+
+          <!-- Moyens de paiement -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+              <svg class="w-6 h-6 text-[#1e3a8a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+              </svg>
+              Mode de paiement
+            </h2>
+            
+            <div class="space-y-4">
+              
+              <!-- Mobile Money -->
+              <div class="payment-method relative p-4 rounded-xl" data-payment="mobile-money">
+                <div class="flex items-center gap-4">
+                  <div class="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <h3 class="font-bold text-gray-800 text-lg">Mobile Money</h3>
+                    <p class="text-sm text-gray-600">Orange Money, MTN Money, Moov Money</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Wave -->
+              <div class="payment-method relative p-4 rounded-xl" data-payment="wave">
+                <div class="flex items-center gap-4">
+                  <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <h3 class="font-bold text-gray-800 text-lg">Wave</h3>
+                    <p class="text-sm text-gray-600">Paiement instantané via Wave</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Virement bancaire -->
+              <div class="payment-method relative p-4 rounded-xl" data-payment="virement">
+                <div class="flex items-center gap-4">
+                  <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/>
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <h3 class="font-bold text-gray-800 text-lg">Virement bancaire</h3>
+                    <p class="text-sm text-gray-600">Transfert direct sur notre compte</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Paiement à la livraison -->
+              <div class="payment-method relative p-4 rounded-xl" data-payment="livraison">
+                <div class="flex items-center gap-4">
+                  <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <h3 class="font-bold text-gray-800 text-lg">Paiement à la livraison</h3>
+                    <p class="text-sm text-gray-600">Payez en espèces lors de la réception</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div id="paymentDetails" class="mt-6 p-4 bg-blue-50 rounded-lg hidden">
+              <h4 class="font-semibold text-gray-800 mb-2">Instructions de paiement</h4>
+              <p id="paymentInstructions" class="text-sm text-gray-600"></p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RÉSUMÉ DE COMMANDE -->
+        <div class="lg:col-span-1">
+          <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
+            <h3 class="text-xl font-bold text-gray-800 mb-6">Résumé de la commande</h3>
+            
+            <div id="orderSummary" class="space-y-3 mb-6 max-h-64 overflow-y-auto">
+              <!-- Articles -->
+            </div>
+            
+            <div class="border-t pt-4 space-y-3">
+              <div class="flex justify-between text-gray-600">
+                <span>Sous-total</span>
+                <span id="subtotalAmount" class="font-medium">0 FCFA</span>
+              </div>
+              <div class="flex justify-between text-gray-600">
+                <span>Livraison</span>
+                <span class="font-medium text-green-600">Gratuite</span>
+              </div>
+              <div class="border-t pt-3 flex justify-between text-xl font-bold text-gray-800">
+                <span>Total</span>
+                <span id="totalAmount" class="text-[#6b4f3a]">0 FCFA</span>
+              </div>
+            </div>
+
+            <button id="confirmOrderBtn" class="btn-primary w-full py-4 mt-6 text-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              Confirmer la commande
+            </button>
+
+            <div class="mt-6 space-y-3 text-sm">
+              <div class="flex items-start gap-2 text-gray-600">
+                <svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                </svg>
+                <span>Paiement 100% sécurisé</span>
+              </div>
+              <div class="flex items-start gap-2 text-gray-600">
+                <svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
+                </svg>
+                <span>Livraison gratuite à Abidjan</span>
+              </div>
+              <div class="flex items-start gap-2 text-gray-600">
+                <svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                </svg>
+                <span>Support client disponible</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+(function() {
+  'use strict';
+
+  const STORAGE_KEY = 'evoradesign_cart';
+  let selectedPayment = null;
+
+  // Charger le panier
+  function loadCart() {
+    try {
+      const cart = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      displayOrderSummary(cart);
+      return cart;
+    } catch (error) {
+      console.error('Erreur lors du chargement du panier:', error);
+      return [];
+    }
+  }
+
+  // Afficher le résumé de commande
+  function displayOrderSummary(cart) {
+    const orderSummary = document.getElementById('orderSummary');
+    const subtotalAmount = document.getElementById('subtotalAmount');
+    const totalAmount = document.getElementById('totalAmount');
+
+    if (cart.length === 0) {
+      orderSummary.innerHTML = '<p class="text-center text-gray-500 py-4">Votre panier est vide</p>';
+      subtotalAmount.textContent = '0 FCFA';
+      totalAmount.textContent = '0 FCFA';
+      return;
+    }
+
+    orderSummary.innerHTML = cart.map(item => `
+      <div class="flex justify-between items-start text-sm">
+        <div class="flex-1">
+          <p class="font-medium text-gray-800">${item.name}</p>
+        </div>
+        <p class="font-semibold text-gray-800 ml-2">${item.price.toLocaleString('fr-FR')} FCFA</p>
+      </div>
+    `).join('');
+
+    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    subtotalAmount.textContent = `${total.toLocaleString('fr-FR')} FCFA`;
+    totalAmount.textContent = `${total.toLocaleString('fr-FR')} FCFA`;
+  }
+
+  // Gestion des moyens de paiement
+  const paymentMethods = document.querySelectorAll('.payment-method');
+  const paymentDetails = document.getElementById('paymentDetails');
+  const paymentInstructions = document.getElementById('paymentInstructions');
+  const confirmBtn = document.getElementById('confirmOrderBtn');
+
+  const paymentInfo = {
+    'mobile-money': 'Vous serez contacté pour finaliser le paiement via Orange Money, MTN Money ou Moov Money. Préparez votre numéro de téléphone mobile.',
+    'wave': 'Vous recevrez un lien de paiement Wave par SMS. Le paiement est instantané et sécurisé.',
+    'virement': 'Coordonnées bancaires:\nBanque: [Nom de la banque]\nIBAN: CI00 0000 0000 0000 0000 0000\nTitulaire: EVORA DESIGN\n\nEnvoyez la preuve de virement par WhatsApp.',
+    'livraison': 'Vous paierez en espèces lors de la réception de votre commande. Assurez-vous d\'avoir le montant exact.'
+  };
+
+  paymentMethods.forEach(method => {
+    method.addEventListener('click', function() {
+      // Retirer la sélection précédente
+      paymentMethods.forEach(m => m.classList.remove('selected'));
+      
+      // Ajouter la sélection
+      this.classList.add('selected');
+      selectedPayment = this.dataset.payment;
+      
+      // Afficher les instructions
+      paymentDetails.classList.remove('hidden');
+      paymentInstructions.textContent = paymentInfo[selectedPayment];
+      
+      // Activer le bouton de confirmation
+      confirmBtn.disabled = false;
+    });
+  });
+
+  // Validation du formulaire
+  const orderForm = document.getElementById('orderForm');
+  
+  confirmBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    // Vérifier le formulaire
+    if (!orderForm.checkValidity()) {
+      orderForm.reportValidity();
+      return;
+    }
+    
+    // Vérifier le moyen de paiement
+    if (!selectedPayment) {
+      alert('Veuillez sélectionner un moyen de paiement');
+      return;
+    }
+    
+    // Récupérer les données
+    const formData = new FormData(orderForm);
+    const cart = loadCart();
+    
+    if (cart.length === 0) {
+      alert('Votre panier est vide');
+      window.location.href = 'index.html';
+      return;
+    }
+    
+    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    
+    // Préparer le message de commande
+    const orderDetails = `🛍️ NOUVELLE COMMANDE EVORA DESIGN\n\n` +
+      `👤 CLIENT:\n` +
+      `Nom: ${formData.get('nom')}\n` +
+      `Téléphone: ${formData.get('telephone')}\n` +
+      `Email: ${formData.get('email')}\n\n` +
+      `📍 LIVRAISON:\n` +
+      `Adresse: ${formData.get('adresse')}\n` +
+      `Ville: ${formData.get('ville')}\n` +
+      `Commune: ${formData.get('commune') || 'Non spécifié'}\n` +
+      `Instructions: ${formData.get('notes') || 'Aucune'}\n\n` +
+      `🛋️ ARTICLES:\n` +
+      cart.map(item => `- ${item.name}: ${item.price.toLocaleString('fr-FR')} FCFA`).join('\n') +
+      `\n\n💰 TOTAL: ${total.toLocaleString('fr-FR')} FCFA\n\n` +
+      `💳 MODE DE PAIEMENT: ${getPaymentMethodName(selectedPayment)}\n\n` +
+      `Merci de confirmer la commande et les délais de livraison.`;
+    
+    // Redirection vers WhatsApp
+    const whatsappUrl = `https://wa.me/2250748655120?text=${encodeURIComponent(orderDetails)}`;
+    
+    // Afficher confirmation
+    if (confirm('Votre commande va être envoyée. Vous allez être redirigé vers WhatsApp pour finaliser.')) {
+      // Vider le panier
+      localStorage.removeItem(STORAGE_KEY);
+      
+      // Rediriger vers page de confirmation
+      sessionStorage.setItem('orderConfirmed', 'true');
+      sessionStorage.setItem('orderTotal', total);
+      sessionStorage.setItem('orderPayment', selectedPayment);
+      
+      window.location.href = 'confirmation.html';
+      
+      // Ouvrir WhatsApp
+      setTimeout(() => {
+        window.open(whatsappUrl, '_blank');
+      }, 500);
+    }
+  });
+
+  function getPaymentMethodName(method) {
+    const names = {
+      'mobile-money': 'Mobile Money (Orange/MTN/Moov)',
+      'wave': 'Wave',
+      'virement': 'Virement bancaire',
+      'livraison': 'Paiement à la livraison'
+    };
+    return names[method] || method;
+  }
+
+  // Charger le panier au chargement de la page
+  const cart = loadCart();
+  if (cart.length === 0) {
+    if (confirm('Votre panier est vide. Voulez-vous retourner à la boutique ?')) {
+      window.location.href = 'index.html';
+    }
+  }
+
+})();
+</script>
+
+<script src="js/api-client.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,312 @@
+/* =========================
+   VARIABLES CSS
+========================= */
+:root {
+    --color-primary: #1e3a8a;
+    --color-primary-hover: #1e40af;
+    --color-secondary: #6b4f3a;
+    --color-bg: #F5F1EB;
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-gray-light: #f3f4f6;
+    --color-gray: #6b7280;
+    --color-gray-dark: #374151;
+    
+    --font-primary: 'Montserrat', sans-serif;
+    --font-heading: 'Poppins', sans-serif;
+    
+    --transition-base: all 0.3s ease;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 15px 30px rgba(0, 0, 0, 0.2);
+    
+    --border-radius-sm: 8px;
+    --border-radius-md: 12px;
+    --border-radius-lg: 16px;
+}
+
+/* =========================
+   RESET & BASE
+========================= */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-primary);
+    line-height: 1.6;
+    color: var(--color-gray-dark);
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+/* =========================
+   UTILITAIRES
+========================= */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* =========================
+   BOUTONS
+========================= */
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 12px 24px;
+    border-radius: var(--border-radius-md);
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition-base);
+    display: inline-block;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: var(--color-primary-hover);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    outline: none;
+}
+
+.btn-primary:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.btn-primary:active {
+    transform: scale(0.95);
+}
+
+.btn-cart {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 10px 18px;
+    border-radius: var(--border-radius-sm);
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-base);
+    position: relative;
+}
+
+.btn-cart:hover,
+.btn-cart:focus {
+    background-color: var(--color-primary-hover);
+    transform: translateY(-2px);
+    outline: none;
+}
+
+.btn-cart:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.btn-cart.has-items {
+    background-color: #059669;
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+}
+
+.btn-cart.has-items:hover {
+    background-color: #047857;
+}
+
+/* =========================
+   CARTES
+========================= */
+.card-hover {
+    transition: var(--transition-base);
+}
+
+.card-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+.card-hover:focus-within {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* =========================
+   LAZY LOADING
+========================= */
+img[loading="lazy"] {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+img[loading="lazy"].loaded {
+    opacity: 1;
+}
+
+/* =========================
+   PANIER - APERÇU
+========================= */
+.cart-preview {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 10px;
+    width: 320px;
+    max-height: 400px;
+    background: var(--color-white);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    overflow: hidden;
+    transition: var(--transition-base);
+}
+
+.cart-preview.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px);
+}
+
+.cart-preview-header {
+    padding: 16px;
+    border-bottom: 1px solid #e5e7eb;
+    background: var(--color-gray-light);
+}
+
+.cart-preview-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-gray-dark);
+}
+
+.cart-preview-items {
+    max-height: 250px;
+    overflow-y: auto;
+    padding: 12px;
+}
+
+.cart-preview-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 8px;
+    background: var(--color-gray-light);
+    border-radius: var(--border-radius-sm);
+    font-size: 14px;
+}
+
+.cart-preview-item-name {
+    font-weight: 500;
+    color: var(--color-gray-dark);
+    flex: 1;
+}
+
+.cart-preview-item-price {
+    color: var(--color-secondary);
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.cart-preview-footer {
+    padding: 16px;
+    border-top: 1px solid #e5e7eb;
+    background: var(--color-gray-light);
+}
+
+.cart-preview-total {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-gray-dark);
+}
+
+.cart-preview-empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--color-gray);
+}
+
+/* Position relative pour le header */
+header .container {
+    position: relative;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+    .btn-primary {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    .card-hover:hover {
+        transform: translateY(-4px);
+    }
+}
+
+/* =========================
+   ACCESSIBILITÉ
+========================= */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus visible pour navigation clavier */
+:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+}

@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EVORA DESIGN - Administration Utilisateurs</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background-color: #f3f4f6;
+    }
+    
+    .sidebar {
+      background: linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%);
+    }
+    
+    .sidebar a.active {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-left: 4px solid #fbbf24;
+    }
+    
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+    }
+    
+    .btn-primary {
+      background-color: #1e3a8a;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary:hover {
+      background-color: #1e40af;
+      transform: scale(1.05);
+    }
+    
+    .btn-success {
+      background-color: #059669;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+    }
+    
+    .btn-success:hover {
+      background-color: #047857;
+    }
+    
+    .btn-danger {
+      background-color: #dc2626;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+    }
+    
+    .btn-danger:hover {
+      background-color: #b91c1c;
+    }
+    
+    .badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
+    .badge-admin {
+      background-color: #fee2e2;
+      color: #991b1b;
+    }
+    
+    .badge-manager {
+      background-color: #dbeafe;
+      color: #1e3a8a;
+    }
+    
+    .badge-user {
+      background-color: #e0e7ff;
+      color: #3730a3;
+    }
+    
+    .badge-active {
+      background-color: #dcfce7;
+      color: #166534;
+    }
+    
+    .badge-inactive {
+      background-color: #f3f4f6;
+      color: #4b5563;
+    }
+    
+    .badge-banned {
+      background-color: #fee2e2;
+      color: #991b1b;
+    }
+    
+    .modal {
+      transition: opacity 0.3s ease;
+    }
+    
+    .table-header {
+      background-color: #1e3a8a;
+      color: white;
+    }
+    
+    .table-row:hover {
+      background-color: #f9fafb;
+    }
+    
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #1e3a8a;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    
+    .avatar-lg {
+      width: 80px;
+      height: 80px;
+      font-size: 2rem;
+    }
+    
+    .permission-checkbox {
+      width: 1.2rem;
+      height: 1.2rem;
+      accent-color: #1e3a8a;
+    }
+    
+    .activity-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 0.5rem;
+    }
+    
+    .dot-online {
+      background-color: #10b981;
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+    }
+    
+    .dot-offline {
+      background-color: #9ca3af;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+<!-- ========== CONTAINER PRINCIPAL ========== -->
+<div class="flex h-screen bg-gray-100">
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar w-64 text-white flex-shrink-0 hidden md:block overflow-y-auto">
+    <div class="p-6">
+      <div class="flex items-center space-x-3 mb-8">
+        <img src="../images/LOGO EVORA NOUVEAU.png" alt="Logo" class="h-10 w-10 object-contain">
+        <h2 class="text-xl font-bold">EVORA DESIGN</h2>
+      </div>
+      
+      <nav class="space-y-2">
+        <a href="dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-tachometer-alt w-5"></i>
+          <span>Tableau de bord</span>
+        </a>
+        <a href="products.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-box w-5"></i>
+          <span>Produits</span>
+        </a>
+        <a href="categories.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-tags w-5"></i>
+          <span>Catégories</span>
+        </a>
+        <a href="orders.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-shopping-cart w-5"></i>
+          <span>Commandes</span>
+        </a>
+        <a href="messages.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-envelope w-5"></i>
+          <span>Messages</span>
+        </a>
+        <a href="users.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-white/20 border-l-4 border-yellow-400 active">
+          <i class="fas fa-users w-5"></i>
+          <span>Utilisateurs</span>
+        </a>
+        <a href="settings.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-cog w-5"></i>
+          <span>Paramètres</span>
+        </a>
+        <hr class="border-white/20 my-4">
+        <a href="../index.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-home w-5"></i>
+          <span>Voir le site</span>
+        </a>
+        <a href="login.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-sign-out-alt w-5"></i>
+          <span>Déconnexion</span>
+        </a>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- ========== CONTENU PRINCIPAL ========== -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+
+    <!-- ========== HEADER ADMIN ========== -->
+    <header class="bg-white shadow-sm px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <button id="menuBtn" class="md:hidden text-gray-600 hover:text-[#1e3a8a]">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+        <h1 class="text-2xl font-semibold text-gray-800">Gestion des Utilisateurs</h1>
+      </div>
+      
+      <div class="flex items-center space-x-4">
+        <div class="relative">
+          <button class="text-gray-600 hover:text-[#1e3a8a] relative">
+            <i class="fas fa-bell text-xl"></i>
+            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">3</span>
+          </button>
+        </div>
+        
+        <div class="flex items-center space-x-3">
+          <img src="https://ui-avatars.com/api/?name=Admin+User&background=1e3a8a&color=fff" class="h-10 w-10 rounded-full">
+          <div class="hidden md:block">
+            <p class="text-sm font-semibold">Admin EVORA</p>
+            <p class="text-xs text-gray-500">admin@evoradesign.ci</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="flex-1 overflow-y-auto p-6 bg-gray-100">
+
+      <!-- Statistiques -->
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">Total utilisateurs</p>
+              <p class="text-2xl font-bold text-[#1e3a8a]" id="totalUsers">0</p>
+            </div>
+            <div class="bg-blue-100 p-3 rounded-full">
+              <i class="fas fa-users text-[#1e3a8a] text-xl"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">Actifs</p>
+              <p class="text-2xl font-bold text-green-600" id="activeUsers">0</p>
+            </div>
+            <div class="bg-green-100 p-3 rounded-full">
+              <i class="fas fa-check-circle text-green-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">Administrateurs</p>
+              <p class="text-2xl font-bold text-red-600" id="adminUsers">0</p>
+            </div>
+            <div class="bg-red-100 p-3 rounded-full">
+              <i class="fas fa-crown text-red-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">Nouveaux (mois)</p>
+              <p class="text-2xl font-bold text-purple-600" id="newUsers">0</p>
+            </div>
+            <div class="bg-purple-100 p-3 rounded-full">
+              <i class="fas fa-user-plus text-purple-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">En ligne</p>
+              <p class="text-2xl font-bold text-blue-600" id="onlineUsers">0</p>
+            </div>
+            <div class="bg-blue-100 p-3 rounded-full">
+              <i class="fas fa-circle text-blue-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barre d'actions et recherche -->
+      <div class="mb-6 flex flex-wrap gap-4 items-center justify-between">
+        <div class="flex gap-2">
+          <button id="addUserBtn" class="btn-primary flex items-center gap-2">
+            <i class="fas fa-user-plus"></i>
+            Nouvel utilisateur
+          </button>
+          <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg transition flex items-center gap-2">
+            <i class="fas fa-download"></i>
+            Exporter
+          </button>
+        </div>
+        
+        <div class="flex gap-2">
+          <div class="relative">
+            <input type="text" id="searchInput" placeholder="Rechercher un utilisateur..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] focus:border-transparent w-80">
+            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+          </div>
+          
+          <select id="roleFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            <option value="">Tous les rôles</option>
+            <option value="admin">Administrateur</option>
+            <option value="manager">Gestionnaire</option>
+            <option value="user">Utilisateur</option>
+          </select>
+          
+          <select id="statusFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            <option value="">Tous les statuts</option>
+            <option value="active">Actif</option>
+            <option value="inactive">Inactif</option>
+            <option value="banned">Banni</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Vue: Grille utilisateurs -->
+      <div class="mb-6 flex justify-end">
+        <div class="bg-white rounded-lg shadow flex">
+          <button id="gridViewBtn" class="px-4 py-2 bg-[#1e3a8a] text-white rounded-l-lg">
+            <i class="fas fa-th-large"></i>
+          </button>
+          <button id="listViewBtn" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-r-lg hover:bg-gray-300">
+            <i class="fas fa-list"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Vue en grille -->
+      <div id="gridView" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Les utilisateurs seront chargés ici -->
+        <div class="col-span-full text-center py-8">
+          <i class="fas fa-spinner fa-spin text-3xl text-[#1e3a8a] mb-2"></i>
+          <p class="text-gray-500">Chargement des utilisateurs...</p>
+        </div>
+      </div>
+
+      <!-- Vue en liste -->
+      <div id="listView" class="hidden">
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+          <table class="w-full">
+            <thead class="table-header">
+              <tr>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Utilisateur</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Contact</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Rôle</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Statut</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Inscription</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody" class="divide-y divide-gray-200">
+              <!-- Les utilisateurs en liste seront chargés ici -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="mt-4 flex items-center justify-between">
+        <p class="text-sm text-gray-600" id="showingInfo">Affichage de 1 à 8 utilisateurs</p>
+        <div class="flex gap-2">
+          <button class="px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 disabled:opacity-50" id="prevPage" disabled>
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <span class="px-3 py-1 bg-[#1e3a8a] text-white rounded" id="currentPage">1</span>
+          <button class="px-3 py-1 border border-gray-300 rounded hover:bg-gray-100" id="nextPage">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ========== MODAL AJOUT/MODIFICATION UTILISATEUR ========== -->
+<div id="userModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 modal">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+    <div class="p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold text-gray-800" id="modalTitle">Ajouter un utilisateur</h2>
+        <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times text-2xl"></i>
+        </button>
+      </div>
+      
+      <form id="userForm" class="space-y-4">
+        <input type="hidden" id="userId">
+        
+        <div class="grid grid-cols-2 gap-4">
+          <!-- Informations personnelles -->
+          <div class="col-span-2">
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">Informations personnelles</h3>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Prénom *</label>
+            <input type="text" id="userFirstName" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nom *</label>
+            <input type="text" id="userLastName" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+          </div>
+          
+          <div class="col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+            <input type="email" id="userEmail" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
+            <input type="tel" id="userPhone" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Date de naissance</label>
+            <input type="date" id="userBirthdate" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+          </div>
+          
+          <div class="col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Adresse</label>
+            <input type="text" id="userAddress" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+          </div>
+          
+          <!-- Compte -->
+          <div class="col-span-2">
+            <h3 class="text-lg font-semibold text-gray-700 mb-2 mt-2">Informations du compte</h3>
+          </div>
+          
+          <div class="col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nom d'utilisateur *</label>
+            <input type="text" id="userUsername" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Mot de passe *</label>
+            <input type="password" id="userPassword" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            <p class="text-xs text-gray-500 mt-1">Minimum 8 caractères</p>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Confirmer mot de passe</label>
+            <input type="password" id="userConfirmPassword" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Rôle</label>
+            <select id="userRole" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+              <option value="user">Utilisateur</option>
+              <option value="manager">Gestionnaire</option>
+              <option value="admin">Administrateur</option>
+            </select>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Statut</label>
+            <select id="userStatus" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+              <option value="active">Actif</option>
+              <option value="inactive">Inactif</option>
+              <option value="banned">Banni</option>
+            </select>
+          </div>
+          
+          <!-- Avatar -->
+          <div class="col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Photo de profil</label>
+            <div class="flex items-center space-x-4">
+              <div class="flex-1">
+                <input type="file" id="userAvatar" accept="image/*" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+              </div>
+              <div id="avatarPreview" class="w-16 h-16 bg-gray-100 rounded-full overflow-hidden hidden">
+                <img src="" alt="Aperçu" class="w-full h-full object-cover">
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex justify-end space-x-3 pt-4">
+          <button type="button" id="cancelModal" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+            Annuler
+          </button>
+          <button type="submit" class="btn-primary px-6 py-2">
+            Enregistrer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MODAL PERMISSIONS ========== -->
+<div id="permissionsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 modal">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl">
+    <div class="p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold text-gray-800">Gestion des permissions</h2>
+        <button id="closePermissionsModal" class="text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times text-2xl"></i>
+        </button>
+      </div>
+      
+      <div class="mb-4">
+        <p class="text-gray-600" id="permissionsUserInfo">Utilisateur: <span class="font-semibold"></span></p>
+      </div>
+      
+      <div class="space-y-4">
+        <div class="border rounded-lg p-4">
+          <h3 class="font-semibold mb-3">Modules d'administration</h3>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" class="permission-checkbox" data-perm="dashboard" checked>
+              <span>Tableau de bord</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" class="permission-checkbox" data-perm="products" checked>
+              <span>Produits</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" class="permission-checkbox" data-perm="categories" checked>
+              <span>Catégories</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" class="permission-checkbox" data-perm="orders" checked>
+              <span>Commandes</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" class="permission-checkbox" data-perm="messages" checked>
+              <span>Messages</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" class="permission-checkbox" data-perm="users">
+              <span>Utilisateurs</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" class="permission-checkbox" data-perm="settings">
+              <span>Paramètres</span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="border rounded-lg p-4">
+          <h3 class="font-semibold mb-3">Actions autorisées</h3>
+          <div class="grid grid-cols-3 gap-3">
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" class="permission-checkbox" data-perm="create" checked>
+              <span>Créer</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" class="permission-checkbox" data-perm="read" checked>
+              <span>Lire</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" class="permission-checkbox" data-perm="update" checked>
+              <span>Modifier</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" class="permission-checkbox" data-perm="delete">
+              <span>Supprimer</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" class="permission-checkbox" data-perm="export">
+              <span>Exporter</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" class="permission-checkbox" data-perm="import">
+              <span>Importer</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      
+      <div class="flex justify-end space-x-3 mt-6">
+        <button id="cancelPermissions" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+          Annuler
+        </button>
+        <button id="savePermissions" class="btn-primary">
+          Enregistrer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MODAL SUPPRESSION ========== -->
+<div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 modal">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+    <div class="p-6">
+      <div class="text-center">
+        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+          <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+        </div>
+        <h3 class="text-lg font-bold text-gray-800 mb-2">Confirmer la suppression</h3>
+        <p class="text-gray-600 mb-4">Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.</p>
+        <input type="hidden" id="deleteUserId">
+        <div class="flex justify-center space-x-3">
+          <button id="cancelDelete" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+            Annuler
+          </button>
+          <button id="confirmDelete" class="btn-danger px-6 py-2">
+            Supprimer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SCRIPT JAVASCRIPT ========== -->
+<script>
+  // Données simulées des utilisateurs
+  let users = [
+    {
+      id: 1,
+      firstName: 'Jean',
+      lastName: 'Kouassi',
+      email: 'jean.kouassi@email.com',
+      phone: '+225 07 12 34 56',
+      username: 'jkouassi',
+      role: 'admin',
+      status: 'active',
+      birthdate: '1985-06-15',
+      address: 'Cocody, Angré, Abidjan',
+      avatar: null,
+      createdAt: '2024-01-15T09:30:00',
+      lastLogin: '2025-02-20T08:45:00',
+      online: true,
+      orders: 12,
+      permissions: ['all']
+    },
+    {
+      id: 2,
+      firstName: 'Marie',
+      lastName: 'Koné',
+      email: 'marie.kone@email.com',
+      phone: '+225 05 23 45 67',
+      username: 'mkone',
+      role: 'manager',
+      status: 'active',
+      birthdate: '1990-03-22',
+      address: 'Plateau, Avenue Noguès, Abidjan',
+      avatar: null,
+      createdAt: '2024-02-10T14:20:00',
+      lastLogin: '2025-02-19T16:30:00',
+      online: false,
+      orders: 45,
+      permissions: ['products', 'categories', 'orders']
+    },
+    {
+      id: 3,
+      firstName: 'Amadou',
+      lastName: 'Touré',
+      email: 'amadou.toure@email.com',
+      phone: '+225 07 34 56 78',
+      username: 'atoure',
+      role: 'user',
+      status: 'active',
+      birthdate: '1992-11-08',
+      address: 'Yopougon, Siporex, Abidjan',
+      avatar: null,
+      createdAt: '2024-03-05T11:15:00',
+      lastLogin: '2025-02-18T10:20:00',
+      online: false,
+      orders: 3,
+      permissions: ['products:read']
+    },
+    {
+      id: 4,
+      firstName: 'Fatoumata',
+      lastName: 'Diallo',
+      email: 'fatou.diallo@email.com',
+      phone: '+225 05 45 67 89',
+      username: 'fdiallo',
+      role: 'user',
+      status: 'active',
+      birthdate: '1988-09-17',
+      address: 'Marcory, Zone 4, Abidjan',
+      avatar: null,
+      createdAt: '2024-04-20T09:45:00',
+      lastLogin: '2025-02-17T14:15:00',
+      online: false,
+      orders: 7,
+      permissions: ['products:read', 'orders:read']
+    },
+    {
+      id: 5,
+      firstName: 'Koffi',
+      lastName: 'Bernard',
+      email: 'koffi.b@email.com',
+      phone: '+225 07 56 78 90',
+      username: 'kbernard',
+      role: 'user',
+      status: 'inactive',
+      birthdate: '1975-12-03',
+      address: 'Abobo, PK18, Abidjan',
+      avatar: null,
+      createdAt: '2024-05-12T13:30:00',
+      lastLogin: '2025-01-15T11:40:00',
+      online: false,
+      orders: 0,
+      permissions: ['products:read']
+    },
+    {
+      id: 6,
+      firstName: 'Aminata',
+      lastName: 'Cissé',
+      email: 'aminata.c@email.com',
+      phone: '+225 05 67 89 01',
+      username: 'acisse',
+      role: 'manager',
+      status: 'active',
+      birthdate: '1987-07-29',
+      address: 'Riviera 3, Palmeraie, Abidjan',
+      avatar: null,
+      createdAt: '2024-06-08T10:00:00',
+      lastLogin: '2025-02-20T09:10:00',
+      online: true,
+      orders: 23,
+      permissions: ['products', 'categories', 'orders', 'messages']
+    },
+    {
+      id: 7,
+      firstName: 'Yao',
+      lastName: 'Philippe',
+      email: 'yao.philippe@email.com',
+      phone: '+225 07 78 90 12',
+      username: 'yphilippe',
+      role: 'user',
+      status: 'banned',
+      birthdate: '1983-04-12',
+      address: 'Koumassi, Campement, Abidjan',
+      avatar: null,
+      createdAt: '2024-07-15T15:45:00',
+      lastLogin: '2025-02-10T08:30:00',
+      online: false,
+      orders: 2,
+      permissions: []
+    },
+    {
+      id: 8,
+      firstName: 'Nadia',
+      lastName: 'Kouadio',
+      email: 'nadia.k@email.com',
+      phone: '+225 05 89 01 23',
+      username: 'nkouadio',
+      role: 'user',
+      status: 'active',
+      birthdate: '1995-01-25',
+      address: 'Treichville, Abidjan',
+      avatar: null,
+      createdAt: '2024-08-22T12:15:00',
+      lastLogin: '2025-02-19T17:50:00',
+      online: false,
+      orders: 1,
+      permissions: ['products:read']
+    },
+    {
+      id: 9,
+      firstName: 'Soro',
+      lastName: 'Moussa',
+      email: 'soro.m@email.com',
+      phone: '+225 07 90 12 34',
+      username: 'smoussa',
+      role: 'admin',
+      status: 'active',
+      birthdate: '1980-08-19',
+      address: 'Cocody, Mermoz, Abidjan',
+      avatar: null,
+      createdAt: '2024-09-05T09:00:00',
+      lastLogin: '2025-02-20T08:15:00',
+      online: true,
+      orders: 56,
+      permissions: ['all']
+    },
+    {
+      id: 10,
+      firstName: 'Rachel',
+      lastName: 'N\'Guessan',
+      email: 'rachel.n@email.com',
+      phone: '+225 05 01 23 45',
+      username: 'rnguessan',
+      role: 'user',
+      status: 'active',
+      birthdate: '1993-10-31',
+      address: 'Bingerville, Abidjan',
+      avatar: null,
+      createdAt: '2024-10-18T14:30:00',
+      lastLogin: '2025-02-18T13:20:00',
+      online: false,
+      orders: 4,
+      permissions: ['products:read', 'orders:read']
+    }
+  ];
+
+  // Variables globales
+  let currentPage = 1;
+  const itemsPerPage = 8;
+  let filteredUsers = [...users];
+  let searchTerm = '';
+  let roleFilter = '';
+  let statusFilter = '';
+  let currentView = 'grid';
+  let currentUserId = null;
+
+  // Initialisation
+  document.addEventListener('DOMContentLoaded', function() {
+    updateStats();
+    renderUsers();
+    setupEventListeners();
+  });
+
+  // Configuration des écouteurs
+  function setupEventListeners() {
+    document.getElementById('addUserBtn').addEventListener('click', openAddModal);
+    
+    document.getElementById('gridViewBtn').addEventListener('click', () => switchView('grid'));
+    document.getElementById('listViewBtn').addEventListener('click', () => switchView('list'));
+    
+    document.getElementById('searchInput').addEventListener('input', handleSearch);
+    document.getElementById('roleFilter').addEventListener('change', handleRoleFilter);
+    document.getElementById('statusFilter').addEventListener('change', handleStatusFilter);
+    
+    document.getElementById('prevPage').addEventListener('click', () => changePage(currentPage - 1));
+    document.getElementById('nextPage').addEventListener('click', () => changePage(currentPage + 1));
+    
+    // Modals
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    document.getElementById('cancelModal').addEventListener('click', closeModal);
+    document.getElementById('closePermissionsModal').addEventListener('click', closePermissionsModal);
+    document.getElementById('cancelPermissions').addEventListener('click', closePermissionsModal);
+    document.getElementById('savePermissions').addEventListener('click', savePermissions);
+    
+    document.getElementById('cancelDelete').addEventListener('click', closeDeleteModal);
+    document.getElementById('confirmDelete').addEventListener('click', handleDelete);
+    
+    document.getElementById('userForm').addEventListener('submit', handleUserSubmit);
+    document.getElementById('userAvatar').addEventListener('change', handleAvatarPreview);
+  }
+
+  // Mise à jour des statistiques
+  function updateStats() {
+    const total = users.length;
+    const active = users.filter(u => u.status === 'active').length;
+    const admins = users.filter(u => u.role === 'admin').length;
+    const newThisMonth = users.filter(u => {
+      const created = new Date(u.createdAt);
+      const now = new Date();
+      return created.getMonth() === now.getMonth() && created.getFullYear() === now.getFullYear();
+    }).length;
+    const online = users.filter(u => u.online).length;
+
+    document.getElementById('totalUsers').textContent = total;
+    document.getElementById('activeUsers').textContent = active;
+    document.getElementById('adminUsers').textContent = admins;
+    document.getElementById('newUsers').textContent = newThisMonth;
+    document.getElementById('onlineUsers').textContent = online;
+  }
+
+  // Gestion de la recherche
+  function handleSearch(e) {
+    searchTerm = e.target.value.toLowerCase();
+    filterUsers();
+  }
+
+  // Gestion du filtre de rôle
+  function handleRoleFilter(e) {
+    roleFilter = e.target.value;
+    filterUsers();
+  }
+
+  // Gestion du filtre de statut
+  function handleStatusFilter(e) {
+    statusFilter = e.target.value;
+    filterUsers();
+  }
+
+  // Filtrage des utilisateurs
+  function filterUsers() {
+    filteredUsers = users.filter(user => {
+      // Filtre par recherche
+      if (searchTerm) {
+        const matches = user.firstName.toLowerCase().includes(searchTerm) ||
+                       user.lastName.toLowerCase().includes(searchTerm) ||
+                       user.email.toLowerCase().includes(searchTerm) ||
+                       user.username.toLowerCase().includes(searchTerm) ||
+                       user.phone.includes(searchTerm);
+        if (!matches) return false;
+      }
+      
+      // Filtre par rôle
+      if (roleFilter && user.role !== roleFilter) return false;
+      
+      // Filtre par statut
+      if (statusFilter && user.status !== statusFilter) return false;
+      
+      return true;
+    });
+    
+    currentPage = 1;
+    renderUsers();
+  }
+
+  // Changement de vue
+  function switchView(view) {
+    currentView = view;
+    if (view === 'grid') {
+      document.getElementById('gridView').classList.remove('hidden');
+      document.getElementById('listView').classList.add('hidden');
+      document.getElementById('gridViewBtn').classList.add('bg-[#1e3a8a]', 'text-white');
+      document.getElementById('gridViewBtn').classList.remove('bg-gray-200', 'text-gray-600');
+      document.getElementById('listViewBtn').classList.remove('bg-[#1e3a8a]', 'text-white');
+      document.getElementById('listViewBtn').classList.add('bg-gray-200', 'text-gray-600');
+    } else {
+      document.getElementById('gridView').classList.add('hidden');
+      document.getElementById('listView').classList.remove('hidden');
+      document.getElementById('listViewBtn').classList.add('bg-[#1e3a8a]', 'text-white');
+      document.getElementById('listViewBtn').classList.remove('bg-gray-200', 'text-gray-600');
+      document.getElementById('gridViewBtn').classList.remove('bg-[#1e3a8a]', 'text-white');
+      document.getElementById('gridViewBtn').classList.add('bg-gray-200', 'text-gray-600');
+    }
+    renderUsers();
+  }
+
+  // Rendu des utilisateurs
+  function renderUsers() {
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const paginatedUsers = filteredUsers.slice(start, end);
+    
+    if (currentView === 'grid') {
+      renderGridView(paginatedUsers);
+    } else {
+      renderListView(paginatedUsers);
+    }
+    
+    updatePaginationInfo();
+  }
+
+  // Rendu en grille
+  function renderGridView(users) {
+    const gridView = document.getElementById('gridView');
+    
+    if (users.length === 0) {
+      gridView.innerHTML = `
+        <div class="col-span-full text-center py-12">
+          <i class="fas fa-users-slash text-5xl text-gray-400 mb-3"></i>
+          <p class="text-gray-500 text-lg">Aucun utilisateur trouvé</p>
+        </div>
+      `;
+      return;
+    }
+    
+    gridView.innerHTML = users.map(user => `
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="avatar">
+                ${user.firstName[0]}${user.lastName[0]}
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-800">${user.firstName} ${user.lastName}</h3>
+                <p class="text-sm text-gray-500">@${user.username}</p>
+              </div>
+            </div>
+            <span class="activity-dot ${user.online ? 'dot-online' : 'dot-offline'}"></span>
+          </div>
+          
+          <div class="space-y-2 mb-4">
+            <div class="flex items-center text-sm text-gray-600">
+              <i class="fas fa-envelope w-5 text-gray-400"></i>
+              <span class="truncate">${user.email}</span>
+            </div>
+            <div class="flex items-center text-sm text-gray-600">
+              <i class="fas fa-phone w-5 text-gray-400"></i>
+              <span>${user.phone}</span>
+            </div>
+            <div class="flex items-center text-sm text-gray-600">
+              <i class="fas fa-calendar w-5 text-gray-400"></i>
+              <span>Inscrit le ${formatDate(user.createdAt)}</span>
+            </div>
+            <div class="flex items-center text-sm text-gray-600">
+              <i class="fas fa-shopping-cart w-5 text-gray-400"></i>
+              <span>${user.orders} commandes</span>
+            </div>
+          </div>
+          
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="badge badge-${user.role}">
+                ${user.role === 'admin' ? 'Administrateur' : user.role === 'manager' ? 'Gestionnaire' : 'Utilisateur'}
+              </span>
+              <span class="badge badge-${user.status} ml-1">
+                ${user.status === 'active' ? 'Actif' : user.status === 'inactive' ? 'Inactif' : 'Banni'}
+              </span>
+            </div>
+            
+            <div class="flex gap-2">
+              <button onclick="editUser(${user.id})" class="text-blue-600 hover:text-blue-800">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button onclick="openPermissionsModal(${user.id})" class="text-purple-600 hover:text-purple-800">
+                <i class="fas fa-shield-alt"></i>
+              </button>
+              <button onclick="deleteUser(${user.id})" class="text-red-600 hover:text-red-800">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Rendu en liste
+  function renderListView(users) {
+    const tbody = document.getElementById('usersTableBody');
+    
+    if (users.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6" class="px-6 py-8 text-center text-gray-500">
+            <i class="fas fa-users-slash text-4xl mb-2"></i>
+            <p>Aucun utilisateur trouvé</p>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+    
+    tbody.innerHTML = users.map(user => `
+      <tr class="table-row">
+        <td class="px-6 py-4">
+          <div class="flex items-center gap-3">
+            <div class="avatar">
+              ${user.firstName[0]}${user.lastName[0]}
+            </div>
+            <div>
+              <div class="font-medium text-gray-900">${user.firstName} ${user.lastName}</div>
+              <div class="text-xs text-gray-500">@${user.username}</div>
+            </div>
+          </div>
+        </td>
+        <td class="px-6 py-4">
+          <div class="text-sm">${user.email}</div>
+          <div class="text-xs text-gray-500">${user.phone}</div>
+        </td>
+        <td class="px-6 py-4">
+          <span class="badge badge-${user.role}">
+            ${user.role === 'admin' ? 'Administrateur' : user.role === 'manager' ? 'Gestionnaire' : 'Utilisateur'}
+          </span>
+        </td>
+        <td class="px-6 py-4">
+          <span class="badge badge-${user.status}">
+            ${user.status === 'active' ? 'Actif' : user.status === 'inactive' ? 'Inactif' : 'Banni'}
+          </span>
+        </td>
+        <td class="px-6 py-4 text-sm text-gray-600">
+          ${formatDate(user.createdAt)}
+        </td>
+        <td class="px-6 py-4">
+          <div class="flex space-x-2">
+            <button onclick="editUser(${user.id})" class="text-blue-600 hover:text-blue-800">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button onclick="openPermissionsModal(${user.id})" class="text-purple-600 hover:text-purple-800">
+              <i class="fas fa-shield-alt"></i>
+            </button>
+            <button onclick="deleteUser(${user.id})" class="text-red-600 hover:text-red-800">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // Formatage de la date
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  }
+
+  // Formatage de la date avec heure
+  function formatDateTime(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('fr-FR', { 
+      day: '2-digit', 
+      month: '2-digit', 
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  }
+
+  // Mise à jour de la pagination
+  function updatePaginationInfo() {
+    const start = (currentPage - 1) * itemsPerPage + 1;
+    const end = Math.min(currentPage * itemsPerPage, filteredUsers.length);
+    document.getElementById('showingInfo').textContent = 
+      `Affichage de ${start} à ${end} sur ${filteredUsers.length} utilisateurs`;
+    
+    document.getElementById('prevPage').disabled = currentPage === 1;
+    document.getElementById('nextPage').disabled = currentPage * itemsPerPage >= filteredUsers.length;
+    document.getElementById('currentPage').textContent = currentPage;
+  }
+
+  // Changement de page
+  function changePage(page) {
+    if (page < 1 || page > Math.ceil(filteredUsers.length / itemsPerPage)) return;
+    currentPage = page;
+    renderUsers();
+  }
+
+  // Ouverture du modal d'ajout
+  function openAddModal() {
+    document.getElementById('modalTitle').textContent = 'Ajouter un utilisateur';
+    document.getElementById('userForm').reset();
+    document.getElementById('userId').value = '';
+    document.getElementById('userPassword').required = true;
+    document.getElementById('userConfirmPassword').required = true;
+    document.getElementById('avatarPreview').classList.add('hidden');
+    document.getElementById('userModal').classList.remove('hidden');
+    document.getElementById('userModal').classList.add('flex');
+  }
+
+  // Édition d'un utilisateur
+  window.editUser = function(id) {
+    const user = users.find(u => u.id === id);
+    if (!user) return;
+    
+    document.getElementById('modalTitle').textContent = 'Modifier l\'utilisateur';
+    document.getElementById('userId').value = user.id;
+    document.getElementById('userFirstName').value = user.firstName;
+    document.getElementById('userLastName').value = user.lastName;
+    document.getElementById('userEmail').value = user.email;
+    document.getElementById('userPhone').value = user.phone;
+    document.getElementById('userBirthdate').value = user.birthdate;
+    document.getElementById('userAddress').value = user.address;
+    document.getElementById('userUsername').value = user.username;
+    document.getElementById('userRole').value = user.role;
+    document.getElementById('userStatus').value = user.status;
+    
+    document.getElementById('userPassword').required = false;
+    document.getElementById('userConfirmPassword').required = false;
+    
+    if (user.avatar) {
+      const preview = document.getElementById('avatarPreview');
+      const previewImg = preview.querySelector('img');
+      previewImg.src = user.avatar;
+      preview.classList.remove('hidden');
+    }
+    
+    document.getElementById('userModal').classList.remove('hidden');
+    document.getElementById('userModal').classList.add('flex');
+  };
+
+  // Ouverture du modal de permissions
+  window.openPermissionsModal = function(id) {
+    const user = users.find(u => u.id === id);
+    if (!user) return;
+    
+    currentUserId = id;
+    document.getElementById('permissionsUserInfo').innerHTML = `Utilisateur: <span class="font-semibold">${user.firstName} ${user.lastName}</span>`;
+    
+    // Cocher les permissions (simulé)
+    document.querySelectorAll('.permission-checkbox').forEach(cb => {
+      cb.checked = true;
+    });
+    
+    document.getElementById('permissionsModal').classList.remove('hidden');
+    document.getElementById('permissionsModal').classList.add('flex');
+  };
+
+  // Sauvegarde des permissions
+  function savePermissions() {
+    alert('Permissions mises à jour avec succès !');
+    closePermissionsModal();
+  }
+
+  // Fermeture du modal de permissions
+  function closePermissionsModal() {
+    document.getElementById('permissionsModal').classList.add('hidden');
+    document.getElementById('permissionsModal').classList.remove('flex');
+  }
+
+  // Préparation de la suppression
+  window.deleteUser = function(id) {
+    document.getElementById('deleteUserId').value = id;
+    document.getElementById('deleteModal').classList.remove('hidden');
+    document.getElementById('deleteModal').classList.add('flex');
+  };
+
+  // Fermeture des modals
+  function closeModal() {
+    document.getElementById('userModal').classList.add('hidden');
+    document.getElementById('userModal').classList.remove('flex');
+  }
+
+  function closeDeleteModal() {
+    document.getElementById('deleteModal').classList.add('hidden');
+    document.getElementById('deleteModal').classList.remove('flex');
+  }
+
+  // Soumission du formulaire
+  function handleUserSubmit(e) {
+    e.preventDefault();
+    
+    const password = document.getElementById('userPassword').value;
+    const confirmPassword = document.getElementById('userConfirmPassword').value;
+    
+    if (password && password !== confirmPassword) {
+      alert('Les mots de passe ne correspondent pas');
+      return;
+    }
+    
+    const id = document.getElementById('userId').value;
+    const userData = {
+      firstName: document.getElementById('userFirstName').value,
+      lastName: document.getElementById('userLastName').value,
+      email: document.getElementById('userEmail').value,
+      phone: document.getElementById('userPhone').value,
+      birthdate: document.getElementById('userBirthdate').value,
+      address: document.getElementById('userAddress').value,
+      username: document.getElementById('userUsername').value,
+      role: document.getElementById('userRole').value,
+      status: document.getElementById('userStatus').value,
+      avatar: null,
+      online: false,
+      orders: 0,
+      permissions: []
+    };
+    
+    if (id) {
+      // Modification
+      const index = users.findIndex(u => u.id === parseInt(id));
+      if (index !== -1) {
+        users[index] = { ...users[index], ...userData, id: parseInt(id) };
+        alert('Utilisateur modifié avec succès !');
+      }
+    } else {
+      // Ajout
+      const newId = Math.max(...users.map(u => u.id)) + 1;
+      userData.createdAt = new Date().toISOString();
+      userData.lastLogin = null;
+      users.push({ id: newId, ...userData });
+      alert('Utilisateur ajouté avec succès !');
+    }
+    
+    filterUsers();
+    updateStats();
+    closeModal();
+  }
+
+  // Suppression
+  function handleDelete() {
+    const id = parseInt(document.getElementById('deleteUserId').value);
+    users = users.filter(u => u.id !== id);
+    filterUsers();
+    updateStats();
+    closeDeleteModal();
+    alert('Utilisateur supprimé avec succès');
+  }
+
+  // Aperçu de l'avatar
+  function handleAvatarPreview(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const preview = document.getElementById('avatarPreview');
+        const previewImg = preview.querySelector('img');
+        previewImg.src = e.target.result;
+        preview.classList.remove('hidden');
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  // Menu mobile
+  document.getElementById('menuBtn')?.addEventListener('click', function() {
+    alert('Menu mobile - Fonctionnalité à implémenter');
+  });
+</script>
+</body>
+</html>

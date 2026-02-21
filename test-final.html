@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Final - Produits EVORA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#F5F1EB]">
+    <div class="container mx-auto p-8">
+        <h1 class="text-4xl font-bold mb-8 text-center" style="color: #6b4f3a;">Test Final - Produits</h1>
+        
+        <div class="bg-yellow-100 border-l-4 border-yellow-500 p-4 mb-8">
+            <h2 class="font-bold mb-2">Console Debug:</h2>
+            <div id="console" class="text-sm font-mono"></div>
+        </div>
+
+        <section id="boutique" class="py-20 bg-white rounded-lg">
+            <div class="container mx-auto">
+                <h2 class="text-4xl text-center mb-12" style="color: #6b4f3a;">Catégories</h2>
+                <div class="grid md:grid-cols-3 gap-10" id="products-grid">
+                    <div class="col-span-3 text-center text-gray-500">
+                        Chargement...
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Console personnalisée
+        const consoleDiv = document.getElementById('console');
+        function log(msg) {
+            console.log(msg);
+            consoleDiv.innerHTML += `<div>${msg}</div>`;
+        }
+
+        log('🚀 Script démarré');
+
+        // Attendre que le DOM soit chargé
+        document.addEventListener('DOMContentLoaded', function() {
+            log('✅ DOM chargé');
+
+            // 1. Vérifier localStorage
+            const stored = localStorage.getItem('evora_products');
+            log(`📦 localStorage: ${stored ? 'EXISTE' : 'VIDE'}`);
+
+            if (!stored) {
+                log('❌ Aucun produit dans localStorage');
+                log('💡 Allez dans admin/products.html pour ajouter des produits');
+                return;
+            }
+
+            // 2. Parser les produits
+            let products;
+            try {
+                products = JSON.parse(stored);
+                log(`✅ ${products.length} produits parsés`);
+            } catch (error) {
+                log(`❌ Erreur parsing: ${error.message}`);
+                return;
+            }
+
+            // 3. Filtrer les produits actifs
+            const activeProducts = products.filter(p => {
+                const isActive = p.status === 'actif';
+                const hasStock = p.stock > 0;
+                log(`  ${p.name}: status=${p.status} (${isActive?'✅':'❌'}), stock=${p.stock} (${hasStock?'✅':'❌'})`);
+                return isActive && hasStock;
+            });
+
+            log(`🎯 ${activeProducts.length} produits actifs`);
+
+            if (activeProducts.length === 0) {
+                log('⚠️ Aucun produit actif à afficher');
+                document.getElementById('products-grid').innerHTML = `
+                    <div class="col-span-3 text-center text-red-500">
+                        <p class="text-xl mb-2">Aucun produit actif trouvé</p>
+                        <p>Vérifiez que vos produits ont le statut "actif" et un stock > 0</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // 4. Trouver le conteneur
+            const grid = document.getElementById('products-grid');
+            if (!grid) {
+                log('❌ Grid non trouvé!');
+                return;
+            }
+            log('✅ Grid trouvé');
+
+            // 5. Afficher les produits
+            const displayProducts = activeProducts.slice(0, 6);
+            log(`📺 Affichage de ${displayProducts.length} produits`);
+
+            grid.innerHTML = displayProducts.map(product => {
+                // Corriger le chemin de l'image
+                let imagePath = product.image;
+                if (imagePath.startsWith('../')) {
+                    imagePath = imagePath.substring(3);
+                }
+                log(`  📷 ${product.name}: ${imagePath}`);
+
+                return `
+                    <div class="bg-[#F5F1EB] rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
+                        <img src="${imagePath}" 
+                             class="w-full h-64 object-cover" 
+                             alt="${product.name}"
+                             onerror="this.src='images/placeholder.jpg'; console.error('Image non trouvée: ${imagePath}')">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">${product.name}</h3>
+                            ${product.description ? `<p class="text-gray-600 text-sm mb-3">${product.description}</p>` : ''}
+                            <p class="text-[#6b4f3a] font-bold text-lg mb-4">${product.price.toLocaleString('fr-FR')} FCFA</p>
+                            <button class="bg-[#1e3a8a] hover:bg-[#1e40af] text-white w-full py-3 rounded-lg transition font-medium">
+                                Ajouter au panier
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            log('✅✅✅ PRODUITS AFFICHÉS AVEC SUCCÈS! ✅✅✅');
+        });
+    </script>
+</body>
+</html>

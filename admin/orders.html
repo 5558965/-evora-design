@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EVORA DESIGN - Administration Commandes</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Chart.js pour les graphiques -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <style>
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background-color: #f3f4f6;
+    }
+    
+    .sidebar {
+      background: linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%);
+    }
+    
+    .sidebar a.active {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-left: 4px solid #fbbf24;
+    }
+    
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+    }
+    
+    .btn-primary {
+      background-color: #1e3a8a;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary:hover {
+      background-color: #1e40af;
+      transform: scale(1.05);
+    }
+    
+    .status-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: inline-block;
+    }
+    
+    .status-pending { background-color: #fef3c7; color: #92400e; }
+    .status-confirmed { background-color: #dbeafe; color: #1e40af; }
+    .status-processing { background-color: #e0f2fe; color: #0369a1; }
+    .status-shipped { background-color: #d1fae5; color: #065f46; }
+    .status-delivered { background-color: #dcfce7; color: #166534; }
+    .status-cancelled { background-color: #fee2e2; color: #991b1b; }
+    
+    .payment-paid { background-color: #dcfce7; color: #166534; }
+    .payment-pending { background-color: #fef3c7; color: #92400e; }
+    .payment-failed { background-color: #fee2e2; color: #991b1b; }
+    .payment-refunded { background-color: #e0e7ff; color: #3730a3; }
+    
+    .modal {
+      transition: opacity 0.3s ease;
+    }
+    
+    .table-header {
+      background-color: #1e3a8a;
+      color: white;
+    }
+    
+    .table-row:hover {
+      background-color: #f9fafb;
+    }
+    
+    .detail-section {
+      background-color: #f9fafb;
+      border-radius: 0.5rem;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+<!-- ========== CONTAINER PRINCIPAL ========== -->
+<div class="flex h-screen bg-gray-100">
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar w-64 text-white flex-shrink-0 hidden md:block overflow-y-auto">
+    <div class="p-6">
+      <div class="flex items-center space-x-3 mb-8">
+        <img src="../images/LOGO EVORA NOUVEAU.png" alt="Logo" class="h-10 w-10 object-contain">
+        <h2 class="text-xl font-bold">EVORA DESIGN</h2>
+      </div>
+      
+      <nav class="space-y-2">
+        <a href="dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-tachometer-alt w-5"></i>
+          <span>Tableau de bord</span>
+        </a>
+        <a href="products.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-box w-5"></i>
+          <span>Produits</span>
+        </a>
+        <a href="categories.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-tags w-5"></i>
+          <span>Catégories</span>
+        </a>
+        <a href="orders.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-white/20 border-l-4 border-yellow-400 active">
+          <i class="fas fa-shopping-cart w-5"></i>
+          <span>Commandes</span>
+        </a>
+        <a href="messages.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-envelope w-5"></i>
+          <span>Messages</span>
+        </a>
+        <a href="users.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-users w-5"></i>
+          <span>Utilisateurs</span>
+        </a>
+        <a href="settings.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-cog w-5"></i>
+          <span>Paramètres</span>
+        </a>
+        <hr class="border-white/20 my-4">
+        <a href="../index.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-home w-5"></i>
+          <span>Voir le site</span>
+        </a>
+        <a href="login.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+          <i class="fas fa-sign-out-alt w-5"></i>
+          <span>Déconnexion</span>
+        </a>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- ========== CONTENU PRINCIPAL ========== -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+
+    <!-- ========== HEADER ADMIN ========== -->
+    <header class="bg-white shadow-sm px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <button id="menuBtn" class="md:hidden text-gray-600 hover:text-[#1e3a8a]">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+        <h1 class="text-2xl font-semibold text-gray-800">Gestion des Commandes</h1>
+      </div>
+      
+      <div class="flex items-center space-x-4">
+        <div class="relative">
+          <button class="text-gray-600 hover:text-[#1e3a8a] relative">
+            <i class="fas fa-bell text-xl"></i>
+            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">5</span>
+          </button>
+        </div>
+        
+        <div class="flex items-center space-x-3">
+          <img src="https://ui-avatars.com/api/?name=Admin+User&background=1e3a8a&color=fff" class="h-10 w-10 rounded-full">
+          <div class="hidden md:block">
+            <p class="text-sm font-semibold">Admin EVORA</p>
+            <p class="text-xs text-gray-500">admin@evoradesign.ci</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="flex-1 overflow-y-auto p-6 bg-gray-100">
+
+      <!-- Filtres rapides -->
+      <div class="mb-6 flex flex-wrap gap-2">
+        <button class="filter-btn active px-4 py-2 rounded-lg bg-[#1e3a8a] text-white" data-filter="all">Toutes</button>
+        <button class="filter-btn px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-gray-100" data-filter="pending">En attente</button>
+        <button class="filter-btn px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-gray-100" data-filter="confirmed">Confirmées</button>
+        <button class="filter-btn px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-gray-100" data-filter="processing">En préparation</button>
+        <button class="filter-btn px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-gray-100" data-filter="shipped">Expédiées</button>
+        <button class="filter-btn px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-gray-100" data-filter="delivered">Livrées</button>
+        <button class="filter-btn px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-gray-100" data-filter="cancelled">Annulées</button>
+      </div>
+
+      <!-- Statistiques -->
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">Total commandes</p>
+              <p class="text-2xl font-bold text-[#1e3a8a]" id="totalOrders">0</p>
+            </div>
+            <div class="bg-blue-100 p-3 rounded-full">
+              <i class="fas fa-shopping-cart text-[#1e3a8a] text-xl"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">Chiffre d'affaires</p>
+              <p class="text-2xl font-bold text-green-600" id="totalRevenue">0 FCFA</p>
+            </div>
+            <div class="bg-green-100 p-3 rounded-full">
+              <i class="fas fa-chart-line text-green-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">En attente</p>
+              <p class="text-2xl font-bold text-yellow-600" id="pendingOrders">0</p>
+            </div>
+            <div class="bg-yellow-100 p-3 rounded-full">
+              <i class="fas fa-clock text-yellow-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">À expédier</p>
+              <p class="text-2xl font-bold text-blue-600" id="toShip">0</p>
+            </div>
+            <div class="bg-blue-100 p-3 rounded-full">
+              <i class="fas fa-truck text-blue-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-4 card-hover">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-500 text-sm">Aujourd'hui</p>
+              <p class="text-2xl font-bold text-purple-600" id="todayOrders">0</p>
+            </div>
+            <div class="bg-purple-100 p-3 rounded-full">
+              <i class="fas fa-calendar-day text-purple-600 text-xl"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Graphique d'activité -->
+      <div class="bg-white rounded-lg shadow p-6 mb-6">
+        <h3 class="text-lg font-semibold mb-4">Activité des commandes (7 derniers jours)</h3>
+        <canvas id="ordersChart" height="100"></canvas>
+      </div>
+
+      <!-- Barre de recherche et actions -->
+      <div class="mb-6 flex flex-wrap gap-4 items-center justify-between">
+        <div class="flex gap-2">
+          <div class="relative">
+            <input type="text" id="searchInput" placeholder="Rechercher commande, client..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] focus:border-transparent w-80">
+            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+          </div>
+          
+          <select id="paymentFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]">
+            <option value="">Tous paiements</option>
+            <option value="paid">Payé</option>
+            <option value="pending">En attente</option>
+            <option value="failed">Échoué</option>
+            <option value="refunded">Remboursé</option>
+          </select>
+        </div>
+        
+        <div class="flex gap-2">
+          <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg transition flex items-center gap-2">
+            <i class="fas fa-download"></i>
+            Exporter
+          </button>
+          <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg transition flex items-center gap-2">
+            <i class="fas fa-print"></i>
+            Imprimer
+          </button>
+        </div>
+      </div>
+
+      <!-- Tableau des commandes -->
+      <div class="bg-white rounded-lg shadow overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="table-header">
+              <tr>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Commande</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Date</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Client</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Total</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Statut</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Paiement</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="ordersTableBody" class="divide-y divide-gray-200">
+              <!-- Les commandes seront chargées ici -->
+              <tr>
+                <td colspan="7" class="px-6 py-8 text-center text-gray-500">
+                  <i class="fas fa-spinner fa-spin text-3xl mb-2"></i>
+                  <p>Chargement des commandes...</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="mt-4 flex items-center justify-between">
+        <p class="text-sm text-gray-600" id="showingInfo">Affichage de 1 à 10 commandes</p>
+        <div class="flex gap-2">
+          <button class="px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 disabled:opacity-50" id="prevPage" disabled>
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <span class="px-3 py-1 bg-[#1e3a8a] text-white rounded" id="currentPage">1</span>
+          <button class="px-3 py-1 border border-gray-300 rounded hover:bg-gray-100" id="nextPage">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ========== MODAL DÉTAILS COMMANDE ========== -->
+<div id="orderModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 modal">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+    <div class="p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold text-gray-800" id="orderModalTitle">Détails de la commande</h2>
+        <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times text-2xl"></i>
+        </button>
+      </div>
+      
+      <div id="orderDetails" class="space-y-6">
+        <!-- Les détails seront chargés dynamiquement -->
+      </div>
+      
+      <div class="flex justify-end space-x-3 pt-4 border-t">
+        <button id="closeModalBtn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MODAL SUIVI COMMANDE ========== -->
+<div id="trackingModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 modal">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+    <div class="p-6">
+      <h3 class="text-xl font-bold mb-4">Mettre à jour le statut</h3>
+      <input type="hidden" id="trackingOrderId">
+      
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Nouveau statut</label>
+          <select id="orderStatus" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+            <option value="pending">En attente</option>
+            <option value="confirmed">Confirmée</option>
+            <option value="processing">En préparation</option>
+            <option value="shipped">Expédiée</option>
+            <option value="delivered">Livrée</option>
+            <option value="cancelled">Annulée</option>
+          </select>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Numéro de suivi</label>
+          <input type="text" id="trackingNumber" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Optionnel">
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Commentaire</label>
+          <textarea id="trackingComment" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Ajouter un commentaire..."></textarea>
+        </div>
+      </div>
+      
+      <div class="flex justify-end space-x-3 mt-6">
+        <button id="cancelTracking" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+          Annuler
+        </button>
+        <button id="saveTracking" class="btn-primary">
+          Mettre à jour
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SCRIPT JAVASCRIPT ========== -->
+<script>
+  // Données simulées des commandes
+  let orders = [
+    {
+      id: 'CMD-2025-001',
+      date: '2025-02-15T10:30:00',
+      customer: {
+        name: 'Kouassi Jean',
+        email: 'kouassi.j@email.com',
+        phone: '+225 07 12 34 56',
+        address: 'Cocody, Angré, Rue J12'
+      },
+      items: [
+        { name: 'Canapé Bois Noble', quantity: 1, price: 450000 },
+        { name: 'Table Artisanale', quantity: 1, price: 380000 }
+      ],
+      subtotal: 830000,
+      shipping: 15000,
+      total: 845000,
+      status: 'pending',
+      payment: 'pending',
+      paymentMethod: 'Orange Money'
+    },
+    {
+      id: 'CMD-2025-002',
+      date: '2025-02-16T14:15:00',
+      customer: {
+        name: 'Diallo Fatou',
+        email: 'fatou.d@email.com',
+        phone: '+225 05 23 45 67',
+        address: 'Plateau, Avenue Noguès'
+      },
+      items: [
+        { name: 'Lit Moderne', quantity: 1, price: 520000 },
+        { name: 'Commode', quantity: 2, price: 180000 }
+      ],
+      subtotal: 880000,
+      shipping: 15000,
+      total: 895000,
+      status: 'confirmed',
+      payment: 'paid',
+      paymentMethod: 'Carte bancaire'
+    },
+    {
+      id: 'CMD-2025-003',
+      date: '2025-02-16T09:45:00',
+      customer: {
+        name: 'Konan Paul',
+        email: 'paul.k@email.com',
+        phone: '+225 07 34 56 78',
+        address: 'Yopougon, Siporex'
+      },
+      items: [
+        { name: 'Cuisine équipée', quantity: 1, price: 1250000 }
+      ],
+      subtotal: 1250000,
+      shipping: 0,
+      total: 1250000,
+      status: 'processing',
+      payment: 'paid',
+      paymentMethod: 'Wave'
+    },
+    {
+      id: 'CMD-2025-004',
+      date: '2025-02-17T11:20:00',
+      customer: {
+        name: 'Bamba Mariam',
+        email: 'mariam.b@email.com',
+        phone: '+225 05 45 67 89',
+        address: 'Marcory, Zone 4'
+      },
+      items: [
+        { name: 'Dressing sur mesure', quantity: 1, price: 890000 },
+        { name: 'Meuble TV', quantity: 1, price: 250000 }
+      ],
+      subtotal: 1140000,
+      shipping: 15000,
+      total: 1155000,
+      status: 'shipped',
+      payment: 'paid',
+      paymentMethod: 'MTN Money',
+      trackingNumber: 'TRK-2025-004'
+    },
+    {
+      id: 'CMD-2025-005',
+      date: '2025-02-17T15:30:00',
+      customer: {
+        name: 'Traoré Ahmed',
+        email: 'ahmed.t@email.com',
+        phone: '+225 07 56 78 90',
+        address: 'Abobo, PK18'
+      },
+      items: [
+        { name: 'Table Artisanale', quantity: 1, price: 380000 },
+        { name: 'Canapé Bois Noble', quantity: 1, price: 450000 },
+        { name: 'Meuble TV', quantity: 1, price: 250000 }
+      ],
+      subtotal: 1080000,
+      shipping: 15000,
+      total: 1095000,
+      status: 'delivered',
+      payment: 'paid',
+      paymentMethod: 'Carte bancaire',
+      trackingNumber: 'TRK-2025-005',
+      deliveredAt: '2025-02-19T14:30:00'
+    },
+    {
+      id: 'CMD-2025-006',
+      date: '2025-02-18T08:15:00',
+      customer: {
+        name: 'Koffi Aimé',
+        email: 'aime.k@email.com',
+        phone: '+225 05 67 89 01',
+        address: 'Koumassi, Campement'
+      },
+      items: [
+        { name: 'Bureau professionnel', quantity: 2, price: 320000 }
+      ],
+      subtotal: 640000,
+      shipping: 15000,
+      total: 655000,
+      status: 'pending',
+      payment: 'failed',
+      paymentMethod: 'Orange Money'
+    },
+    {
+      id: 'CMD-2025-007',
+      date: '2025-02-18T13:45:00',
+      customer: {
+        name: 'N\'Guessan Anne',
+        email: 'anne.n@email.com',
+        phone: '+225 07 78 90 12',
+        address: 'Riviera 3, Palmeraie'
+      },
+      items: [
+        { name: 'Kitchenette', quantity: 1, price: 650000 }
+      ],
+      subtotal: 650000,
+      shipping: 15000,
+      total: 665000,
+      status: 'cancelled',
+      payment: 'refunded',
+      paymentMethod: 'Wave'
+    }
+  ];
+
+  // Données pour le graphique (7 derniers jours)
+  const chartData = {
+    labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
+    datasets: [{
+      label: 'Nombre de commandes',
+      data: [4, 6, 8, 12, 9, 5, 3],
+      borderColor: '#1e3a8a',
+      backgroundColor: 'rgba(30, 58, 138, 0.1)',
+      tension: 0.4,
+      fill: true
+    }]
+  };
+
+  // Variables globales
+  let currentPage = 1;
+  const itemsPerPage = 10;
+  let filteredOrders = [...orders];
+  let currentFilter = 'all';
+  let searchTerm = '';
+  let paymentFilter = '';
+
+  // Initialisation
+  document.addEventListener('DOMContentLoaded', function() {
+    initChart();
+    updateStats();
+    renderOrders();
+    setupEventListeners();
+  });
+
+  // Initialisation du graphique
+  function initChart() {
+    const ctx = document.getElementById('ordersChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: chartData,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 2
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // Configuration des écouteurs
+  function setupEventListeners() {
+    // Filtres
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => {
+          b.classList.remove('active', 'bg-[#1e3a8a]', 'text-white');
+          b.classList.add('bg-white', 'text-gray-700');
+        });
+        this.classList.add('active', 'bg-[#1e3a8a]', 'text-white');
+        this.classList.remove('bg-white', 'text-gray-700');
+        
+        currentFilter = this.dataset.filter;
+        filterOrders();
+      });
+    });
+
+    document.getElementById('searchInput').addEventListener('input', handleSearch);
+    document.getElementById('paymentFilter').addEventListener('change', handlePaymentFilter);
+    
+    document.getElementById('prevPage').addEventListener('click', () => changePage(currentPage - 1));
+    document.getElementById('nextPage').addEventListener('click', () => changePage(currentPage + 1));
+    
+    // Modals
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+    document.getElementById('cancelTracking').addEventListener('click', closeTrackingModal);
+    document.getElementById('saveTracking').addEventListener('click', updateOrderStatus);
+  }
+
+  // Mise à jour des statistiques
+  function updateStats() {
+    const total = orders.length;
+    const revenue = orders.reduce((sum, order) => sum + order.total, 0);
+    const pending = orders.filter(o => o.status === 'pending').length;
+    const toShip = orders.filter(o => ['confirmed', 'processing'].includes(o.status)).length;
+    const today = orders.filter(o => {
+      const orderDate = new Date(o.date).toDateString();
+      const todayDate = new Date().toDateString();
+      return orderDate === todayDate;
+    }).length;
+
+    document.getElementById('totalOrders').textContent = total;
+    document.getElementById('totalRevenue').textContent = revenue.toLocaleString() + ' FCFA';
+    document.getElementById('pendingOrders').textContent = pending;
+    document.getElementById('toShip').textContent = toShip;
+    document.getElementById('todayOrders').textContent = today;
+  }
+
+  // Gestion de la recherche
+  function handleSearch(e) {
+    searchTerm = e.target.value.toLowerCase();
+    filterOrders();
+  }
+
+  // Gestion du filtre de paiement
+  function handlePaymentFilter(e) {
+    paymentFilter = e.target.value;
+    filterOrders();
+  }
+
+  // Filtrage des commandes
+  function filterOrders() {
+    filteredOrders = orders.filter(order => {
+      // Filtre par statut
+      if (currentFilter !== 'all' && order.status !== currentFilter) {
+        return false;
+      }
+      
+      // Filtre par recherche
+      if (searchTerm) {
+        const matches = order.id.toLowerCase().includes(searchTerm) ||
+                       order.customer.name.toLowerCase().includes(searchTerm) ||
+                       order.customer.email.toLowerCase().includes(searchTerm);
+        if (!matches) return false;
+      }
+      
+      // Filtre par paiement
+      if (paymentFilter && order.payment !== paymentFilter) {
+        return false;
+      }
+      
+      return true;
+    });
+    
+    currentPage = 1;
+    renderOrders();
+  }
+
+  // Rendu des commandes
+  function renderOrders() {
+    const tbody = document.getElementById('ordersTableBody');
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const paginatedOrders = filteredOrders.slice(start, end);
+    
+    if (filteredOrders.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7" class="px-6 py-8 text-center text-gray-500">
+            <i class="fas fa-shopping-cart text-4xl mb-2"></i>
+            <p>Aucune commande trouvée</p>
+          </td>
+        </tr>
+      `;
+      updatePaginationInfo();
+      return;
+    }
+    
+    tbody.innerHTML = paginatedOrders.map(order => `
+      <tr class="table-row cursor-pointer" onclick="viewOrderDetails('${order.id}')">
+        <td class="px-6 py-4 font-medium">${order.id}</td>
+        <td class="px-6 py-4">${formatDate(order.date)}</td>
+        <td class="px-6 py-4">
+          <div class="font-medium">${order.customer.name}</div>
+          <div class="text-xs text-gray-500">${order.customer.email}</div>
+        </td>
+        <td class="px-6 py-4 font-medium">${order.total.toLocaleString()} FCFA</td>
+        <td class="px-6 py-4">
+          <span class="status-badge status-${order.status}">
+            ${getStatusLabel(order.status)}
+          </span>
+        </td>
+        <td class="px-6 py-4">
+          <span class="status-badge payment-${order.payment}">
+            ${getPaymentLabel(order.payment)}
+          </span>
+        </td>
+        <td class="px-6 py-4" onclick="event.stopPropagation()">
+          <div class="flex space-x-2">
+            <button onclick="viewOrderDetails('${order.id}')" class="text-blue-600 hover:text-blue-800">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button onclick="openTrackingModal('${order.id}')" class="text-green-600 hover:text-green-800">
+              <i class="fas fa-truck"></i>
+            </button>
+            <button onclick="printOrder('${order.id}')" class="text-gray-600 hover:text-gray-800">
+              <i class="fas fa-print"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+    
+    updatePaginationInfo();
+  }
+
+  // Formatage de la date
+  function formatDate(dateString) {
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+    return new Date(dateString).toLocaleDateString('fr-FR', options);
+  }
+
+  // Libellés de statut
+  function getStatusLabel(status) {
+    const labels = {
+      'pending': 'En attente',
+      'confirmed': 'Confirmée',
+      'processing': 'En préparation',
+      'shipped': 'Expédiée',
+      'delivered': 'Livrée',
+      'cancelled': 'Annulée'
+    };
+    return labels[status] || status;
+  }
+
+  function getPaymentLabel(payment) {
+    const labels = {
+      'paid': 'Payé',
+      'pending': 'En attente',
+      'failed': 'Échoué',
+      'refunded': 'Remboursé'
+    };
+    return labels[payment] || payment;
+  }
+
+  // Mise à jour de la pagination
+  function updatePaginationInfo() {
+    const start = (currentPage - 1) * itemsPerPage + 1;
+    const end = Math.min(currentPage * itemsPerPage, filteredOrders.length);
+    document.getElementById('showingInfo').textContent = 
+      `Affichage de ${start} à ${end} sur ${filteredOrders.length} commandes`;
+    
+    document.getElementById('prevPage').disabled = currentPage === 1;
+    document.getElementById('nextPage').disabled = currentPage * itemsPerPage >= filteredOrders.length;
+    document.getElementById('currentPage').textContent = currentPage;
+  }
+
+  // Changement de page
+  function changePage(page) {
+    if (page < 1 || page > Math.ceil(filteredOrders.length / itemsPerPage)) return;
+    currentPage = page;
+    renderOrders();
+  }
+
+  // Voir les détails d'une commande
+  window.viewOrderDetails = function(orderId) {
+    const order = orders.find(o => o.id === orderId);
+    if (!order) return;
+    
+    const details = document.getElementById('orderDetails');
+    details.innerHTML = `
+      <div class="grid grid-cols-2 gap-4">
+        <div class="detail-section">
+          <h4 class="font-semibold mb-2">Informations client</h4>
+          <p><span class="text-gray-600">Nom:</span> ${order.customer.name}</p>
+          <p><span class="text-gray-600">Email:</span> ${order.customer.email}</p>
+          <p><span class="text-gray-600">Téléphone:</span> ${order.customer.phone}</p>
+          <p><span class="text-gray-600">Adresse:</span> ${order.customer.address}</p>
+        </div>
+        
+        <div class="detail-section">
+          <h4 class="font-semibold mb-2">Détails commande</h4>
+          <p><span class="text-gray-600">Commande:</span> ${order.id}</p>
+          <p><span class="text-gray-600">Date:</span> ${formatDate(order.date)}</p>
+          <p><span class="text-gray-600">Statut:</span> 
+            <span class="status-badge status-${order.status} ml-2">${getStatusLabel(order.status)}</span>
+          </p>
+          <p><span class="text-gray-600">Paiement:</span> 
+            <span class="status-badge payment-${order.payment} ml-2">${getPaymentLabel(order.payment)}</span>
+          </p>
+          <p><span class="text-gray-600">Mode:</span> ${order.paymentMethod}</p>
+          ${order.trackingNumber ? `<p><span class="text-gray-600">Suivi:</span> ${order.trackingNumber}</p>` : ''}
+        </div>
+      </div>
+      
+      <div class="detail-section">
+        <h4 class="font-semibold mb-2">Articles commandés</h4>
+        <table class="w-full">
+          <thead>
+            <tr class="text-sm text-gray-600 border-b">
+              <th class="text-left py-2">Produit</th>
+              <th class="text-center py-2">Quantité</th>
+              <th class="text-right py-2">Prix unitaire</th>
+              <th class="text-right py-2">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${order.items.map(item => `
+              <tr class="border-b">
+                <td class="py-2">${item.name}</td>
+                <td class="text-center py-2">${item.quantity}</td>
+                <td class="text-right py-2">${item.price.toLocaleString()} FCFA</td>
+                <td class="text-right py-2">${(item.quantity * item.price).toLocaleString()} FCFA</td>
+              </tr>
+            `).join('')}
+          </tbody>
+          <tfoot class="font-semibold">
+            <tr>
+              <td colspan="3" class="text-right py-2">Sous-total:</td>
+              <td class="text-right py-2">${order.subtotal.toLocaleString()} FCFA</td>
+            </tr>
+            <tr>
+              <td colspan="3" class="text-right py-2">Frais de livraison:</td>
+              <td class="text-right py-2">${order.shipping.toLocaleString()} FCFA</td>
+            </tr>
+            <tr class="text-lg">
+              <td colspan="3" class="text-right py-2">Total:</td>
+              <td class="text-right py-2 text-[#1e3a8a]">${order.total.toLocaleString()} FCFA</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      
+      ${order.status === 'delivered' ? `
+        <div class="detail-section">
+          <p class="text-green-600"><i class="fas fa-check-circle"></i> Livrée le ${formatDate(order.deliveredAt)}</p>
+        </div>
+      ` : ''}
+    `;
+    
+    document.getElementById('orderModalTitle').textContent = `Commande ${order.id}`;
+    document.getElementById('orderModal').classList.remove('hidden');
+    document.getElementById('orderModal').classList.add('flex');
+  };
+
+  // Ouvrir le modal de suivi
+  window.openTrackingModal = function(orderId) {
+    const order = orders.find(o => o.id === orderId);
+    if (!order) return;
+    
+    document.getElementById('trackingOrderId').value = orderId;
+    document.getElementById('orderStatus').value = order.status;
+    document.getElementById('trackingNumber').value = order.trackingNumber || '';
+    document.getElementById('trackingComment').value = '';
+    
+    document.getElementById('trackingModal').classList.remove('hidden');
+    document.getElementById('trackingModal').classList.add('flex');
+  };
+
+  // Mettre à jour le statut
+  function updateOrderStatus() {
+    const orderId = document.getElementById('trackingOrderId').value;
+    const newStatus = document.getElementById('orderStatus').value;
+    const trackingNumber = document.getElementById('trackingNumber').value;
+    const comment = document.getElementById('trackingComment').value;
+    
+    const order = orders.find(o => o.id === orderId);
+    if (order) {
+      order.status = newStatus;
+      if (trackingNumber) order.trackingNumber = trackingNumber;
+      
+      alert(`Statut de la commande ${orderId} mis à jour avec succès !`);
+      if (comment) {
+        alert(`Commentaire ajouté: ${comment}`);
+      }
+      
+      updateStats();
+      renderOrders();
+      closeTrackingModal();
+    }
+  }
+
+  // Imprimer la commande
+  window.printOrder = function(orderId) {
+    alert(`Impression de la commande ${orderId} - Fonctionnalité à implémenter`);
+  };
+
+  // Fermeture des modals
+  function closeModal() {
+    document.getElementById('orderModal').classList.add('hidden');
+    document.getElementById('orderModal').classList.remove('flex');
+  }
+
+  function closeTrackingModal() {
+    document.getElementById('trackingModal').classList.add('hidden');
+    document.getElementById('trackingModal').classList.remove('flex');
+  }
+
+  // Menu mobile
+  document.getElementById('menuBtn')?.addEventListener('click', function() {
+    alert('Menu mobile - Fonctionnalité à implémenter');
+  });
+</script>
+</body>
+</html>

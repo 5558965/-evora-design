@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Sécurité Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="admin-auth.js"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8">
+        <h1 class="text-3xl font-bold mb-6 text-green-600">✅ Sécurité Fonctionnelle !</h1>
+        
+        <p class="mb-4">Si vous voyez cette page, c'est que vous êtes bien authentifié.</p>
+        
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+            <h2 class="font-bold mb-2">Informations de Session</h2>
+            <div id="session-info" class="text-sm space-y-1"></div>
+        </div>
+
+        <div class="space-y-4">
+            <a href="dashboard.html" class="block bg-blue-600 text-white text-center py-3 rounded-lg hover:bg-blue-700">
+                Aller au Dashboard
+            </a>
+            <button onclick="adminLogout()" class="block w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700">
+                Se Déconnecter
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Afficher les infos de session
+        const sessionInfo = document.getElementById('session-info');
+        const username = sessionStorage.getItem('adminUsername');
+        const loginTime = sessionStorage.getItem('loginTime');
+        
+        if (loginTime) {
+            const date = new Date(parseInt(loginTime));
+            sessionInfo.innerHTML = `
+                <p><strong>Utilisateur:</strong> ${username}</p>
+                <p><strong>Connecté depuis:</strong> ${date.toLocaleString('fr-FR')}</p>
+                <p><strong>Session valide:</strong> Oui ✅</p>
+            `;
+        }
+    </script>
+</body>
+</html>
