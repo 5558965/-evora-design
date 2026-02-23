@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Réinitialisation Produits Admin</title>
+</head>
+<body>
+    <h1>Réinitialisation en cours...</h1>
+    <script>
+        // Supprimer les produits du localStorage
+        localStorage.removeItem('evora_products');
+        localStorage.removeItem('admin_products');
+        
+        // Rediriger vers la page produits
+        alert('✅ Produits réinitialisés !\n\nLes produits par défaut avec les bons chemins d\'images vont se charger.');
+        window.location.href = 'products.html';
+    </script>
+</body>
+</html>

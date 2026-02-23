@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Ajout Produit - EVORA DESIGN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .log { padding: 8px; margin: 4px 0; border-radius: 4px; font-family: monospace; font-size: 12px; }
+        .log.success { background: #d4edda; color: #155724; }
+        .log.error { background: #f8d7da; color: #721c24; }
+        .log.info { background: #d1ecf1; color: #0c5460; }
+        .log.warning { background: #fff3cd; color: #856404; }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6 text-blue-900">Test Ajout Produit EVORA DESIGN</h1>
+        
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4">Étape 1: Ajouter un produit de test</h2>
+            <button id="addTestProduct" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+                Ajouter un produit de test
+            </button>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4">Étape 2: Vérifier localStorage</h2>
+            <button id="checkStorage" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700">
+                Vérifier localStorage
+            </button>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4">Étape 3: Simuler l'affichage sur le site</h2>
+            <button id="simulateDisplay" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700">
+                Simuler l'affichage
+            </button>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4">Étape 4: Nettoyer</h2>
+            <button id="cleanup" class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700">
+                Supprimer le produit de test
+            </button>
+        </div>
+
+        <div class="bg-gray-900 text-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-bold mb-4">Console de Test</h2>
+            <div id="console" class="space-y-1 max-h-96 overflow-y-auto"></div>
+        </div>
+    </div>
+
+    <script>
+        const consoleDiv = document.getElementById('console');
+        
+        function log(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `log ${type}`;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            consoleDiv.appendChild(div);
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+            console.log(message);
+        }
+
+        // Étape 1: Ajouter un produit de test
+        document.getElementById('addTestProduct').addEventListener('click', () => {
+            log('🚀 Ajout d\'un produit de test...', 'info');
+            
+            const testProduct = {
+                id: 999,
+                name: 'Produit Test Automatique',
+                category: 'test',
+                price: 150000,
+                stock: 10,
+                status: 'actif',
+                image: 'Images/canape.jpg',
+                description: 'Ceci est un produit de test pour vérifier le flux d\'ajout'
+            };
+
+            try {
+                // Charger les produits existants
+                const stored = localStorage.getItem('evora_products');
+                let products = stored ? JSON.parse(stored) : [];
+                
+                log(`📦 Produits existants: ${products.length}`, 'info');
+                
+                // Supprimer l'ancien produit de test s'il existe
+                products = products.filter(p => p.id !== 999);
+                
+                // Ajouter le nouveau produit
+                products.push(testProduct);
+                
+                // Sauvegarder
+                localStorage.setItem('evora_products', JSON.stringify(products));
+                
+                log(`✅ Produit ajouté! Total: ${products.length} produits`, 'success');
+                log(`   Nom: ${testProduct.name}`, 'success');
+                log(`   Prix: ${testProduct.price.toLocaleString()} FCFA`, 'success');
+                log(`   Stock: ${testProduct.stock}`, 'success');
+                log(`   Status: ${testProduct.status}`, 'success');
+                
+            } catch (error) {
+                log(`❌ Erreur: ${error.message}`, 'error');
+            }
+        });
+
+        // Étape 2: Vérifier localStorage
+        document.getElementById('checkStorage').addEventListener('click', () => {
+            log('🔍 Vérification de localStorage...', 'info');
+            
+            try {
+                const stored = localStorage.getItem('evora_products');
+                
+                if (!stored) {
+                    log('⚠️ Aucun produit dans localStorage', 'warning');
+                    return;
+                }
+                
+                const products = JSON.parse(stored);
+                log(`📦 Total produits: ${products.length}`, 'info');
+                
+                // Filtrer les produits actifs avec stock
+                const activeProducts = products.filter(p => p.status === 'actif' && p.stock > 0);
+                log(`✅ Produits actifs avec stock: ${activeProducts.length}`, 'success');
+                
+                // Afficher les détails
+                activeProducts.forEach((p, index) => {
+                    log(`   ${index + 1}. ${p.name} - ${p.price.toLocaleString()} FCFA (Stock: ${p.stock})`, 'info');
+                });
+                
+                // Vérifier le produit de test
+                const testProduct = products.find(p => p.id === 999);
+                if (testProduct) {
+                    log('🎯 Produit de test trouvé!', 'success');
+                    log(`   Sera affiché: ${testProduct.status === 'actif' && testProduct.stock > 0 ? 'OUI ✅' : 'NON ❌'}`, 
+                        testProduct.status === 'actif' && testProduct.stock > 0 ? 'success' : 'error');
+                } else {
+                    log('⚠️ Produit de test non trouvé', 'warning');
+                }
+                
+            } catch (error) {
+                log(`❌ Erreur: ${error.message}`, 'error');
+            }
+        });
+
+        // Étape 3: Simuler l'affichage
+        document.getElementById('simulateDisplay').addEventListener('click', () => {
+            log('🎨 Simulation de l\'affichage sur le site...', 'info');
+            
+            try {
+                const stored = localStorage.getItem('evora_products');
+                
+                if (!stored) {
+                    log('⚠️ Aucun produit à afficher', 'warning');
+                    return;
+                }
+                
+                const products = JSON.parse(stored);
+                log(`📦 Chargement de ${products.length} produits`, 'info');
+                
+                // Filtrer comme le fait script.js
+                const activeProducts = products.filter(p => {
+                    const isActive = p.status === 'actif';
+                    const hasStock = p.stock > 0;
+                    log(`   ${p.name}: Status=${p.status} (${isActive?'✅':'❌'}), Stock=${p.stock} (${hasStock?'✅':'❌'})`, 
+                        isActive && hasStock ? 'success' : 'warning');
+                    return isActive && hasStock;
+                });
+                
+                log(`✅ ${activeProducts.length} produits seront affichés sur le site`, 'success');
+                
+                if (activeProducts.length === 0) {
+                    log('⚠️ Aucun produit actif, les produits par défaut seront conservés', 'warning');
+                } else {
+                    log('📺 Liste des produits qui s\'afficheront:', 'info');
+                    activeProducts.forEach((p, index) => {
+                        log(`   ${index + 1}. ${p.name} - ${p.price.toLocaleString()} FCFA`, 'success');
+                    });
+                }
+                
+            } catch (error) {
+                log(`❌ Erreur: ${error.message}`, 'error');
+            }
+        });
+
+        // Étape 4: Nettoyer
+        document.getElementById('cleanup').addEventListener('click', () => {
+            log('🧹 Nettoyage du produit de test...', 'info');
+            
+            try {
+                const stored = localStorage.getItem('evora_products');
+                
+                if (!stored) {
+                    log('⚠️ Aucun produit à nettoyer', 'warning');
+                    return;
+                }
+                
+                let products = JSON.parse(stored);
+                const beforeCount = products.length;
+                
+                // Supprimer le produit de test
+                products = products.filter(p => p.id !== 999);
+                
+                localStorage.setItem('evora_products', JSON.stringify(products));
+                
+                log(`✅ Produit de test supprimé`, 'success');
+                log(`   Avant: ${beforeCount} produits`, 'info');
+                log(`   Après: ${products.length} produits`, 'info');
+                
+            } catch (error) {
+                log(`❌ Erreur: ${error.message}`, 'error');
+            }
+        });
+
+        // Log initial
+        log('🎯 Test prêt! Suivez les étapes dans l\'ordre.', 'info');
+        log('📝 Clé localStorage utilisée: evora_products', 'info');
+    </script>
+</body>
+</html>

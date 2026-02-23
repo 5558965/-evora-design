@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Image</title>
+    <style>
+        body { padding: 20px; font-family: Arial; }
+        .test { margin: 20px 0; padding: 10px; border: 2px solid #ccc; }
+        img { max-width: 200px; border: 1px solid #ddd; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>Test des chemins d'images depuis admin/</h1>
+    
+    <div class="test">
+        <h3>Test 1: ../Images/canape.jpg</h3>
+        <img src="../Images/canape.jpg" alt="Test 1" 
+             onload="document.getElementById('r1').innerHTML='✅ Chargée'" 
+             onerror="document.getElementById('r1').innerHTML='❌ Erreur'">
+        <p id="r1">Chargement...</p>
+    </div>
+    
+    <div class="test">
+        <h3>Test 2: ../Images/table-2.jpg</h3>
+        <img src="../Images/table-2.jpg" alt="Test 2" 
+             onload="document.getElementById('r2').innerHTML='✅ Chargée'" 
+             onerror="document.getElementById('r2').innerHTML='❌ Erreur'">
+        <p id="r2">Chargement...</p>
+    </div>
+    
+    <div class="test">
+        <h3>Test 3: ../Images/lit-moderne.jpg</h3>
+        <img src="../Images/lit-moderne.jpg" alt="Test 3" 
+             onload="document.getElementById('r3').innerHTML='✅ Chargée'" 
+             onerror="document.getElementById('r3').innerHTML='❌ Erreur'">
+        <p id="r3">Chargement...</p>
+    </div>
+
+    <div class="test">
+        <h3>Fichiers dans le dossier Images:</h3>
+        <pre id="files">Vérification...</pre>
+    </div>
+
+    <script>
+        // Afficher le localStorage
+        const products = localStorage.getItem('evora_products');
+        if (products) {
+            const parsed = JSON.parse(products);
+            document.getElementById('files').textContent = 
+                'Produits dans localStorage:\n' + 
+                JSON.stringify(parsed.slice(0, 3), null, 2);
+        } else {
+            document.getElementById('files').textContent = 'Aucun produit dans localStorage';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correction LocalStorage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #1e3a8a; }
+        button {
+            background: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #059669;
+        }
+        .danger {
+            background: #dc2626;
+        }
+        .danger:hover {
+            background: #b91c1c;
+        }
+        pre {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            max-height: 400px;
+        }
+        .success {
+            background: #d1fae5;
+            padding: 15px;
+            border-left: 4px solid #10b981;
+            margin: 15px 0;
+        }
+        .warning {
+            background: #fef3c7;
+            padding: 15px;
+            border-left: 4px solid #f59e0b;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Correction des chemins d'images</h1>
+        
+        <div class="warning">
+            <strong>⚠️ Problème détecté:</strong> Les produits dans le localStorage ont des chemins d'images incorrects.
+        </div>
+        
+        <h2>Actions disponibles:</h2>
+        
+        <button onclick="fixImagePaths()">✅ Corriger les chemins d'images</button>
+        <button onclick="deleteProducts()" class="danger">🗑️ Supprimer tous les produits</button>
+        <button onclick="location.reload()">🔄 Recharger</button>
+        
+        <div id="result"></div>
+        
+        <h2>Produits actuels:</h2>
+        <pre id="current-products"></pre>
+    </div>
+
+    <script>
+        function displayCurrentProducts() {
+            const products = localStorage.getItem('evora_products');
+            const div = document.getElementById('current-products');
+            if (products) {
+                div.textContent = JSON.stringify(JSON.parse(products), null, 2);
+            } else {
+                div.textContent = 'Aucun produit';
+            }
+        }
+
+        function fixImagePaths() {
+            const products = localStorage.getItem('evora_products');
+            if (!products) {
+                alert('Aucun produit à corriger');
+                return;
+            }
+
+            const parsed = JSON.parse(products);
+            
+            // Mapping des corrections
+            const corrections = {
+                'Canapé Bois Noble': 'Images/canape.jpg',
+                'Table Artisanale': 'Images/table-2.jpg',
+                'Lit Moderne': 'Images/lit-moderne.jpg',
+                'Cuisine équipée moderne': 'Images/cuisine-1.jpg',
+                'Dressing sur mesure': 'Images/dressing-1.jpg',
+                'Bureau professionnel': 'Images/Bureaux.jpg',
+                'Placard 3 portes': 'Images/placards.png',
+                'Kitchenette compacte': 'Images/kichnettte-2.jpg'
+            };
+
+            let corrected = 0;
+            parsed.forEach(product => {
+                if (corrections[product.name]) {
+                    product.image = corrections[product.name];
+                    corrected++;
+                }
+            });
+
+            // Sauvegarder
+            localStorage.setItem('evora_products', JSON.stringify(parsed));
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <div class="success">
+                    <strong>✅ Correction réussie!</strong><br>
+                    ${corrected} produit(s) corrigé(s).<br>
+                    <br>
+                    <strong>Prochaine étape:</strong> Ouvrez index.html pour voir les images s'afficher correctement.
+                </div>
+            `;
+
+            displayCurrentProducts();
+        }
+
+        function deleteProducts() {
+            if (confirm('⚠️ Voulez-vous vraiment supprimer TOUS les produits du localStorage ?\n\nLes produits HTML statiques s\'afficheront à la place.')) {
+                localStorage.removeItem('evora_products');
+                alert('✅ Produits supprimés ! Rechargez index.html.');
+                location.reload();
+            }
+        }
+
+        displayCurrentProducts();
+    </script>
+</body>
+</html>

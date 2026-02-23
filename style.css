@@ -186,6 +186,11 @@ img[loading="lazy"].loaded {
     opacity: 1;
 }
 
+/* Images sans lazy loading visibles par défaut */
+img:not([loading="lazy"]) {
+    opacity: 1;
+}
+
 /* =========================
    PANIER - APERÇU
 ========================= */

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Boutique</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        .btn-primary {
+            background-color: #1e3a8a;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            background-color: #1e40af;
+        }
+        /* PAS de règle opacity pour les images */
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+    <h1 class="text-3xl font-bold mb-8 text-center">Test Section Boutique</h1>
+    
+    <!-- ========== BOUTIQUE ========== -->
+    <section id="boutique" class="py-20 bg-white rounded-lg">
+        <div class="container mx-auto">
+            <h2 class="text-4xl text-center mb-12" style="color: #6b4f3a;">Catégories</h2>
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="bg-[#F5F1EB] rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="Images/canape.jpg" class="w-full h-64 object-cover" alt="Canapé Bois Noble">
+                    <div class="p-6">
+                        <h3 class="text-xl mb-2">Canapé</h3>
+                        <p class="text-[#6b4f3a] font-bold mb-4">450 000 FCFA</p>
+                        <button class="btn-primary w-full text-center add-to-cart" data-name="Canapé Bois Noble" data-price="450000">
+                            Ajouter au panier
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-[#F5F1EB] rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="Images/table-2.jpg" class="w-full h-64 object-cover" alt="Table Artisanale">
+                    <div class="p-6">
+                        <h3 class="text-xl mb-2">Table Artisanale</h3>
+                        <p class="text-[#6b4f3a] font-bold mb-4">380 000 FCFA</p>
+                        <button class="btn-primary w-full text-center add-to-cart" data-name="Table Artisanale" data-price="380000">
+                            Ajouter au panier
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-[#F5F1EB] rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="Images/lit-moderne.jpg" class="w-full h-64 object-cover" alt="Lit Moderne">
+                    <div class="p-6">
+                        <h3 class="text-xl mb-2">Lit Moderne</h3>
+                        <p class="text-[#6b4f3a] font-bold mb-4">520 000 FCFA</p>
+                        <button class="btn-primary w-full text-center add-to-cart" data-name="Lit Moderne" data-price="520000">
+                            Ajouter au panier
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Vérifier le chargement des images
+        document.querySelectorAll('img').forEach((img, index) => {
+            img.addEventListener('load', () => {
+                console.log(`✅ Image ${index + 1} chargée: ${img.src}`);
+            });
+            img.addEventListener('error', () => {
+                console.error(`❌ Erreur image ${index + 1}: ${img.src}`);
+            });
+        });
+    </script>
+</body>
+</html>

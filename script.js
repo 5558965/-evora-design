@@ -353,7 +353,7 @@
                 
                 return `
                 <div class="bg-[#F5F1EB] rounded-xl shadow-lg overflow-hidden card-hover">
-                    <img src="${imagePath}" class="w-full h-64 object-cover" alt="${product.name}" loading="lazy" onerror="this.src='images/placeholder.jpg'">
+                    <img src="${imagePath}" class="w-full h-64 object-cover" alt="${product.name}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect width=%22400%22 height=%22300%22 fill=%22%23f5f1eb%22/%3E%3Ctext x=%22200%22 y=%22150%22 font-family=%22Arial%22 font-size=%2220%22 fill=%22%236b4f3a%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EImage non disponible%3C/text%3E%3C/svg%3E'">
                     <div class="p-6">
                         <h3 class="text-xl mb-2">${product.name}</h3>
                         ${product.description ? `<p class="text-gray-600 text-sm mb-2">${product.description}</p>` : ''}

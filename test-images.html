@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Images</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .test-item { border: 2px solid #ccc; padding: 10px; }
+        .test-item img { width: 100%; height: 200px; object-fit: cover; }
+        .test-item h3 { margin: 10px 0; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>Test d'affichage des images</h1>
+    <div class="test-container">
+        <div class="test-item">
+            <h3>Canapé</h3>
+            <img src="Images/canape.jpg" alt="Canapé" onerror="this.parentElement.innerHTML+='<p class=error>❌ Erreur de chargement</p>'" onload="this.parentElement.innerHTML+='<p class=success>✅ Image chargée</p>'">
+        </div>
+        <div class="test-item">
+            <h3>Table</h3>
+            <img src="Images/table-2.jpg" alt="Table" onerror="this.parentElement.innerHTML+='<p class=error>❌ Erreur de chargement</p>'" onload="this.parentElement.innerHTML+='<p class=success>✅ Image chargée</p>'">
+        </div>
+        <div class="test-item">
+            <h3>Lit Moderne</h3>
+            <img src="Images/lit-moderne.jpg" alt="Lit" onerror="this.parentElement.innerHTML+='<p class=error>❌ Erreur de chargement</p>'" onload="this.parentElement.innerHTML+='<p class=success>✅ Image chargée</p>'">
+        </div>
+    </div>
+</body>
+</html>

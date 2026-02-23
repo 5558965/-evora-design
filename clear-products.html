@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Nettoyage LocalStorage</title>
+</head>
+<body>
+    <h1>Nettoyage en cours...</h1>
+    <script>
+        // Supprimer les produits
+        localStorage.removeItem('evora_products');
+        
+        // Rediriger vers index.html
+        alert('✅ Produits supprimés du localStorage !\n\nLes produits HTML statiques vont maintenant s\'afficher.');
+        window.location.href = 'index.html';
+    </script>
+</body>
+</html>

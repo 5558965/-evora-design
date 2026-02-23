@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vérification LocalStorage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #1e3a8a; }
+        pre {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        button {
+            background: #dc2626;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #b91c1c;
+        }
+        .info {
+            background: #dbeafe;
+            padding: 10px;
+            border-left: 4px solid #1e3a8a;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Vérification LocalStorage</h1>
+        
+        <div class="info">
+            <strong>Info:</strong> Cette page vérifie si des produits sont stockés dans le localStorage et les affiche.
+        </div>
+        
+        <h2>Produits dans localStorage:</h2>
+        <div id="products-info"></div>
+        
+        <h2>Contenu complet du localStorage:</h2>
+        <pre id="storage-content"></pre>
+        
+        <button onclick="clearProducts()">🗑️ Vider les produits du localStorage</button>
+        <button onclick="location.reload()">🔄 Recharger</button>
+    </div>
+
+    <script>
+        function displayStorageInfo() {
+            const productsDiv = document.getElementById('products-info');
+            const storageDiv = document.getElementById('storage-content');
+            
+            // Vérifier les produits
+            const products = localStorage.getItem('evora_products');
+            if (products) {
+                try {
+                    const parsed = JSON.parse(products);
+                    productsDiv.innerHTML = `
+                        <div style="background: #fef3c7; padding: 10px; border-left: 4px solid #f59e0b; margin: 10px 0;">
+                            <strong>⚠️ TROUVÉ:</strong> ${parsed.length} produit(s) dans localStorage
+                            <pre>${JSON.stringify(parsed, null, 2)}</pre>
+                        </div>
+                    `;
+                } catch (e) {
+                    productsDiv.innerHTML = `<p style="color: red;">Erreur de parsing: ${e.message}</p>`;
+                }
+            } else {
+                productsDiv.innerHTML = `
+                    <div style="background: #d1fae5; padding: 10px; border-left: 4px solid #10b981; margin: 10px 0;">
+                        <strong>✅ AUCUN produit dans localStorage</strong><br>
+                        Les produits HTML statiques devraient s'afficher normalement.
+                    </div>
+                `;
+            }
+            
+            // Afficher tout le localStorage
+            const allStorage = {};
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                allStorage[key] = localStorage.getItem(key);
+            }
+            storageDiv.textContent = JSON.stringify(allStorage, null, 2);
+        }
+        
+        function clearProducts() {
+            if (confirm('Voulez-vous vraiment supprimer les produits du localStorage ?')) {
+                localStorage.removeItem('evora_products');
+                alert('✅ Produits supprimés ! Rechargez index.html pour voir les produits par défaut.');
+                location.reload();
+            }
+        }
+        
+        displayStorageInfo();
+    </script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Ajout Utilisateur - EVORA DESIGN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .log { padding: 8px; margin: 4px 0; border-radius: 4px; font-family: monospace; font-size: 12px; }
+        .log.success { background: #d4edda; color: #155724; }
+        .log.error { background: #f8d7da; color: #721c24; }
+        .log.info { background: #d1ecf1; color: #0c5460; }
+        .log.warning { background: #fff3cd; color: #856404; }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6 text-blue-900">Test Gestion Utilisateurs EVORA DESIGN</h1>
+        
+        <div class="bg-red-100 border-l-4 border-red-500 p-4 mb-6">
+            <h2 class="text-xl font-bold text-red-800 mb-2">⚠️ PROBLÈME DÉTECTÉ</h2>
+            <p class="text-red-700">Les utilisateurs ne sont PAS sauvegardés dans localStorage!</p>
+            <p class="text-red-700">Ils disparaissent au rechargement de la page.</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4">Test 1: Vérifier localStorage</h2>
+            <button id="checkStorage" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+                Vérifier si les utilisateurs sont dans localStorage
+            </button>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4">Test 2: Simuler l'ajout d'un utilisateur</h2>
+            <button id="simulateAdd" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700">
+                Simuler l'ajout (sans localStorage)
+            </button>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4">Solution: Ajouter avec localStorage</h2>
+            <button id="addWithStorage" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700">
+                Ajouter un utilisateur AVEC localStorage
+            </button>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4">Test 3: Vérifier la persistance</h2>
+            <button id="checkPersistence" class="bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700">
+                Vérifier si l'utilisateur persiste
+            </button>
+        </div>
+
+        <div class="bg-gray-900 text-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-bold mb-4">Console de Test</h2>
+            <div id="console" class="space-y-1 max-h-96 overflow-y-auto"></div>
+        </div>
+    </div>
+
+    <script>
+        const consoleDiv = document.getElementById('console');
+        const USERS_STORAGE_KEY = 'evora_users';
+        
+        function log(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `log ${type}`;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            consoleDiv.appendChild(div);
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+            console.log(message);
+        }
+
+        // Test 1: Vérifier localStorage
+        document.getElementById('checkStorage').addEventListener('click', () => {
+            log('🔍 Vérification de localStorage...', 'info');
+            
+            const stored = localStorage.getItem(USERS_STORAGE_KEY);
+            
+            if (!stored) {
+                log('❌ PROBLÈME: Aucun utilisateur dans localStorage!', 'error');
+                log('   Les utilisateurs sont seulement en mémoire', 'error');
+                log('   Ils disparaissent au rechargement de la page', 'error');
+            } else {
+                const users = JSON.parse(stored);
+                log(`✅ ${users.length} utilisateurs trouvés dans localStorage`, 'success');
+                users.forEach((u, i) => {
+                    log(`   ${i + 1}. ${u.firstName} ${u.lastName} (${u.role})`, 'info');
+                });
+            }
+        });
+
+        // Test 2: Simuler l'ajout (comme le fait actuellement users.html)
+        document.getElementById('simulateAdd').addEventListener('click', () => {
+            log('🎭 Simulation de l\'ajout actuel (sans localStorage)...', 'info');
+            
+            // Simuler ce que fait users.html
+            let users = [
+                { id: 1, firstName: 'Jean', lastName: 'Kouassi', role: 'admin' },
+                { id: 2, firstName: 'Marie', lastName: 'Koné', role: 'manager' }
+            ];
+            
+            log(`📦 Utilisateurs en mémoire: ${users.length}`, 'info');
+            
+            // Ajouter un nouvel utilisateur
+            const newUser = {
+                id: 3,
+                firstName: 'Test',
+                lastName: 'Utilisateur',
+                email: 'test@email.com',
+                role: 'user',
+                status: 'active'
+            };
+            
+            users.push(newUser);
+            log(`✅ Utilisateur ajouté en mémoire: ${users.length} utilisateurs`, 'success');
+            log(`⚠️ MAIS pas sauvegardé dans localStorage!`, 'warning');
+            log(`   Au rechargement de la page, il disparaîtra`, 'warning');
+        });
+
+        // Solution: Ajouter avec localStorage
+        document.getElementById('addWithStorage').addEventListener('click', () => {
+            log('💾 Ajout d\'un utilisateur AVEC localStorage...', 'info');
+            
+            try {
+                // Charger les utilisateurs existants
+                let users = [];
+                const stored = localStorage.getItem(USERS_STORAGE_KEY);
+                if (stored) {
+                    users = JSON.parse(stored);
+                    log(`📦 Utilisateurs existants: ${users.length}`, 'info');
+                } else {
+                    log('📦 Aucun utilisateur existant, création de la liste', 'info');
+                }
+                
+                // Créer un nouvel utilisateur
+                const newUser = {
+                    id: users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1,
+                    firstName: 'Test',
+                    lastName: 'Persistant',
+                    email: 'test.persistant@email.com',
+                    phone: '+225 07 00 00 00',
+                    username: 'tpersistant',
+                    role: 'user',
+                    status: 'active',
+                    birthdate: '1990-01-01',
+                    address: 'Abidjan',
+                    avatar: null,
+                    createdAt: new Date().toISOString(),
+                    lastLogin: null,
+                    online: false,
+                    orders: 0,
+                    permissions: ['products:read']
+                };
+                
+                // Ajouter l'utilisateur
+                users.push(newUser);
+                
+                // SAUVEGARDER dans localStorage
+                localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+                
+                log(`✅ Utilisateur ajouté ET sauvegardé!`, 'success');
+                log(`   Total: ${users.length} utilisateurs`, 'success');
+                log(`   Nom: ${newUser.firstName} ${newUser.lastName}`, 'success');
+                log(`   Email: ${newUser.email}`, 'success');
+                log(`   Rôle: ${newUser.role}`, 'success');
+                log(`💾 Sauvegardé dans localStorage avec la clé: ${USERS_STORAGE_KEY}`, 'success');
+                
+            } catch (error) {
+                log(`❌ Erreur: ${error.message}`, 'error');
+            }
+        });
+
+        // Test 3: Vérifier la persistance
+        document.getElementById('checkPersistence').addEventListener('click', () => {
+            log('🔄 Vérification de la persistance...', 'info');
+            
+            const stored = localStorage.getItem(USERS_STORAGE_KEY);
+            
+            if (!stored) {
+                log('❌ Aucun utilisateur persistant trouvé', 'error');
+                log('   Utilisez le bouton "Ajouter avec localStorage" d\'abord', 'warning');
+            } else {
+                const users = JSON.parse(stored);
+                log(`✅ ${users.length} utilisateurs persistants trouvés!`, 'success');
+                log(`   Ces utilisateurs survivront au rechargement de la page`, 'success');
+                
+                users.forEach((u, i) => {
+                    log(`   ${i + 1}. ${u.firstName} ${u.lastName} - ${u.email} (${u.role})`, 'info');
+                });
+                
+                log('🎉 La persistance fonctionne!', 'success');
+            }
+        });
+
+        // Log initial
+        log('🎯 Test de gestion des utilisateurs prêt', 'info');
+        log('⚠️ PROBLÈME: users.html ne sauvegarde PAS dans localStorage', 'warning');
+        log('📝 Clé recommandée: evora_users', 'info');
+    </script>
+</body>
+</html>

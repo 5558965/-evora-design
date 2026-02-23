@@ -42,8 +42,8 @@
     function preloadCriticalResources() {
         // Précharger les images critiques (hero, logo)
         const criticalImages = [
-            'images/LOGO EVORA NOUVEAU.png',
-            'images/EVORA DESIGN .jpg'
+            'Images/evora.png',
+            'Images/presentation.jpg'
         ];
 
         criticalImages.forEach(src => {
